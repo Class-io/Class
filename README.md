@@ -1,2 +1,2 @@
-# Class-
+# Class
 Online Learning Platform
