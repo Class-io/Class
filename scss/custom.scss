@@ -12,3 +12,33 @@ $theme-colors: (
 );
 
 @import "../node_modules/bootstrap/scss/bootstrap";
+
+// Global
+
+body {
+  margin: 0;
+}
+
+// Index
+
+
+
+.navbar {
+  position: absolute;
+  width: 100vw;
+  z-index: 1;
+}
+
+.header {
+  background-image: url("../assets/images/index_header.jpg");
+  background-position: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+.overlay {
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.705);
+  position: absolute;
+}

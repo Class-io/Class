@@ -7,9 +7,9 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-primary">
-      <div class="container justify-content-evenly">
-        <a class="navbar-brand" href="#">Class {}</a>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand ml-5" href="#">Class {}</a>
         <button
           class="navbar-toggler"
           type="button"
@@ -21,22 +21,31 @@
         >
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div
-          class="collapse navbar-collapse"
-          id="navbarNavAltMarkup"
-        >
+        <div class="collapse navbar-collapse d-flex justify-content-around" id="navbarNavAltMarkup">
           <div class="navbar-nav">
             <a class="nav-link active" aria-current="page" href="#">About</a>
             <a class="nav-link" href="#">Courses</a>
+            <a class="nav-link" href="#">News</a>
             <a class="nav-link" href="#">Subscribe</a>
-            <a class="nav-link" href="#">Disabled</a>
-            <div class="navbar-nav">
-              <a class="nav-link ml-5" href="#">Login</a>
-              <a class="nav-link" href="#">Sign Up</a>
-            </div>
           </div>
+              <div class="navbar-nav">
+                <a class="nav-link ml-5" href="#">Login</a>
+                <a class="nav-link" href="#">Sign Up</a>
+              </div>
         </div>
       </div>
     </nav>
+
+    <div
+      class="header container-fluid d-flex flex-column justify-content-center gx-0"
+    >
+      <div class="overlay container-fluid d-flex flex-column justify-content-center align-items-center">
+        <h1 class="display-1 text-white">Welcome to Class {}</h1>
+        <p class="display-5 text-white">
+          <u>Work with the latest</u>, <em>learn</em> from the <strong>greatest</strong>
+        </p>
+        <p class="lead text-white"><strong>Get started today!</strong></p>
+      </div>
+    </div>
   </body>
 </html>
