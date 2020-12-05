@@ -1,0 +1,16 @@
+{
+  "dependencies": {
+    "bootstrap": "^5.0.0-alpha3",
+    "sass": "^1.29.0"
+  },
+  "name": "class",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
