@@ -1,0 +1,28 @@
+version: '3'
+services:
+   server:
+      container_name: class-server
+      restart: always
+      build: .
+      ports:
+         - '5000:4000'
+      depends_on:
+         - database
+      environment: 
+         DATABASE_URL: mongodb://database:27018
+      links:
+         - database:database
+   database:
+      container_name: class-database
+      restart: always
+      image: mongo:4.0
+      ports:
+         - 27018:27018
+      command: mongod --port 27018 --bind_ip_all
+   database-admin:
+      container_name: class-database-admin
+      image: mrvautin/adminmongo
+      ports:
+         - 1234:1234
+      environment: 
+         HOST: 0.0.0.0
