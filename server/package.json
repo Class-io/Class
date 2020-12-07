@@ -1,13 +1,15 @@
 {
   "name": "server",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
-  "private": true,
-  "license": "UNLICENSED",
+  "author": "Piotr Blachnio",
   "scripts": {
+    "prebuild": "rimraf dist",
+    "build": "nest build",
     "start": "nest start",
+    "start:db": "bash ./src/scripts/start-db.sh",
+    "start:db:admin": "bash ./src/scripts/start-db-admin.sh",
     "start:dev": "cross-env APP_MODE=development nodemon --config nodemon.json",
+    "start:prod": "node dist/main",
     "lint": "eslint src"
   },
   "dependencies": {
