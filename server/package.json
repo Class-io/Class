@@ -7,7 +7,8 @@
   "license": "UNLICENSED",
   "scripts": {
     "start": "nest start",
-    "start:dev": "nodemon --config nodemon.json"
+    "start:dev": "nodemon --config nodemon.json",
+    "lint": "eslint src"
   },
   "dependencies": {
     "@nestjs/common": "^7.0.0",
