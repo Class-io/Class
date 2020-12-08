@@ -23,6 +23,9 @@ export class ConfigValidator {
                 PREFIX: string(),
                 PORT: number().required()
             },
+            AUTH: {
+                SECRET: string().min(5)
+            },
             DATABASE: {
                 NAME: string(),
                 URL: string().required()
