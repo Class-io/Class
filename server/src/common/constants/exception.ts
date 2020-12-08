@@ -1,0 +1,11 @@
+enum Exception {
+    DEFAULT = 0,
+    INPUT_NOT_VALID = 100,
+    USER_NOT_FOUND = 101,
+    INVALID_CREDENTIALS = 103,
+    UNAUTHORIZED = 104,
+    EMAIL_ALREADY_EXISTS = 105,
+    USERNAME_ALREADY_EXISTS = 106
+}
+
+export default Exception;
