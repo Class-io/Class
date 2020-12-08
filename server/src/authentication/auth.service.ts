@@ -17,8 +17,8 @@ import { InvalidCredentialsException } from "../common/exceptions/invalid-creden
 export class AuthService {
     constructor(private readonly _usersSerivce: UsersService, private readonly _jwtService: JwtService) {}
 
-    public async validateUser(email: string, password: string): Promise<IUser> {
-        const user: IUser | null = await this._usersSerivce.get({ email });
+    public async validateUser(username: string, password: string): Promise<IUser> {
+        const user: IUser | null = await this._usersSerivce.get({ username });
         if(!user) throw new InvalidCredentialsException();
 
         const isPasswordValid: boolean = await compareStringToHash(password, user.password);
@@ -40,11 +40,7 @@ export class AuthService {
         if(existingUser) throw new UsernameAlreadyExistsException();
 
         const user: IUser = await this._usersSerivce.create({ ...input, password: await hashString(input.password) });
-        const payload: IUserPayload = {
-            id: user.id,
-            username: user.username,
-            email: user.email
-        };
+        const payload: IUserPayload = this._getPayload(user);
 
         const accessToken: string = this._jwtService.sign(payload, { expiresIn: '24h' }) 
         const response: RegisterResponse = { accessToken };
@@ -54,7 +50,6 @@ export class AuthService {
     
     public async checkIfUserExistsInDatabase(username: string): Promise<void> {
         const user: IUser | null = await this._usersSerivce.get({ username });
-
         if(!user) throw new UserNotFoundException();
     }
 
