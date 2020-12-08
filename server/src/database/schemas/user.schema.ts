@@ -4,6 +4,12 @@ export const UserSchema = new Schema({
     email: String,
     username: String,
     password: String,
-    joinedAt: Number,
-    isConfirmed: Boolean
+    joinedAt: {
+        type: Number,
+        default: Date.now()
+    },
+    isConfirmed: {
+        type: Boolean,
+        default: false
+    }
 });
