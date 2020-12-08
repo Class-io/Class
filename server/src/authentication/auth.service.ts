@@ -1,5 +1,4 @@
 import { Injectable } from "@nestjs/common";
-import { UserNotFoundException } from "../common/exceptions/user-not-found-exception";
 import { compareStringToHash } from "../common/helpers/compare-string-to-hash";
 import { IUser } from "../models/user/interfaces/IUser";
 import { UsersService } from "../models/user/users.service";
@@ -32,11 +31,6 @@ export class AuthService {
 
         const response = this._createResponse(user);
         return response;
-    }
-
-    public async checkIfUserExistsInDatabase(username: string): Promise<void> {
-        const user = await this._usersSerivce.get({ username });
-        if(!user) throw new UserNotFoundException();
     }
 
     private async _checkIfUsernameAlreadyExistsInDatabase(username: string): Promise<void> {

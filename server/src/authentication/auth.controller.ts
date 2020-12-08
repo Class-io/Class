@@ -5,6 +5,7 @@ import { ValidationPipe } from "../common/pipes/validation.pipe";
 import { RegisterValidationSchema } from "./schemas/register.schema";
 import { RegisterRequestDTO, RegisterResponseDTO } from "./dto/register.dto";
 import { Constants } from "../common/constants";
+import { LoginValidationSchema } from "./schemas/login.schema";
 
 @Controller('/')
 export class AuthController {
@@ -12,7 +13,7 @@ export class AuthController {
     
     @Post(Constants.Endpoint.Auth.LOGIN)
     @HttpCode(200)
-    public login(@Body() body: LoginRequestDTO): Promise<LoginResponseDTO> {
+    public login(@Body(new ValidationPipe(LoginValidationSchema)) body: LoginRequestDTO): Promise<LoginResponseDTO> {
         return this._authService.login(body);
     }
 
