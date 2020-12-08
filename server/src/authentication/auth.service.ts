@@ -18,16 +18,6 @@ import { EmailAlreadyExistsException } from "../common/exceptions/email-already-
 export class AuthService {
     constructor(private readonly _usersSerivce: UsersService, private readonly _jwtService: JwtService) {}
 
-    public async validateUser(username: string, password: string): Promise<IUser> {
-        const user = await this._usersSerivce.get({ username });
-        if(!user) throw new InvalidCredentialsException();
-
-        const isPasswordValid = await compareStringToHash(password, user.password);
-        if(!isPasswordValid) throw new InvalidCredentialsException();
-
-        return user;
-    }
-
     public login(user: UserDTO): LoginResponse {
         const payload = this._getPayload(user);
         const accessToken = this._jwtService.sign(payload, { expiresIn: '24h' });
@@ -46,6 +36,13 @@ export class AuthService {
         return response;
     }
     
+    public async validateCredentials(email: string, password: string): Promise<IUser> {
+        const user = await this._getUserFromDatabaseByEmailOrThrowException(email);
+        await this._checkIfPasswordIsValidInDatabase(password, user.password);
+
+        return user;
+    }
+
     public async checkIfUserExistsInDatabase(username: string): Promise<void> {
         const user = await this._usersSerivce.get({ username });
         if(!user) throw new UserNotFoundException();
@@ -74,6 +71,18 @@ export class AuthService {
 
         const response = { accessToken };
         return response;
+    }
+
+    private async _getUserFromDatabaseByEmailOrThrowException(email: string): Promise<IUser> {
+        const user = await this._usersSerivce.get({ email });
+        if(!user) throw new InvalidCredentialsException();
+
+        return user;
+    }
+
+    private async _checkIfPasswordIsValidInDatabase(password: string, hashedPassword: string): Promise<void> {
+        const isPasswordValid = await compareStringToHash(password, hashedPassword);
+        if(!isPasswordValid) throw new InvalidCredentialsException();
     }
 
     private _getPayload(user: IUserPayload): IUserPayload {
