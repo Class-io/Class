@@ -1,27 +1,23 @@
-import { Body, Controller, HttpCode, Post, Req, UseGuards } from "@nestjs/common";
-import { Request } from 'express';
+import { Body, Controller, HttpCode, Post } from "@nestjs/common";
 import { AuthService } from "./auth.service";
-import { LoginResponse } from "./dto/login.dto";
+import { LoginRequestDTO, LoginResponseDTO } from "./dto/login.dto";
 import { ValidationPipe } from "../common/pipes/validation.pipe";
 import { RegisterValidationSchema } from "./schemas/register.schema";
-import { CreateUserDTO } from "../models/user/dto/create.dto";
-import { RegisterResponse } from "./dto/register.dto";
+import { RegisterRequestDTO, RegisterResponseDTO } from "./dto/register.dto";
 import { Constants } from "../common/constants";
-import { LocalAuthGuard } from "../common/guards/local.guard";
 
 @Controller('/')
 export class AuthController {
     constructor(private readonly _authService: AuthService) {}
     
-    @UseGuards(LocalAuthGuard)
     @Post(Constants.Endpoint.Auth.LOGIN)
     @HttpCode(200)
-    public login(@Req() req: Request): LoginResponse {
-        return this._authService.login(req.user);
+    public login(@Body() body: LoginRequestDTO): Promise<LoginResponseDTO> {
+        return this._authService.login(body);
     }
 
     @Post(Constants.Endpoint.Auth.REGISTER)
-    public async register(@Body(new ValidationPipe(RegisterValidationSchema)) body: CreateUserDTO): Promise<RegisterResponse> {
+    public register(@Body(new ValidationPipe(RegisterValidationSchema)) body: RegisterRequestDTO): Promise<RegisterResponseDTO> {
         return this._authService.register(body);
     }
 }
