@@ -18,14 +18,6 @@ import { EmailAlreadyExistsException } from "../common/exceptions/email-already-
 export class AuthService {
     constructor(private readonly _usersSerivce: UsersService, private readonly _jwtService: JwtService) {}
 
-    public login(user: UserDTO): LoginResponse {
-        const payload = this._getPayload(user);
-        const accessToken = this._jwtService.sign(payload, { expiresIn: '24h' });
-
-        const response = { accessToken };
-        return response;
-    }
-
     public async register(input: CreateUserDTO): Promise<RegisterResponse> {
         await this._checkIfEmailAlreadyExistsInDatabase(input.email);
         await this._checkIfUsernameAlreadyExistsInDatabase(input.username);
@@ -35,7 +27,12 @@ export class AuthService {
 
         return response;
     }
-    
+
+    public login(user: UserDTO): LoginResponse {
+        const response = this._createLoginResponse(user);
+        return response;
+    }
+
     public async validateCredentials(email: string, password: string): Promise<IUser> {
         const user = await this._getUserFromDatabaseByEmailOrThrowException(email);
         await this._checkIfPasswordIsValidInDatabase(password, user.password);
@@ -68,6 +65,14 @@ export class AuthService {
     private _createRegisterResponse(user: IUser): RegisterResponse {
         const payload = this._getPayload(user);
         const accessToken = this._jwtService.sign(payload, { expiresIn: '24h' }) 
+
+        const response = { accessToken };
+        return response;
+    }
+
+    private _createLoginResponse(user: UserDTO): LoginResponse {
+        const payload = this._getPayload(user);
+        const accessToken = this._jwtService.sign(payload, { expiresIn: '24h' });
 
         const response = { accessToken };
         return response;
