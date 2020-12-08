@@ -12,45 +12,68 @@ import { IUserPayload } from "../models/user/interfaces/IUserPayload";
 import { CreateUserDTO } from "../models/user/dto/create.dto";
 import { hashString } from "../common/helpers/hash-string";
 import { InvalidCredentialsException } from "../common/exceptions/invalid-credentials.exception";
+import { EmailAlreadyExistsException } from "../common/exceptions/email-already-exists.exception";
 
 @Injectable()
 export class AuthService {
     constructor(private readonly _usersSerivce: UsersService, private readonly _jwtService: JwtService) {}
 
     public async validateUser(username: string, password: string): Promise<IUser> {
-        const user: IUser | null = await this._usersSerivce.get({ username });
+        const user = await this._usersSerivce.get({ username });
         if(!user) throw new InvalidCredentialsException();
 
-        const isPasswordValid: boolean = await compareStringToHash(password, user.password);
+        const isPasswordValid = await compareStringToHash(password, user.password);
         if(!isPasswordValid) throw new InvalidCredentialsException();
 
         return user;
     }
 
     public login(user: UserDTO): LoginResponse {
-        const payload: IUserPayload = this._getPayload(user);
-        const accessToken: string = this._jwtService.sign(payload, { expiresIn: '24h' });
+        const payload = this._getPayload(user);
+        const accessToken = this._jwtService.sign(payload, { expiresIn: '24h' });
 
-        const response: LoginResponse = { accessToken };
+        const response = { accessToken };
         return response;
     }
 
     public async register(input: CreateUserDTO): Promise<RegisterResponse> {
-        const existingUser: IUser | null = await this._usersSerivce.get({ username: input.username });
-        if(existingUser) throw new UsernameAlreadyExistsException();
+        await this._checkIfEmailAlreadyExistsInDatabase(input.email);
+        await this._checkIfUsernameAlreadyExistsInDatabase(input.username);
 
-        const user: IUser = await this._usersSerivce.create({ ...input, password: await hashString(input.password) });
-        const payload: IUserPayload = this._getPayload(user);
-
-        const accessToken: string = this._jwtService.sign(payload, { expiresIn: '24h' }) 
-        const response: RegisterResponse = { accessToken };
+        const user = await this._createUserInDatabase(input);
+        const response = this._createRegisterResponse(user);
 
         return response;
     }
     
     public async checkIfUserExistsInDatabase(username: string): Promise<void> {
-        const user: IUser | null = await this._usersSerivce.get({ username });
+        const user = await this._usersSerivce.get({ username });
         if(!user) throw new UserNotFoundException();
+    }
+
+    private async _checkIfUsernameAlreadyExistsInDatabase(username: string): Promise<void> {
+        const user = await this._usersSerivce.get({ username });
+        if(user) throw new UsernameAlreadyExistsException();
+    }
+
+    private async _checkIfEmailAlreadyExistsInDatabase(email: string): Promise<void> {
+        const user = await this._usersSerivce.get({ email });
+        if(user) throw new EmailAlreadyExistsException();
+    }
+
+    private async _createUserInDatabase(input: CreateUserDTO): Promise<IUser> {
+        const hashedPassword = await hashString(input.password);
+        const user = await this._usersSerivce.create({ ...input, password: hashedPassword });
+
+        return user;
+    }
+
+    private _createRegisterResponse(user: IUser): RegisterResponse {
+        const payload = this._getPayload(user);
+        const accessToken = this._jwtService.sign(payload, { expiresIn: '24h' }) 
+
+        const response = { accessToken };
+        return response;
     }
 
     private _getPayload(user: IUserPayload): IUserPayload {
