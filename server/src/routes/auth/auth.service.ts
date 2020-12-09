@@ -5,11 +5,11 @@ import { UsersService } from "../user/users.service";
 import { JwtService } from "@nestjs/jwt";
 import { RegisterRequestDTO, RegisterResponseDTO } from "./dto/register.dto";
 import { UsernameAlreadyExistsException } from "../../common/exceptions/username-already-exists.exception";
-import { IUserPayload } from "../user/interfaces/IUserPayload";
 import { hashString } from "../../common/helpers/hash-string";
 import { InvalidCredentialsException } from "../../common/exceptions/invalid-credentials.exception";
 import { EmailAlreadyExistsException } from "../../common/exceptions/email-already-exists.exception";
 import { LoginRequestDTO, LoginResponseDTO } from "./dto/login.dto";
+import { IAccessTokenPayload } from "./interfaces/IAccessTokenPayload";
 
 @Injectable()
 export class AuthService {
@@ -70,7 +70,7 @@ export class AuthService {
         if(!isPasswordValid) throw new InvalidCredentialsException();
     }
 
-    private _getPayload(user: IUserPayload): IUserPayload {
+    private _getPayload(user: IAccessTokenPayload): IAccessTokenPayload {
         return {
             id: user.id,
             username: user.username,
