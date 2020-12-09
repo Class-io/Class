@@ -23,7 +23,7 @@ export class ConfigValidator {
                 PREFIX: string(),
                 PORT: number().required()
             },
-            AUTH: {
+            ACCESS_TOKEN_SECRET: {
                 SECRET: string().min(5)
             },
             DATABASE: {
