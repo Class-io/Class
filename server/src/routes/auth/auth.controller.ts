@@ -1,10 +1,10 @@
 import { Body, Controller, HttpCode, Post } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { LoginRequestDTO, LoginResponseDTO } from "./dto/login.dto";
-import { ValidationPipe } from "../common/pipes/validation.pipe";
+import { ValidationPipe } from "../../common/pipes/validation.pipe";
 import { RegisterValidationSchema } from "./schemas/register.schema";
 import { RegisterRequestDTO, RegisterResponseDTO } from "./dto/register.dto";
-import { Constants } from "../common/constants";
+import { Constants } from "../../common/constants";
 import { LoginValidationSchema } from "./schemas/login.schema";
 
 @Controller('/')

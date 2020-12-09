@@ -1,15 +1,17 @@
 import { Injectable } from "@nestjs/common";
-import { compareStringToHash } from "../common/helpers/compare-string-to-hash";
-import { IUser } from "../models/user/interfaces/IUser";
-import { UsersService } from "../models/user/users.service";
-import { JwtService } from "@nestjs/jwt";
+import { compareStringToHash } from "../../common/helpers/compare-string-to-hash";
+import { IUser } from "../user/interfaces/IUser";
+import { UsersService } from "../user/users.service";
 import { RegisterRequestDTO, RegisterResponseDTO } from "./dto/register.dto";
-import { UsernameAlreadyExistsException } from "../common/exceptions/username-already-exists.exception";
-import { IUserPayload } from "../models/user/interfaces/IUserPayload";
-import { hashString } from "../common/helpers/hash-string";
-import { InvalidCredentialsException } from "../common/exceptions/invalid-credentials.exception";
-import { EmailAlreadyExistsException } from "../common/exceptions/email-already-exists.exception";
+import { UsernameAlreadyExistsException } from "../../common/exceptions/username-already-exists.exception";
+import { hashString } from "../../common/helpers/hash-string";
+import { InvalidCredentialsException } from "../../common/exceptions/invalid-credentials.exception";
+import { EmailAlreadyExistsException } from "../../common/exceptions/email-already-exists.exception";
 import { LoginRequestDTO, LoginResponseDTO } from "./dto/login.dto";
+import { IAccessTokenPayload } from "./interfaces/IAccessTokenPayload";
+import { JwtService } from "../../services/jwt/jwt.service";
+import Token from "../../common/constants/token";
+import { UserNotFoundException } from "../../common/exceptions/user-not-found-exception";
 
 @Injectable()
 export class AuthService {
@@ -33,6 +35,11 @@ export class AuthService {
         return response;
     }
 
+    public async checkIfUserExistsInDatabaseById(id: string): Promise<void> {
+        const user = await this._usersSerivce.get({ _id: id });
+        if(!user) throw new UserNotFoundException();
+    }
+    
     private async _checkIfUsernameAlreadyExistsInDatabase(username: string): Promise<void> {
         const user = await this._usersSerivce.get({ username });
         if(user) throw new UsernameAlreadyExistsException();
@@ -52,7 +59,7 @@ export class AuthService {
 
     private _createResponse(user: IUser): RegisterResponseDTO {
         const payload = this._getPayload(user);
-        const accessToken = this._jwtService.sign(payload, { expiresIn: '24h' }) 
+        const accessToken = this._jwtService.generateToken(Token.ACCESS, payload);
 
         const response = { accessToken };
         return response;
@@ -70,7 +77,7 @@ export class AuthService {
         if(!isPasswordValid) throw new InvalidCredentialsException();
     }
 
-    private _getPayload(user: IUserPayload): IUserPayload {
+    private _getPayload(user: IAccessTokenPayload): IAccessTokenPayload {
         return {
             id: user.id,
             username: user.username,

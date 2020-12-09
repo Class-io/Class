@@ -3,5 +3,5 @@ import { config } from 'dotenv';
 config();
 
 export default {
-    SECRET: process.env.AUTH_SECRET
+    ACCESS_TOKEN_SECRET: process.env.AUTH_ACCESS_TOKEN_SECRET
 } as const;
