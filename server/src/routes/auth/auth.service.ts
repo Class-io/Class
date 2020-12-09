@@ -36,7 +36,7 @@ export class AuthService {
     }
 
     public async checkIfUserExistsInDatabaseById(id: string): Promise<void> {
-        const user = await this._usersSerivce.get({ id });
+        const user = await this._usersSerivce.get({ _id: id });
         if(!user) throw new UserNotFoundException();
     }
     
