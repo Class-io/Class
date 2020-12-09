@@ -8,12 +8,14 @@ import { ITokenProperties } from "./interfaces/ITokenProperties";
 
 @Injectable()
 export class JwtService {
-    public generateToken(type: Token.ACCESS, payload: IAccessTokenPayload): string {
+    public generateToken(type: Token.ACCESS, payload: IAccessTokenPayload): string
+    public generateToken(type: Token, payload: TokenPayload): string {
         this._checkIfPayloadExists(payload);
         return this._createToken(type, payload);
     }
 
-    public verifyTokenAndGetPayload(type: Token.ACCESS, token: string): IAccessTokenPayload {
+    public verifyTokenAndGetPayload(type: Token.ACCESS, token: string): IAccessTokenPayload
+    public verifyTokenAndGetPayload(type: Token, token: string): TokenPayload {
         this._checkIfTokenExistsAndHasTypeString(token);
         return this._getPayloadOrThrowError(type, token);
     }
