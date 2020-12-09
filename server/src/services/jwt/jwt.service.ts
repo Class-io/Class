@@ -1,6 +1,6 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, UnauthorizedException } from "@nestjs/common";
 import Token from "../../common/constants/token";
-import jwt, { VerifyErrors } from "jsonwebtoken";
+import { VerifyErrors, verify, sign } from "jsonwebtoken";
 import config from "../../config";
 import { TokenPayload } from "../../types";
 import { IAccessTokenPayload } from "../../routes/auth/interfaces/IAccessTokenPayload";
@@ -28,7 +28,7 @@ export class JwtService {
 
     private _createToken(type: Token, payload: TokenPayload): string {
         const { secret, expiresIn } = this._getTokenProperties(type);
-        const token = jwt.sign(payload, secret, { expiresIn });
+        const token = sign(payload, secret, { expiresIn });
 
         return token;
     }
@@ -37,15 +37,15 @@ export class JwtService {
         const tokenExists = token;
         const tokenHasTypeString = typeof token === 'string';
 
-        if(!tokenExists || !tokenHasTypeString) throw new Error('Token does not exist or is not a string');
+        if(!tokenExists || !tokenHasTypeString) throw new UnauthorizedException();
     }
 
     private _getPayloadOrThrowError(type: Token, token: string): TokenPayload {
         const secret = this._getTokenProperties(type).secret;
         let payload: TokenPayload;
 
-        jwt.verify(token, secret, (error: VerifyErrors, data: TokenPayload) => {
-            if(error) throw error;
+        verify(token, secret, (error: VerifyErrors, data: TokenPayload) => {
+            if(error) throw new UnauthorizedException();
             payload = data;
         });
 
@@ -55,7 +55,7 @@ export class JwtService {
     private _getTokenProperties(type: Token): ITokenProperties {
         switch(type) {
             case Token.ACCESS:
-                return { secret: config.AUTH.ACCESS_TOKEN_SECRET, expiresIn: '' }
+                return { secret: config.AUTH.ACCESS_TOKEN_SECRET, expiresIn: '1y' }
             default:
                 throw new Error('Token type is invalid');
         }
