@@ -1,2 +1,5 @@
-import config from "../../config";
+enum Token {
+    ACCESS
+}
 
+export default Token;
