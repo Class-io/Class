@@ -12,6 +12,10 @@ export class JwtService {
         return this._createTokenBasedOnType(type, payload);
     }
 
+    public verifyTokenAndGetPayload(type: Token.ACCESS, token: string): IAccessTokenPayload {
+
+    }
+
     private _checkIfPayloadExists(payload: TokenPayload): void {
         if(!payload) {
             throw new Error('Payload has to be provided');
@@ -26,4 +30,6 @@ export class JwtService {
                 throw new Error('Token type is invalid');
         }
     }
+
+    
 }
