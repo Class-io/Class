@@ -1,14 +1,14 @@
 import { Injectable } from "@nestjs/common";
-import { compareStringToHash } from "../common/helpers/compare-string-to-hash";
-import { IUser } from "../models/user/interfaces/IUser";
-import { UsersService } from "../models/user/users.service";
+import { compareStringToHash } from "../../common/helpers/compare-string-to-hash";
+import { IUser } from "../user/interfaces/IUser";
+import { UsersService } from "../user/users.service";
 import { JwtService } from "@nestjs/jwt";
 import { RegisterRequestDTO, RegisterResponseDTO } from "./dto/register.dto";
-import { UsernameAlreadyExistsException } from "../common/exceptions/username-already-exists.exception";
-import { IUserPayload } from "../models/user/interfaces/IUserPayload";
-import { hashString } from "../common/helpers/hash-string";
-import { InvalidCredentialsException } from "../common/exceptions/invalid-credentials.exception";
-import { EmailAlreadyExistsException } from "../common/exceptions/email-already-exists.exception";
+import { UsernameAlreadyExistsException } from "../../common/exceptions/username-already-exists.exception";
+import { IUserPayload } from "../user/interfaces/IUserPayload";
+import { hashString } from "../../common/helpers/hash-string";
+import { InvalidCredentialsException } from "../../common/exceptions/invalid-credentials.exception";
+import { EmailAlreadyExistsException } from "../../common/exceptions/email-already-exists.exception";
 import { LoginRequestDTO, LoginResponseDTO } from "./dto/login.dto";
 
 @Injectable()
