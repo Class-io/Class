@@ -18,7 +18,7 @@ export class UserSeeder {
     public async run(): Promise<void> {
         this._generateFakeData();
 
-        await this._getFakeDataWithHashedPassword();
+        await this._createFakeDataWithHashedPassword();
 
         await this._saveUserAccount();
 
@@ -33,7 +33,7 @@ export class UserSeeder {
         };
     }
 
-    private async _getFakeDataWithHashedPassword(): Promise<void> {
+    private async _createFakeDataWithHashedPassword(): Promise<void> {
         const hashedPassword = await hashString(this._fakeUserData.password);
         this._fakeUserDataWithHashedPassword = { ...this._fakeUserData, password: hashedPassword };
     }
@@ -48,12 +48,9 @@ export class UserSeeder {
 
     private async _printFakeUserDataAfterSleep(): Promise<void> {
         logger.green('User generated successfully');
-    
+
         await sleep(1500);
-    
-        console.log({
-            username: this._fakeUserData.username,
-            password: this._fakeUserData.password
-        });
+
+        console.log(this._fakeUserData);
     }
 }
