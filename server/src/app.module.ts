@@ -9,10 +9,10 @@ import { TasksModule } from './common/tasks/tasks.module';
 @Module({
   imports: [
     MongooseModule.forRoot(config.DATABASE.URL, { dbName: config.DATABASE.NAME, useFindAndModify: false }),
+    AuthModule,
+    UsersModule,
     ScheduleModule.forRoot(),
     TasksModule,
-    AuthModule,
-    UsersModule
   ],
 })
 
