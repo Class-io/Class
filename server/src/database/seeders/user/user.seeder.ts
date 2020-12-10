@@ -2,10 +2,10 @@ import { Command } from 'nestjs-command';
 import { Injectable } from '@nestjs/common';
 import { random, internet } from 'faker';
 import { hashString } from '../../../common/helpers/hash-string';
-import { green, red } from 'chalk';
 import { sleep } from '../../../common/helpers/sleep';
 import { UsersService } from '../../../routes/user/users.service';
 import { RegisterRequestDTO } from '../../../routes/auth/dto/register.dto';
+import { logger } from '../../../common/utils/logger';
 
 @Injectable()
 export class UserSeeder {
@@ -42,12 +42,12 @@ export class UserSeeder {
         try {
             await this._usersService.create(this._fakeUserDataWithHashedPassword);
         } catch(error) {
-            console.log(red(error));
+            logger.red(error);
         }
     }
 
     private async _printFakeUserDataAfterSleep(): Promise<void> {
-        console.log(green('User generated successfully'));
+        logger.green('User generated successfully');
     
         await sleep(1500);
     
