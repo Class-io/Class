@@ -6,4 +6,5 @@ export interface IUser extends Document {
     readonly password: string;
     readonly joinedAt: number;
     readonly isConfirmed: boolean;
+    readonly isTutor: boolean;
 }

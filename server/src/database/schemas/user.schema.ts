@@ -17,5 +17,9 @@ export const UserSchema = new Schema({
     isConfirmed: {
         type: Boolean,
         default: false
+    },
+    isTutor: {
+        type: Boolean,
+        default: false
     }
 });
