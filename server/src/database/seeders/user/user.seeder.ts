@@ -1,4 +1,4 @@
-import { Command } from 'nestjs-command';
+import { Command, Option } from 'nestjs-command';
 import { Injectable } from '@nestjs/common';
 import { random, internet } from 'faker';
 import { hashString } from '../../../common/helpers/hash-string';
@@ -15,8 +15,8 @@ export class UserSeeder {
     constructor(private readonly _usersService: UsersService) {}
 
     @Command({ command: 'seed:user', describe: 'Create new user', autoExit: true })
-    public async run(): Promise<void> {
-        this._generateFakeData();
+    public async run(@Option({ name: 'tutor', alias: 't', type: 'boolean' }) isTutor: boolean): Promise<void> {
+        this._generateFakeData(isTutor);
 
         await this._createFakeDataWithHashedPassword();
 
@@ -25,11 +25,12 @@ export class UserSeeder {
         await this._printFakeUserDataAfterSleep();
     }
 
-    private _generateFakeData(): void {
+    private _generateFakeData(isTutor: boolean): void {
         this._fakeUserData = {
             username: random.alphaNumeric(5),
             email: internet.email(),
-            password: random.alphaNumeric(5)
+            password: random.alphaNumeric(5),
+            isTutor: isTutor
         };
     }
 

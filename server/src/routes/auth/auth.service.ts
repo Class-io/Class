@@ -17,11 +17,11 @@ import { UserNotFoundException } from '../../common/exceptions/user-not-found-ex
 export class AuthService {
     constructor(private readonly _usersSerivce: UsersService, private readonly _jwtService: JwtService) {}
 
-    public async register(input: RegisterRequestDTO): Promise<RegisterResponseDTO> {
+    public async register(input: RegisterRequestDTO, isTutor: boolean = false): Promise<RegisterResponseDTO> {
         await this._checkIfEmailAlreadyExistsInDatabase(input.email);
         await this._checkIfUsernameAlreadyExistsInDatabase(input.username);
 
-        const user = await this._createUserInDatabase(input);
+        const user = await this._createUserInDatabase({...input, isTutor });
         const response = this._createResponse(user);
 
         return response;
@@ -81,7 +81,8 @@ export class AuthService {
         return {
             id: user.id,
             username: user.username,
-            email: user.email
+            email: user.email,
+            isTutor: user.isTutor
         }
     }
 }
