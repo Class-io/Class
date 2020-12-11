@@ -30,7 +30,7 @@ export class UserSeeder {
             username: random.alphaNumeric(5),
             email: internet.email(),
             password: random.alphaNumeric(5),
-            isTutor: isTutor;
+            isTutor: isTutor
         };
     }
 

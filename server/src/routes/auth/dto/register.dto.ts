@@ -2,10 +2,7 @@ export class RegisterRequestDTO implements Readonly<RegisterRequestDTO> {
     email: string;
     username: string;
     password: string;
-}
-
-export class TutorRegisterRequestDTO extends RegisterRequestDTO implements Readonly<TutorRegisterRequestDTO> {
-    isTutor: boolean;
+    isTutor: boolean = false;
 }
 
 export class RegisterResponseDTO implements Readonly<RegisterResponseDTO> {

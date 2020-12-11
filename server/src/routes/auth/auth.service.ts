@@ -21,7 +21,7 @@ export class AuthService {
         await this._checkIfEmailAlreadyExistsInDatabase(input.email);
         await this._checkIfUsernameAlreadyExistsInDatabase(input.username);
 
-        const user = await this._createUserInDatabase({...input, isTutor } as RegisterRequestDTO);
+        const user = await this._createUserInDatabase({...input, isTutor });
         const response = this._createResponse(user);
 
         return response;
