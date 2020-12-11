@@ -1,6 +1,7 @@
 export default {
     Auth: {
+        LOGIN: '/auth/login',
         REGISTER: '/auth/register',
-        LOGIN: '/auth/login'
+        REGISTER_TUTOR: '/auth/register-tutor'
     }
 } as const;
