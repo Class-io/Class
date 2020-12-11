@@ -1,4 +1,5 @@
-//      sass ./scss/custom.scss style.css
+//      sass ./client/scss/custom.scss style.css
+//      sass --watch ./client/scss/custom.scss:style.css
 
 $theme-colors: (
   "primary":    orange,
@@ -11,17 +12,16 @@ $theme-colors: (
 //   "dark":       $dark
 );
 
-@import "../node_modules/bootstrap/scss/bootstrap";
+@import "~bootstrap/scss/bootstrap";
 
 // Global
 
 body {
   margin: 0;
+  overflow-x: hidden;
 }
 
 // Index
-
-
 
 .navbar {
   position: absolute;
@@ -29,8 +29,8 @@ body {
   z-index: 1;
 }
 
-.header {
-  background-image: url("../assets/images/index_header.jpg");
+.Header {
+  background-image: url("../../../client/src/images/headers/index_header.jpg");
   background-position: center;
   width: 100vw;
   height: 100vh;
@@ -41,4 +41,28 @@ body {
   width: 100%;
   background-color: rgba(0, 0, 0, 0.705);
   position: absolute;
+  margin: 0;
+}
+
+.card-container {
+  height: 50vh;
+}
+
+.card {
+  height: 11.1rem;
+  margin-top: 5rem;
+}
+
+.icon {
+  width: 11rem;
+  height: 11rem;
+}
+
+// Learn JavaScript
+
+.learn-javascript-header {
+  background-image: url("../../../client/src/images/headers/javascript_header.png");
+  background-position: 0rem 65rem;
+  width: 100vw;
+  height: 100vh;  
 }

@@ -1,0 +1,69 @@
+//      sass ./client/scss/custom.scss style.css
+//      sass --watch ./client/scss/custom.scss:style.css
+
+// $theme-colors: (
+//     "primary":    $primary,
+//     "secondary":  $secondary,
+//     "success":    $success,
+//     "info":       $info,
+//     "warning":    $warning,
+//     "danger":     $danger,
+//     "light":      $light,
+//     "dark":       $dark,
+// );
+
+@import "../../../../node_modules/bootstrap/scss/bootstrap.scss";
+
+// Global
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+}
+
+// JavaScript.js
+
+.navbar {
+  position: absolute;
+  width: 100vw;
+  z-index: 1;
+}
+
+.Header {
+  background-image: url("../../../assets/images/headers/javascript_header.png");
+  background-position: 0rem 65rem;
+  width: 100vw;
+  height: 100vh;
+  color: white;
+}
+
+.Overlay {
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.705);
+  position: absolute;
+  margin: 0;
+}
+
+.HeaderContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+// .card-container {
+//   height: 50vh;
+// }
+
+// .card {
+//   height: 11.1rem;
+//   margin-top: 5rem;
+// }
+
+// .icon {
+//   width: 11rem;
+//   height: 11rem;
+// }
