@@ -12,7 +12,3 @@ jobs:
       - run: yarn install
 
       - run: yarn add netlify-cli
-
-      - run: yarn test
-
-      - run: yarn build
