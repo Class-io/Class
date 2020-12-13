@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  build:
+  build-client:
     docker:
       - image: node:12
 
@@ -14,17 +14,43 @@ jobs:
             - v1-dependencies-{{ checksum "./client/react-app/package.json" }}
             - v1-dependencies-
 
-      - run: cd client/react-app && npm install
+      - run: 
+          name: Install dependencies
+          command: cd client/react-app && npm install
 
-      - run: cd client/react-app && npm install netlify-cli
+      - run: 
+          name: Install netlify-cli
+          command: cd client/react-app && npm install netlify-cli
 
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "./client/react-app/package.json" }}
 
-      - run: cd client/react-app && npm run test
+      - run: 
+          name: Run tests
+          command: cd client/react-app && npm run test
 
-      - run: cd client/react-app && npm run build
+      - run: 
+          name: Build application
+          command: cd client/react-app && npm run build
 
-      - run: cd client/react-app && npm run netlify:deploy
+      - run: 
+          name: Deploy on Netlify
+          command: cd client/react-app && npm run netlify:deploy
+  build-server:
+    docker:
+        - image: node:12
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      - run: echo "Server running on port xxxx"
+
+workflows:
+  build:
+    jobs:
+      - build-client
+      - build-server
