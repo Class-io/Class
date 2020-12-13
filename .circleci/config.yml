@@ -9,6 +9,22 @@ jobs:
     steps:
       - checkout
 
-      - run: yarn install
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "./client/react-app/package.json" }}
+            - v1-dependencies-
 
-      - run: yarn add netlify-cli
+      - run: cd client/react-app && npm install
+
+      - run: cd client/react-app && npm install netlify-cli
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "./client/react-app/package.json" }}
+
+      - run: cd client/react-app && npm run test
+
+      - run: cd client/react-app && npm run build
+
+      - run: cd client/react-app && npm run netlify:deploy
