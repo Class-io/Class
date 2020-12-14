@@ -10,7 +10,6 @@
     "start:db:admin": "bash ./src/scripts/start-db-admin.sh",
     "start:dev": "cross-env APP_MODE=development nodemon --config nodemon.json",
     "start:prod": "cross-env APP_MODE=production node dist/main",
-    "start:heroku": "npm run start build && npm run start:prod",
     "seed:user": "nestjs-command seed:user",
     "test": "cross-env APP_MODE=testing jest",
     "lint": "eslint src"
