@@ -1,0 +1,22 @@
+name: Client
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build_and_test:
+    name: Build and test
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: cd client/react-app && npm install
+    
+    - name: Build application
+      run: cd client/react-app && npm run build
+
+    - name: Run tests
+      run: cd client/react-app && npm run test
