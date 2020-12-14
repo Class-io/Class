@@ -15,8 +15,8 @@ jobs:
     - name: Install dependencies
       run: cd client/react-app && npm install
     
-    - name: Run tests
-      run: cd client/react-app && npm run test
-    
     - name: Build application
       run: cd client/react-app && npm run build
+
+    - name: Run tests
+      run: cd client/react-app && npm run test

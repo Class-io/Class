@@ -1,0 +1,29 @@
+name: Server
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build_and_test:
+    name: Build and test
+    runs-on: ubuntu-latest
+    env:
+      AUTH_ACCESS_TOKEN_SECRET: ${{ secrets.AUTH_ACCESS_TOKEN_SECRET }}
+      DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: cd server && npm install
+    
+    - name: Build application
+      run: cd server && npm run build
+
+    - name: Run tests
+      run: cd server && npm run test
+
+    - name: Check for lint errors
+      run: cd server && npm run lint
