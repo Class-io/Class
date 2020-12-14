@@ -1,3 +1,5 @@
-Frontend - [Netlify](https://class-io.netlify.app/)
+# Chat.io
 
-Backend - [Heroku](https://class-io.herokuapp.com/)
+## Check it by yourself
+- Frontend - [Netlify](https://class-io.netlify.app/)
+- Backend - [Heroku](https://class-io.herokuapp.com/)
