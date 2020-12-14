@@ -47,8 +47,32 @@ jobs:
     steps:
       - checkout
 
-      - run: echo "Server running on port xxxx"
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "./server/package.json" }}
+            - v1-dependencies-
 
+      - run: 
+          name: Install dependencies
+          command: cd server && npm install
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "./server/package.json" }}
+
+      - run: 
+          name: Run tests
+          command: cd server && npm run test
+
+      - run: 
+          name: Build application
+          command: cd server && npm run build
+      
+      - run: 
+          name: Lint
+          command: cd server && npm run lint
+          
 workflows:
   build:
     jobs:
