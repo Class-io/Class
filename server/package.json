@@ -9,8 +9,10 @@
     "start:db": "bash ./src/scripts/start-db.sh",
     "start:db:admin": "bash ./src/scripts/start-db-admin.sh",
     "start:dev": "cross-env APP_MODE=development nodemon --config nodemon.json",
-    "start:prod": "node dist/main",
+    "start:prod": "cross-env APP_MODE=production node dist/main",
+    "start:heroku": "npm run start build && npm run start:prod",
     "seed:user": "nestjs-command seed:user",
+    "test": "cross-env APP_MODE=testing jest",
     "lint": "eslint src"
   },
   "dependencies": {
@@ -25,7 +27,7 @@
     "faker": "^5.1.0",
     "joi": "^17.3.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.11.4",
+    "mongoose": "^5.10.1",
     "nestjs-command": "^1.5.3",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
@@ -40,6 +42,7 @@
     "@types/faker": "^5.1.5",
     "@types/jest": "26.0.10",
     "@types/jsonwebtoken": "^8.5.0",
+    "@types/mongoose": "^5.10.1",
     "@types/node": "^13.9.1",
     "@types/supertest": "^2.0.8",
     "@typescript-eslint/eslint-plugin": "3.9.1",
@@ -64,7 +67,7 @@
       "ts"
     ],
     "rootDir": "src",
-    "testRegex": ".spec.ts$",
+    "testRegex": ".test.ts$",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
     },
