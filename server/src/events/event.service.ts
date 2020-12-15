@@ -9,7 +9,7 @@ import { ISendConfirmationCodeEventPayload } from './interfaces/ISendConfirmatio
 
 @Injectable()
 @Global()
-export class TasksService {
+export class EventService {
     constructor(private readonly _usersSerivce: UsersService, private readonly _mailService: MailService) {}
 
     @OnEvent(Constants.Event.SEND_CONFIRMATION_CODE)
