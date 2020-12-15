@@ -1,3 +1,8 @@
-import { BaseUserDTO } from "./base.dto";
-
-export class UpdateUserDTO extends BaseUserDTO implements Readonly<UpdateUserDTO> {}
+export class UpdateUserDTO implements Readonly<UpdateUserDTO> {
+    username?: string;
+    password?: string;
+    confirmationCode?: {
+        code: string;
+        expiresAt: number;
+    }
+}
