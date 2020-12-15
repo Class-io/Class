@@ -29,6 +29,12 @@ export class ConfigValidator {
             DATABASE: {
                 NAME: string(),
                 URL: string().required()
+            },
+            MAIL: {
+                CLIENT_ID: string().required(),
+                CLIENT_SECRET: string().required(),
+                REFRESH_TOKEN: string().required(),
+                USER: string().required()
             }
         });
     }
