@@ -12,10 +12,11 @@ import { IAccessTokenPayload } from "./interfaces/IAccessTokenPayload";
 import { JwtService } from "../../services/jwt/jwt.service";
 import Token from "../../common/constants/token";
 import { UserNotFoundException } from '../../common/exceptions/user-not-found-exception';
+import { MailService } from '../../services/mail/mail.service';
 
 @Injectable()
 export class AuthService {
-    constructor(private readonly _usersSerivce: UsersService, private readonly _jwtService: JwtService) {}
+    constructor(private readonly _usersSerivce: UsersService, private readonly _jwtService: JwtService, private readonly _mailService: MailService) {}
 
     public async register(input: RegisterRequestDTO): Promise<RegisterResponseDTO> {
         await this._checkIfEmailAlreadyExistsInDatabase(input.email);
@@ -23,7 +24,6 @@ export class AuthService {
 
         const user = await this._createUserInDatabase({...input });
         const response = this._createResponse(user);
-
 
         return response;
     }
