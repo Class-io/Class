@@ -24,6 +24,7 @@ export class AuthService {
         const user = await this._createUserInDatabase({...input });
         const response = this._createResponse(user);
 
+
         return response;
     }
 
