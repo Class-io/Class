@@ -4,6 +4,7 @@ import Exception from './exception';
 import Endpoint from './endpoint';
 import Token from './token';
 import Event from './event';
+import Time from './time';
 
 export const Constants = {
     AppMode,
@@ -11,5 +12,6 @@ export const Constants = {
     Exception,
     Endpoint,
     Token,
-    Event
+    Event,
+    Time
 } as const;

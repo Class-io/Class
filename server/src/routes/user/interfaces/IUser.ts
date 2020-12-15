@@ -1,4 +1,5 @@
 import { Document } from 'mongoose';
+import { IConfirmationCode } from './IConfirmationCode';
 
 export interface IUser extends Document {
     readonly id: string;
@@ -8,4 +9,5 @@ export interface IUser extends Document {
     readonly joinedAt: number;
     readonly isConfirmed: boolean;
     readonly isTutor: boolean;
+    readonly confirmationCode: IConfirmationCode;
 }
