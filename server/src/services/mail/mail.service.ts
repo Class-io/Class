@@ -12,6 +12,15 @@ export class MailService {
         this._verifyTransporter();
     }
 
+    public sendConfirmationCode(email: string, confirmationCode: string): void {
+        this._transporter.sendMail({
+            from: config.MAIL.USER,
+            to: email,
+            subject: 'Chat.io - Confirmation code',
+            html: `<b>${confirmationCode}</b>`
+        });
+    }
+
     private _createTransporter(): Transporter {
         return createTransport({
             pool: true,
