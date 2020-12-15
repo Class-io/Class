@@ -12,11 +12,12 @@ import { IAccessTokenPayload } from "./interfaces/IAccessTokenPayload";
 import { JwtService } from "../../services/jwt/jwt.service";
 import Token from "../../common/constants/token";
 import { UserNotFoundException } from '../../common/exceptions/user-not-found-exception';
-import { MailService } from '../../services/mail/mail.service';
+import { EventEmitter2 } from '@nestjs/event-emitter';
+import { Constants } from '../../common/constants';
 
 @Injectable()
 export class AuthService {
-    constructor(private readonly _usersSerivce: UsersService, private readonly _jwtService: JwtService, private readonly _mailService: MailService) {}
+    constructor(private readonly _usersSerivce: UsersService, private readonly _jwtService: JwtService, private readonly _eventEmitter: EventEmitter2) {}
 
     public async register(input: RegisterRequestDTO): Promise<RegisterResponseDTO> {
         await this._checkIfEmailAlreadyExistsInDatabase(input.email);
@@ -25,6 +26,7 @@ export class AuthService {
         const user = await this._createUserInDatabase({...input });
         const response = this._createResponse(user);
 
+        this._sendConfirmationCode(user.id, user.email);
         return response;
     }
 
@@ -64,6 +66,10 @@ export class AuthService {
 
         const response = { accessToken };
         return response;
+    }
+
+    private _sendConfirmationCode(id: string, email: string): void {
+        this._eventEmitter.emit(Constants.Event.SEND_CONFIRMATION_CODE, { id, email });
     }
 
     private async _getUserFromDatabaseByEmailOrThrowException(email: string): Promise<IUser> {

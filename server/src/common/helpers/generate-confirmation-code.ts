@@ -4,7 +4,7 @@ import { Constants } from '../constants';
 
 export function generateConfirmationCode(): IConfirmationCode {
     return {
-        code: randomBytes(20).toString(),
+        code: randomBytes(20).toString('hex').substr(8, 6),
         expiresAt: Date.now() + Constants.Time.MINUTES_30
     };
 }

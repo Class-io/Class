@@ -12,8 +12,8 @@ export class MailService {
         this._verifyTransporter();
     }
 
-    public sendConfirmationCode(email: string, confirmationCode: string): void {
-        this._transporter.sendMail({
+    public async sendConfirmationCode(email: string, confirmationCode: string): Promise<void> {
+        await this._transporter.sendMail({
             from: config.MAIL.USER,
             to: email,
             subject: 'Chat.io - Confirmation code',
@@ -23,14 +23,13 @@ export class MailService {
 
     private _createTransporter(): Transporter {
         return createTransport({
-            pool: true,
             service: 'Gmail',
             auth: {
                 type: 'OAuth2',
                 user: config.MAIL.USER,
                 refreshToken: config.MAIL.REFRESH_TOKEN,
                 clientId: config.MAIL.CLIENT_ID,
-                clientSecret: config.MAIL.CLIENT_SECRET
+                clientSecret: config.MAIL.CLIENT_SECRET,
             }
         });
     };
