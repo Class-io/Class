@@ -21,9 +21,4 @@ export class AuthController {
     public register(@Body(new ValidationPipe(RegisterValidationSchema)) body: RegisterRequestDTO): Promise<RegisterResponseDTO> {
         return this._authService.register(body);
     }
-
-    @Post(Constants.Endpoint.Auth.REGISTER_TUTOR)
-    public registerTutor(@Body(new ValidationPipe(RegisterValidationSchema)) body: RegisterRequestDTO): Promise<RegisterResponseDTO> {
-        return this._authService.register(body, true);
-    }
 }
