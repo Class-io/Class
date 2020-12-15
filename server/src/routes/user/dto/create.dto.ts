@@ -1,5 +1,5 @@
-import { BaseUserDTO } from "./base.dto";
-
-export class CreateUserDTO extends BaseUserDTO implements Readonly<CreateUserDTO> {
+export class CreateUserDTO implements Readonly<CreateUserDTO> {
+    email: string;
+    username: string;
     password: string;
 }
