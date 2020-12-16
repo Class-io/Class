@@ -29,33 +29,23 @@ export class AccountService {
     }
 
     private _throwExceptionWhenUserDoesNotExist(user: IUser | null): void {
-        if(!user) {
-            throw new UserNotFoundException();
-        }
+        if(!user) throw new UserNotFoundException();
     }
 
     private _throwExceptionWhenAccountIsFromSocialMedia(user: IUser): void {
-        if(user.isSocialMediaAccount) {
-            throw new InvalidAccountTypeException();
-        }
+        if(user.isSocialMediaAccount) throw new InvalidAccountTypeException();
     }
 
     private _throwExceptionWhenEmailIsAlreadyConfirmed(user: IUser): void {
-        if(user.isConfirmed) {
-            throw new EmailAlreadyConfirmedException();
-        }
+        if(user.isConfirmed) throw new EmailAlreadyConfirmedException();
     }
 
     private _throwExceptionWhenConfirmationCodeIsInvalid(user: IUser, code: string): void {
-        if(user.confirmationCode.code !== code) {
-            throw new InvalidConfirmationCodeException();
-        }
+        if(user.confirmationCode.code !== code) throw new InvalidConfirmationCodeException();
     }
 
     private _throwExceptionWhenConfirmationCodeIsExpired(user: IUser): void {
-        if(Date.now() > user.confirmationCode.expiresAt) {
-            throw new ExpiredConfirmationCodeException();
-        }
+        if(Date.now() > user.confirmationCode.expiresAt) throw new ExpiredConfirmationCodeException();
     }
 
     private async _confirmEmailInDatabase(user: IUser): Promise<void> {

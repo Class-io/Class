@@ -20,8 +20,8 @@ export class AuthService {
     constructor(private readonly _usersService: UsersService, private readonly _jwtService: JwtService, private readonly _eventEmitter: EventEmitter2) {}
 
     public async register(input: RegisterRequestDTO): Promise<void> {
-        await this._checkIfEmailAlreadyExistsInDatabase(input.email);
-        await this._checkIfUsernameAlreadyExistsInDatabase(input.username);
+        await this._throwExceptionWhenEmailExistsInDatabase(input.email);
+        await this._throwExceptionWhenUsernameExistsInDatabase(input.username);
 
         const user = await this._createUserInDatabase({...input });
         this._sendConfirmationCode(user.id, user.email);
@@ -29,7 +29,7 @@ export class AuthService {
 
     public async login(input: LoginRequestDTO): Promise<LoginResponseDTO> {
         const user = await this._getUserFromDatabaseByEmailOrThrowException(input.email);
-        await this._checkIfPasswordIsValidInDatabase(input.password, user.password);
+        await this._throwExceptionWhenPasswordIsInvalid(input.password, user.password);
 
         this._throwExceptionWhenEmailIsNotConfirmed(user);
         const response = this._createLoginResponse(user);
@@ -37,14 +37,14 @@ export class AuthService {
         return response;
     }
     
-    private async _checkIfUsernameAlreadyExistsInDatabase(username: string): Promise<void> {
-        const user = await this._usersService.get({ username });
-        if(user) throw new UsernameAlreadyExistsException();
-    }
-
-    private async _checkIfEmailAlreadyExistsInDatabase(email: string): Promise<void> {
+    private async _throwExceptionWhenEmailExistsInDatabase(email: string): Promise<void> {
         const user = await this._usersService.get({ email });
         if(user) throw new EmailAlreadyExistsException();
+    }
+
+    private async _throwExceptionWhenUsernameExistsInDatabase(username: string): Promise<void> {
+        const user = await this._usersService.get({ username });
+        if(user) throw new UsernameAlreadyExistsException();
     }
 
     private async _createUserInDatabase(input: RegisterRequestDTO): Promise<IUser> {
@@ -73,15 +73,13 @@ export class AuthService {
         return user;
     }
 
-    private async _checkIfPasswordIsValidInDatabase(password: string, hashedPassword: string): Promise<void> {
+    private async _throwExceptionWhenPasswordIsInvalid(password: string, hashedPassword: string): Promise<void> {
         const isPasswordValid = await compareStringToHash(password, hashedPassword);
         if(!isPasswordValid) throw new InvalidCredentialsException();
     }
 
     private _throwExceptionWhenEmailIsNotConfirmed(user: IUser): void {
-        if(!user.isConfirmed) {
-            throw new EmailNotConfirmedException();
-        }
+        if(!user.isConfirmed) throw new EmailNotConfirmedException();
     }
 
     private _getPayload(user: IAccessTokenPayload): IAccessTokenPayload {
