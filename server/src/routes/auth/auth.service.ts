@@ -13,6 +13,7 @@ import { JwtService } from "../../services/jwt/jwt.service";
 import Token from "../../common/constants/token";
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { Constants } from '../../common/constants';
+import { EmailNotConfirmedException } from '../../common/exceptions/email-not-confirmed.exception';
 
 @Injectable()
 export class AuthService {
@@ -30,7 +31,9 @@ export class AuthService {
         const user = await this._getUserFromDatabaseByEmailOrThrowException(input.email);
         await this._checkIfPasswordIsValidInDatabase(input.password, user.password);
 
+        this._throwExceptionWhenEmailIsNotConfirmed(user);
         const response = this._createLoginResponse(user);
+        
         return response;
     }
     
@@ -73,6 +76,12 @@ export class AuthService {
     private async _checkIfPasswordIsValidInDatabase(password: string, hashedPassword: string): Promise<void> {
         const isPasswordValid = await compareStringToHash(password, hashedPassword);
         if(!isPasswordValid) throw new InvalidCredentialsException();
+    }
+
+    private _throwExceptionWhenEmailIsNotConfirmed(user: IUser): void {
+        if(!user.isConfirmed) {
+            throw new EmailNotConfirmedException();
+        }
     }
 
     private _getPayload(user: IAccessTokenPayload): IAccessTokenPayload {
