@@ -7,13 +7,14 @@ import { InvalidConfirmationCodeException } from '../../common/exceptions/invali
 import { ExpiredConfirmationCodeException } from '../../common/exceptions/expired-confirmation-code.exception';
 import { EmailAlreadyConfirmedException } from '../../common/exceptions/email-already-confirmed.exception';
 import { IUser } from '../user/interfaces/IUser';
+import { SendConfirmationMailRequestDTO } from './dto/send-confirmation-mail.dto';
 
 @Injectable()
 export class AccountService {
     constructor(private readonly _usersSerivce: UsersService) {}
 
-    public async sendConfirmationMail(): Promise<void> {
-        
+    public async sendConfirmationMail(input: SendConfirmationMailRequestDTO): Promise<void> {
+
     }
 
     public async confirmEmail(input: ConfirmEmailRequestDTO): Promise<void> {

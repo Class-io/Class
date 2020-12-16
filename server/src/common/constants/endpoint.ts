@@ -4,6 +4,7 @@ export default {
         REGISTER: '/auth/register'
     },
     Account: {
-        CONFIRM_EMAIL: '/account/confirm-email'
+        CONFIRM_EMAIL: '/account/confirm-email',
+        SEND_CONFIRMATION_MAIL: '/account/send-confirmation-mail'
     }
 } as const;
