@@ -12,6 +12,10 @@ import { IUser } from '../user/interfaces/IUser';
 export class AccountService {
     constructor(private readonly _usersSerivce: UsersService) {}
 
+    public async sendConfirmationMail(): Promise<void> {
+        
+    }
+
     public async confirmEmail(input: ConfirmEmailRequestDTO): Promise<void> {
         const user = await this._usersSerivce.get({ email: input.email });
 
