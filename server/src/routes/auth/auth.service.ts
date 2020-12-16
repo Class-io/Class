@@ -16,7 +16,7 @@ import { Constants } from '../../common/constants';
 
 @Injectable()
 export class AuthService {
-    constructor(private readonly _usersSerivce: UsersService, private readonly _jwtService: JwtService, private readonly _eventEmitter: EventEmitter2) {}
+    constructor(private readonly _usersService: UsersService, private readonly _jwtService: JwtService, private readonly _eventEmitter: EventEmitter2) {}
 
     public async register(input: RegisterRequestDTO): Promise<RegisterResponseDTO> {
         await this._checkIfEmailAlreadyExistsInDatabase(input.email);
@@ -38,18 +38,18 @@ export class AuthService {
     }
     
     private async _checkIfUsernameAlreadyExistsInDatabase(username: string): Promise<void> {
-        const user = await this._usersSerivce.get({ username });
+        const user = await this._usersService.get({ username });
         if(user) throw new UsernameAlreadyExistsException();
     }
 
     private async _checkIfEmailAlreadyExistsInDatabase(email: string): Promise<void> {
-        const user = await this._usersSerivce.get({ email });
+        const user = await this._usersService.get({ email });
         if(user) throw new EmailAlreadyExistsException();
     }
 
     private async _createUserInDatabase(input: RegisterRequestDTO): Promise<IUser> {
         const hashedPassword = await hashString(input.password);
-        const user = await this._usersSerivce.create({ ...input, password: hashedPassword });
+        const user = await this._usersService.create({ ...input, password: hashedPassword });
 
         return user;
     }
@@ -67,7 +67,7 @@ export class AuthService {
     }
 
     private async _getUserFromDatabaseByEmailOrThrowException(email: string): Promise<IUser> {
-        const user = await this._usersSerivce.get({ email });
+        const user = await this._usersService.get({ email });
         if(!user) throw new InvalidCredentialsException();
 
         return user;
