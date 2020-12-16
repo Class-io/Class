@@ -4,6 +4,7 @@ import { JwtService } from "../../services/jwt/jwt.service";
 import { ConfirmEmailRequestDTO } from './dto/confirm-email.dto';
 import { UserNotFoundException } from '../../common/exceptions/user-not-found-exception';
 import { InvalidAccountTypeException } from '../../common/exceptions/invalid-account-type.exception';
+import { InvalidConfirmationCodeException } from '../../common/exceptions/invalid-confirmation-code.exception';
 
 @Injectable()
 export class AuthService {
@@ -21,7 +22,9 @@ export class AuthService {
         }
 
         if(user.confirmationCode.code !== input.code) {
-            
+            throw new InvalidConfirmationCodeException();
         }
+
+        
     }
 }
