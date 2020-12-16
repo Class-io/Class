@@ -1,10 +1,11 @@
-import { Injectable, UnauthorizedException } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import Token from "../../common/constants/token";
 import { VerifyErrors, verify, sign } from "jsonwebtoken";
 import config from "../../config";
 import { TokenPayload } from "../../types";
 import { IAccessTokenPayload } from "../../routes/auth/interfaces/IAccessTokenPayload";
 import { ITokenProperties } from "./interfaces/ITokenProperties";
+import { UnauthorizedException } from '../../common/exceptions/unauthorized.exception';
 
 @Injectable()
 export class JwtService {

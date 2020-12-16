@@ -3,7 +3,7 @@ import { AuthService } from "./auth.service";
 import { LoginRequestDTO, LoginResponseDTO } from "./dto/login.dto";
 import { ValidationPipe } from "../../common/pipes/validation.pipe";
 import { RegisterValidationSchema } from "./schemas/register.schema";
-import { RegisterRequestDTO, RegisterResponseDTO } from "./dto/register.dto";
+import { RegisterRequestDTO } from "./dto/register.dto";
 import { Constants } from "../../common/constants";
 import { LoginValidationSchema } from "./schemas/login.schema";
 
@@ -18,12 +18,7 @@ export class AuthController {
     }
 
     @Post(Constants.Endpoint.Auth.REGISTER)
-    public register(@Body(new ValidationPipe(RegisterValidationSchema)) body: RegisterRequestDTO): Promise<RegisterResponseDTO> {
+    public register(@Body(new ValidationPipe(RegisterValidationSchema)) body: RegisterRequestDTO): Promise<void> {
         return this._authService.register(body);
-    }
-
-    @Post(Constants.Endpoint.Auth.REGISTER_TUTOR)
-    public registerTutor(@Body(new ValidationPipe(RegisterValidationSchema)) body: RegisterRequestDTO): Promise<RegisterResponseDTO> {
-        return this._authService.register(body, true);
     }
 }

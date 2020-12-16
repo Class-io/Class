@@ -21,5 +21,19 @@ export const UserSchema = new Schema({
     isTutor: {
         type: Boolean,
         default: false
+    },
+    isSocialMediaAccount: {
+        type: Boolean,
+        default: false
+    },
+    confirmationCode: {
+        code: {
+            type: String,
+            default: ''
+        },
+        expiresAt: {
+            type: Number,
+            default: Date.now()
+        }
     }
 });

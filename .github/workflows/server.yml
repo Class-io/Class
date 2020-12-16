@@ -12,6 +12,10 @@ jobs:
       AUTH_ACCESS_TOKEN_SECRET: ${{ secrets.AUTH_ACCESS_TOKEN_SECRET }}
       DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      MAIL_CLIENT_ID: ${{ secrets.MAIL_CLIENT_ID }}
+      MAIL_CLIENT_SECRET: ${{ secrets.MAIL_CLIENT_SECRET }}
+      MAIL_REFRESH_TOKEN: ${{ secrets.MAIL_REFRESH_TOKEN }}
+      MAIL_USER: ${{ secrets.MAIL_USER }}
 
     steps:
     - uses: actions/checkout@v2
