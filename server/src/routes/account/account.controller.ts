@@ -3,6 +3,7 @@ import { ValidationPipe } from "../../common/pipes/validation.pipe";
 import { Constants } from "../../common/constants";
 import { AccountService } from './account.service';
 import { ConfirmEmailRequestDTO } from './dto/confirm-email.dto';
+import { ConfirmEmailValidationSchema } from './schemas/confirm-email.schema';
 
 @Controller('/')
 export class AuthController {
@@ -10,7 +11,7 @@ export class AuthController {
     
     @Post(Constants.Endpoint.Account.CONFIRM_EMAIL)
     @HttpCode(200)
-    public login(@Body(new ValidationPipe(LoginValidationSchema)) body: ConfirmEmailRequestDTO): Promise<void> {
+    public login(@Body(new ValidationPipe(ConfirmEmailValidationSchema)) body: ConfirmEmailRequestDTO): Promise<void> {
         return this._accountService.confirmEmail(body);
     }
 }
