@@ -5,6 +5,7 @@ import { ConfirmEmailRequestDTO } from './dto/confirm-email.dto';
 import { UserNotFoundException } from '../../common/exceptions/user-not-found-exception';
 import { InvalidAccountTypeException } from '../../common/exceptions/invalid-account-type.exception';
 import { InvalidConfirmationCodeException } from '../../common/exceptions/invalid-confirmation-code.exception';
+import { ExpiredConfirmationCodeException } from '../../common/exceptions/expired-confirmation-code.exception';
 
 @Injectable()
 export class AuthService {
@@ -25,6 +26,8 @@ export class AuthService {
             throw new InvalidConfirmationCodeException();
         }
 
-        
+        if(Date.now() > user.confirmationCode.expiresAt) {
+            throw new ExpiredConfirmationCodeException();
+        }
     }
 }
