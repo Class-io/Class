@@ -9,7 +9,7 @@ import { EmailAlreadyConfirmedException } from '../../common/exceptions/email-al
 import { IUser } from '../user/interfaces/IUser';
 
 @Injectable()
-export class AuthService {
+export class AccountService {
     constructor(private readonly _usersSerivce: UsersService) {}
 
     public async confirmEmail(input: ConfirmEmailRequestDTO): Promise<void> {
