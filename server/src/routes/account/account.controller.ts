@@ -5,6 +5,7 @@ import { AccountService } from './account.service';
 import { ConfirmEmailRequestDTO } from './dto/confirm-email.dto';
 import { ConfirmEmailValidationSchema } from './schemas/confirm-email.schema';
 import { SendConfirmationMailRequestDTO } from './dto/send-confirmation-mail.dto';
+import { SendConfirmationMailValidationSchema } from './schemas/send-confirmation-mail.schema';
 
 @Controller('/')
 export class AuthController {
@@ -12,7 +13,7 @@ export class AuthController {
     
     @Post(Constants.Endpoint.Account.SEND_CONFIRMATION_MAIL)
     @HttpCode(200)
-    public sendConfirmationMail(@Body(new ValidationPipe(ConfirmEmailValidationSchema)) body: SendConfirmationMailRequestDTO): Promise<void> {
+    public sendConfirmationMail(@Body(new ValidationPipe(SendConfirmationMailValidationSchema)) body: SendConfirmationMailRequestDTO): Promise<void> {
         return this._accountService.sendConfirmationMail(body);
     }
 
