@@ -1,4 +1,4 @@
-export class ConfirmEmailDTO implements Readonly<ConfirmEmailDTO> {
+export class ConfirmEmailRequestDTO implements Readonly<ConfirmEmailRequestDTO> {
     email: string;
     code: string;
 }

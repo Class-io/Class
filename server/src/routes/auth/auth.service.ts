@@ -11,7 +11,6 @@ import { LoginRequestDTO, LoginResponseDTO } from "./dto/login.dto";
 import { IAccessTokenPayload } from "./interfaces/IAccessTokenPayload";
 import { JwtService } from "../../services/jwt/jwt.service";
 import Token from "../../common/constants/token";
-import { UserNotFoundException } from '../../common/exceptions/user-not-found-exception';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { Constants } from '../../common/constants';
 
@@ -36,11 +35,6 @@ export class AuthService {
 
         const response = this._createResponse(user);
         return response;
-    }
-
-    public async checkIfUserExistsInDatabaseById(id: string): Promise<void> {
-        const user = await this._usersSerivce.get({ _id: id, isConfirmed: true });
-        if(!user) throw new UserNotFoundException();
     }
     
     private async _checkIfUsernameAlreadyExistsInDatabase(username: string): Promise<void> {
