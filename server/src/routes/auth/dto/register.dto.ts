@@ -4,7 +4,3 @@ export class RegisterRequestDTO implements Readonly<RegisterRequestDTO> {
     password: string;
     isTutor: boolean = false;
 }
-
-export class RegisterResponseDTO implements Readonly<RegisterResponseDTO> {
-    accessToken: string;
-}

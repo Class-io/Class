@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { compareStringToHash } from "../../common/helpers/compare-string-to-hash";
 import { IUser } from "../user/interfaces/IUser";
 import { UsersService } from "../user/users.service";
-import { RegisterRequestDTO, RegisterResponseDTO } from "./dto/register.dto";
+import { RegisterRequestDTO } from "./dto/register.dto";
 import { UsernameAlreadyExistsException } from "../../common/exceptions/username-already-exists.exception";
 import { hashString } from "../../common/helpers/hash-string";
 import { InvalidCredentialsException } from "../../common/exceptions/invalid-credentials.exception";
@@ -18,22 +18,19 @@ import { Constants } from '../../common/constants';
 export class AuthService {
     constructor(private readonly _usersService: UsersService, private readonly _jwtService: JwtService, private readonly _eventEmitter: EventEmitter2) {}
 
-    public async register(input: RegisterRequestDTO): Promise<RegisterResponseDTO> {
+    public async register(input: RegisterRequestDTO): Promise<void> {
         await this._checkIfEmailAlreadyExistsInDatabase(input.email);
         await this._checkIfUsernameAlreadyExistsInDatabase(input.username);
 
         const user = await this._createUserInDatabase({...input });
-        const response = this._createResponse(user);
-
         this._sendConfirmationCode(user.id, user.email);
-        return response;
     }
 
     public async login(input: LoginRequestDTO): Promise<LoginResponseDTO> {
         const user = await this._getUserFromDatabaseByEmailOrThrowException(input.email);
         await this._checkIfPasswordIsValidInDatabase(input.password, user.password);
 
-        const response = this._createResponse(user);
+        const response = this._createLoginResponse(user);
         return response;
     }
     
@@ -54,7 +51,7 @@ export class AuthService {
         return user;
     }
 
-    private _createResponse(user: IUser): RegisterResponseDTO {
+    private _createLoginResponse(user: IUser): LoginResponseDTO {
         const payload = this._getPayload(user);
         const accessToken = this._jwtService.generateToken(Token.ACCESS, payload);
 
