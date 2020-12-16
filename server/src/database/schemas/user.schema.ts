@@ -22,6 +22,10 @@ export const UserSchema = new Schema({
         type: Boolean,
         default: false
     },
+    isSocialMediaAccount: {
+        type: Boolean,
+        default: false
+    },
     confirmationCode: {
         code: {
             type: String,

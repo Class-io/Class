@@ -9,5 +9,6 @@ export interface IUser extends Document {
     readonly joinedAt: number;
     readonly isConfirmed: boolean;
     readonly isTutor: boolean;
+    readonly isSocialMediaAccount: boolean;
     readonly confirmationCode: IConfirmationCode;
 }

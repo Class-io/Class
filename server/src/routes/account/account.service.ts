@@ -8,6 +8,6 @@ export class AuthService {
     constructor(private readonly _usersSerivce: UsersService) {}
 
     public async confirmEmail(input: ConfirmEmailRequestDTO): Promise<void> {
-
+        const user = await this._usersSerivce.get({ email: input.email });
     }
 }
