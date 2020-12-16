@@ -8,13 +8,23 @@ import { ExpiredConfirmationCodeException } from '../../common/exceptions/expire
 import { EmailAlreadyConfirmedException } from '../../common/exceptions/email-already-confirmed.exception';
 import { IUser } from '../user/interfaces/IUser';
 import { SendConfirmationMailRequestDTO } from './dto/send-confirmation-mail.dto';
+import { EventEmitter2 } from '@nestjs/event-emitter';
+import { Constants } from '../../common/constants';
 
 @Injectable()
 export class AccountService {
-    constructor(private readonly _usersSerivce: UsersService) {}
+    constructor(private readonly _usersSerivce: UsersService,  private readonly _eventEmitter: EventEmitter2) {}
 
     public async sendConfirmationMail(input: SendConfirmationMailRequestDTO): Promise<void> {
+        const user = await this._usersSerivce.get({ email: input.email });
 
+        this._throwExceptionWhenUserDoesNotExist(user);
+
+        this._throwExceptionWhenAccountIsFromSocialMedia(user);
+
+        this._throwExceptionWhenEmailIsAlreadyConfirmed(user);
+
+        this._sendConfirmationCode(user.id, user.email);
     }
 
     public async confirmEmail(input: ConfirmEmailRequestDTO): Promise<void> {
@@ -55,5 +65,9 @@ export class AccountService {
 
     private async _confirmEmailInDatabase(user: IUser): Promise<void> {
         await this._usersSerivce.updateById(user.id, { confirmationCode: { code: '', expiresAt: Date.now() }, isConfirmed: true });
+    }
+
+    private _sendConfirmationCode(id: string, email: string): void {
+        this._eventEmitter.emit(Constants.Event.SEND_CONFIRMATION_CODE, { id, email });
     }
 }
