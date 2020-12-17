@@ -2,6 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { CreateUserDTO } from "./dto/create.dto";
+import { GetUserDTO } from './dto/get.dto';
 import { UpdateUserDTO } from "./dto/update.dto";
 import { IUser } from "./interfaces/IUser";
 
@@ -9,12 +10,12 @@ import { IUser } from "./interfaces/IUser";
 export class UsersService {
     constructor(@InjectModel('User') private readonly _userModel: Model<IUser>) {}
 
-    public async getMany(searchData: Record<string, unknown> = {}): Promise<IUser[]> {
+    public async getMany(searchData: GetUserDTO = {}): Promise<IUser[]> {
         const users: IUser[] = await this._userModel.find(searchData);
         return users;
     }
 
-    public async get(searchData: Record<string, unknown> = {}): Promise<IUser | null> {
+    public async get(searchData: GetUserDTO = {}): Promise<IUser | null> {
         const user: IUser | null = await this._userModel.findOne(searchData);
         return user;
     }

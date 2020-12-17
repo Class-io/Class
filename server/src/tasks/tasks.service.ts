@@ -11,7 +11,7 @@ export class TasksService {
 
     @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT)
     public async removeUnconfirmedUsers(): Promise<void> {
-        const users = await this._usersSerivce.getMany({ isConfirmed: false, jo });
+        const users = await this._usersSerivce.getMany({ isConfirmed: false });
 
         await this._deleteUsers(users);
 
@@ -20,7 +20,12 @@ export class TasksService {
 
     private async _deleteUsers(users: IUser[]): Promise<void> {
         for(const user of users) {
-            await this._usersSerivce.deleteById(user.id);
+            if(this._accountAgeIsLongerThanTwoHours(user)) await this._usersSerivce.deleteById(user.id);
         }
+    }
+
+    private _accountAgeIsLongerThanTwoHours(user: IUser): boolean {
+        const HOURS_2 = 7200000
+        return Date.now() - user.joinedAt > HOURS_2;
     }
 }
