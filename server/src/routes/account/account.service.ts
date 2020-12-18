@@ -43,6 +43,10 @@ export class AccountService {
         await this._confirmEmailInDatabase(user);
     }
 
+    public async changePassword(): Promise<void> {
+        
+    }
+
     private _throwExceptionWhenUserDoesNotExist(user: IUser | null): void {
         if(!user) throw new UserNotFoundException();
     }
