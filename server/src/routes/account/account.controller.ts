@@ -6,6 +6,8 @@ import { ConfirmEmailRequestDTO } from './dto/confirm-email.dto';
 import { ConfirmEmailValidationSchema } from './schemas/confirm-email.schema';
 import { SendConfirmationMailRequestDTO } from './dto/send-confirmation-mail.dto';
 import { SendConfirmationMailValidationSchema } from './schemas/send-confirmation-mail.schema';
+import { ChangePasswordValidationSchema } from './schemas/change-password.schema';
+import { ChangePasswordRequestDTO } from './dto/change-password.dto';
 
 @Controller('/')
 export class AuthController {
@@ -21,5 +23,11 @@ export class AuthController {
     @HttpCode(200)
     public confirmEmail(@Body(new ValidationPipe(ConfirmEmailValidationSchema)) body: ConfirmEmailRequestDTO): Promise<void> {
         return this._accountService.confirmEmail(body);
+    }
+
+    @Post(Constants.Endpoint.Account.CHANGE_PASSWORD)
+    @HttpCode(200)
+    public changePassword(@Body(new ValidationPipe(ChangePasswordValidationSchema)) body: ChangePasswordRequestDTO): Promise<void> {
+        return this._accountService.changePassword(body);
     }
 }

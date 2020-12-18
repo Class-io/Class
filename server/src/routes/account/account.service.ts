@@ -10,6 +10,7 @@ import { IUser } from '../user/interfaces/IUser';
 import { SendConfirmationMailRequestDTO } from './dto/send-confirmation-mail.dto';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { Constants } from '../../common/constants';
+import { ChangePasswordRequestDTO } from './dto/change-password.dto';
 
 @Injectable()
 export class AccountService {
@@ -43,7 +44,7 @@ export class AccountService {
         await this._confirmEmailInDatabase(user);
     }
 
-    public async changePassword(): Promise<void> {
+    public async changePassword(input: ChangePasswordRequestDTO): Promise<void> {
         
     }
 
