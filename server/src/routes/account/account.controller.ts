@@ -10,6 +10,8 @@ import { ChangePasswordValidationSchema } from './schemas/change-password.schema
 import { ChangePasswordRequestDTO } from './dto/change-password.dto';
 import { JwtGuard } from '../../common/guards/jwt.guard';
 import { Request } from 'express';
+import { ResetPasswordValidationSchema } from './schemas/reset-password.schema';
+import { ResetPasswordRequestDTO } from './dto/reset-password.dto';
 
 @Controller('/')
 export class AuthController {
@@ -25,6 +27,12 @@ export class AuthController {
     @HttpCode(200)
     public confirmEmail(@Body(new ValidationPipe(ConfirmEmailValidationSchema)) body: ConfirmEmailRequestDTO): Promise<void> {
         return this._accountService.confirmEmail(body);
+    }
+
+    @Post(Constants.Endpoint.Account.RESET_PASSWORD)
+    @HttpCode(200)
+    public resetPassword(@Body(new ValidationPipe(ResetPasswordValidationSchema)) body: ResetPasswordRequestDTO): Promise<void> {
+        return this._accountService.resetPassword(body);
     }
 
     @Post(Constants.Endpoint.Account.CHANGE_PASSWORD)
