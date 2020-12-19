@@ -47,6 +47,22 @@ export class AuthService {
         if(user) throw new UsernameAlreadyExistsException();
     }
 
+    private async _throwExceptionWhenPasswordIsInvalid(password: string, hashedPassword: string): Promise<void> {
+        const isPasswordValid = await compareStringToHash(password, hashedPassword);
+        if(!isPasswordValid) throw new InvalidCredentialsException();
+    }
+
+    private _throwExceptionWhenEmailIsNotConfirmed(user: IUser): void {
+        if(!user.isConfirmed) throw new EmailNotConfirmedException();
+    }
+
+    private async _getUserFromDatabaseByEmailOrThrowException(email: string): Promise<IUser> {
+        const user = await this._usersService.get({ email });
+        if(!user) throw new InvalidCredentialsException();
+
+        return user;
+    }
+
     private async _createUserInDatabase(input: RegisterRequestDTO): Promise<IUser> {
         const hashedPassword = await hashString(input.password);
         const user = await this._usersService.create({ ...input, password: hashedPassword });
@@ -64,22 +80,6 @@ export class AuthService {
 
     private _sendConfirmationCode(id: string, email: string): void {
         this._eventEmitter.emit(Constants.Event.SEND_CONFIRMATION_CODE, { id, email });
-    }
-
-    private async _getUserFromDatabaseByEmailOrThrowException(email: string): Promise<IUser> {
-        const user = await this._usersService.get({ email });
-        if(!user) throw new InvalidCredentialsException();
-
-        return user;
-    }
-
-    private async _throwExceptionWhenPasswordIsInvalid(password: string, hashedPassword: string): Promise<void> {
-        const isPasswordValid = await compareStringToHash(password, hashedPassword);
-        if(!isPasswordValid) throw new InvalidCredentialsException();
-    }
-
-    private _throwExceptionWhenEmailIsNotConfirmed(user: IUser): void {
-        if(!user.isConfirmed) throw new EmailNotConfirmedException();
     }
 
     private _getPayload(user: IAccessTokenPayload): IAccessTokenPayload {
