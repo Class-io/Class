@@ -61,6 +61,7 @@ export class AccountService {
         await this._updatePasswordInDatabase(user.id, input.newPassword);
     }
 
+    public async resetPassword(input)
     private _throwExceptionWhenUserDoesNotExist(user: IUser | null): void {
         if(!user) throw new UserNotFoundException();
     }
