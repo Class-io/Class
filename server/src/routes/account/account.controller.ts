@@ -1,4 +1,4 @@
-import { Body, Controller, HttpCode, Post } from "@nestjs/common";
+import { Body, Controller, HttpCode, Post, Req, UseGuards } from "@nestjs/common";
 import { ValidationPipe } from "../../common/pipes/validation.pipe";
 import { Constants } from "../../common/constants";
 import { AccountService } from './account.service';
@@ -8,6 +8,8 @@ import { SendConfirmationMailRequestDTO } from './dto/send-confirmation-mail.dto
 import { SendConfirmationMailValidationSchema } from './schemas/send-confirmation-mail.schema';
 import { ChangePasswordValidationSchema } from './schemas/change-password.schema';
 import { ChangePasswordRequestDTO } from './dto/change-password.dto';
+import { JwtGuard } from '../../common/guards/jwt.guard';
+import { Request } from 'express';
 
 @Controller('/')
 export class AuthController {
@@ -27,7 +29,8 @@ export class AuthController {
 
     @Post(Constants.Endpoint.Account.CHANGE_PASSWORD)
     @HttpCode(200)
-    public changePassword(@Body(new ValidationPipe(ChangePasswordValidationSchema)) body: ChangePasswordRequestDTO): Promise<void> {
-        return this._accountService.changePassword(body);
+    @UseGuards(JwtGuard)
+    public changePassword(@Req() request: Request, @Body(new ValidationPipe(ChangePasswordValidationSchema)) body: ChangePasswordRequestDTO): Promise<void> {
+        return this._accountService.changePassword(request, body);
     }
 }
