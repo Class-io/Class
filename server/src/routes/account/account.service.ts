@@ -16,6 +16,7 @@ import { EmailNotConfirmedException } from '../../common/exceptions/email-not-co
 import { compareStringToHash } from '../../common/helpers/compare-string-to-hash';
 import { InvalidCredentialsException } from '../../common/exceptions/invalid-credentials.exception';
 import { hashString } from '../../common/helpers/hash-string';
+import { ResetPasswordRequestDTO } from './dto/reset-password.dto';
 
 @Injectable()
 export class AccountService {
@@ -49,6 +50,10 @@ export class AccountService {
         await this._confirmEmailInDatabase(user);
     }
 
+    public async resetPassword(input: ResetPasswordRequestDTO): Promise<void> {
+        
+    }
+    
     public async changePassword(request: Request, input: ChangePasswordRequestDTO): Promise<void> {
         const user = await this._usersSerivce.get({ _id: request.user.id });
 
@@ -61,7 +66,6 @@ export class AccountService {
         await this._updatePasswordInDatabase(user.id, input.newPassword);
     }
 
-    public async resetPassword(input)
     private _throwExceptionWhenUserDoesNotExist(user: IUser | null): void {
         if(!user) throw new UserNotFoundException();
     }
