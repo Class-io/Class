@@ -14,9 +14,10 @@ import Token from "../../common/constants/token";
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { Constants } from '../../common/constants';
 import { EmailNotConfirmedException } from '../../common/exceptions/email-not-confirmed.exception';
-import { OAuth2Client } from 'google-auth-library';
+import { OAuth2Client, TokenPayload } from 'google-auth-library';
 import config from '../../config';
 import { GoogleLoginRequestDTO } from './dto/google.dto';
+import AccountType from '../../common/constants/account-type';
 
 @Injectable()
 export class AuthService {
@@ -24,30 +25,28 @@ export class AuthService {
 
     public async register(input: RegisterRequestDTO): Promise<void> {
         await this._throwExceptionWhenEmailExistsInDatabase(input.email);
+        
         await this._throwExceptionWhenUsernameExistsInDatabase(input.username);
 
         const user = await this._createUserInDatabase({...input });
+
         this._sendConfirmationCode(user.id, user.email);
     }
 
     public async login(input: LoginRequestDTO): Promise<LoginResponseDTO> {
         const user = await this._getUserFromDatabaseByEmailOrThrowException(input.email);
+        
         await this._throwExceptionWhenPasswordIsInvalid(input.password, user.password);
 
         this._throwExceptionWhenEmailIsNotConfirmed(user);
+
         return this._createLoginResponse(user);
     }
     
     public async loginWithGoogle(input: GoogleLoginRequestDTO): Promise<LoginResponseDTO> {
-        const client = new OAuth2Client(config.AUTH.GOOGLE_CLIENT_ID);
+        const payload = await this._getPayloadFromGoogleTokenOrThrowException(input.token);
 
-        const ticket = await client.verifyIdToken({
-            idToken: input.token,
-            audience: config.AUTH.GOOGLE_CLIENT_ID
-        });
-
-        const payload = ticket.getPayload();
-        console.log(payload);
+        await this._throwExceptionWhenUserHasDifferentAccount(payload.email, Constants.AccountType.GOOGLE);
 
         return {} as any;
     }   
@@ -71,11 +70,29 @@ export class AuthService {
         if(!user.isConfirmed) throw new EmailNotConfirmedException();
     }
 
+    private async _throwExceptionWhenUserHasDifferentAccount(email: string, accountType: AccountType): Promise<void> {
+        const user = await this._usersService.get({ email });
+        const userHasDifferentAccount = user && user.accountType !== accountType;
+
+        if(userHasDifferentAccount) throw new EmailAlreadyExistsException();
+    }
+
     private async _getUserFromDatabaseByEmailOrThrowException(email: string): Promise<IUser> {
         const user = await this._usersService.get({ email });
         if(!user) throw new InvalidCredentialsException();
 
         return user;
+    }
+
+    private async _getPayloadFromGoogleTokenOrThrowException(token: string): Promise<TokenPayload> {
+        const client = new OAuth2Client(config.AUTH.GOOGLE_CLIENT_ID);
+
+        const ticket = await client.verifyIdToken({
+            idToken: token,
+            audience: config.AUTH.GOOGLE_CLIENT_ID
+        });
+
+        return ticket.getPayload();
     }
 
     private async _createUserInDatabase(input: RegisterRequestDTO): Promise<IUser> {

@@ -16,6 +16,7 @@ jobs:
       MAIL_CLIENT_SECRET: ${{ secrets.MAIL_CLIENT_SECRET }}
       MAIL_REFRESH_TOKEN: ${{ secrets.MAIL_REFRESH_TOKEN }}
       MAIL_USER: ${{ secrets.MAIL_USER }}
+      AUTH_GOOGLE_CLIENT_ID: ${{ secrets.AUTH_GOOGLE_CLIENT_ID }}
 
     steps:
     - uses: actions/checkout@v2

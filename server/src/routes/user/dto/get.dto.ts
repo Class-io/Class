@@ -1,3 +1,4 @@
+import AccountType from '../../../common/constants/account-type';
 import { IConfirmationCode } from '../interfaces/IConfirmationCode';
 
 export class GetUserDTO implements Readonly<GetUserDTO> {
@@ -7,6 +8,6 @@ export class GetUserDTO implements Readonly<GetUserDTO> {
     joinedAt?: number;
     isConfirmed?: boolean;
     isTutor?: boolean;
-    isSocialMediaAccount?: boolean;
+    accountType?: AccountType;
     confirmationCode?: IConfirmationCode;
 }

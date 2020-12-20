@@ -28,10 +28,6 @@ export const UserSchema = new Schema({
         enum: [Constants.AccountType.REGULAR, Constants.AccountType.GOOGLE, Constants.AccountType.GITHUB],
         default: Constants.AccountType.REGULAR
     },
-    isSocialMediaAccount: {
-        type: Boolean,
-        default: false
-    },
     confirmationCode: {
         code: {
             type: String,
