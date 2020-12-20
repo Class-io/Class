@@ -9,7 +9,8 @@ export const UserSchema = new Schema({
         type: String
     },
     password: {
-        type: String
+        type: String,
+        default: ''
     },
     joinedAt: {
         type: Number,

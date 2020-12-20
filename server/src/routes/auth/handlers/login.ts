@@ -1,3 +1,4 @@
+import { Constants } from '../../../common/constants';
 import Token from '../../../common/constants/token';
 import { EmailNotConfirmedException } from '../../../common/exceptions/email-not-confirmed.exception';
 import { InvalidCredentialsException } from '../../../common/exceptions/invalid-credentials.exception';
@@ -25,7 +26,9 @@ export class LoginHandler {
 
     private async _getUserFromDatabaseByEmailOrThrowException(): Promise<void> {
         this._user = await this._usersService.get({ email: this._input.email });
-        if(!this._user) throw new InvalidCredentialsException();
+        const userDoesNotExistOrHasSocialMediaAccount = !this._user || this._user.accountType !== Constants.AccountType.REGULAR;
+
+        if(userDoesNotExistOrHasSocialMediaAccount) throw new InvalidCredentialsException();
     }
 
     private async _throwExceptionWhenPasswordIsInvalid(): Promise<void> {

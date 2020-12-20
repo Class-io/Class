@@ -1,5 +1,6 @@
 import { OAuth2Client, TokenPayload } from 'google-auth-library';
 import { Constants } from '../../../common/constants';
+import Token from '../../../common/constants/token';
 import { EmailAlreadyExistsException } from '../../../common/exceptions/email-already-exists.exception';
 import config from '../../../config';
 import { JwtService } from '../../../services/jwt/jwt.service';
@@ -7,6 +8,7 @@ import { IUser } from '../../user/interfaces/IUser';
 import { UsersService } from '../../user/users.service';
 import { GoogleLoginRequestDTO } from '../dto/google.dto';
 import { LoginResponseDTO } from '../dto/login.dto';
+import { IAccessTokenPayload } from '../interfaces/IAccessTokenPayload';
 import { ITicket } from '../interfaces/ITicket';
 
 export class GoogleLoginHandler {
@@ -21,7 +23,9 @@ export class GoogleLoginHandler {
 
         await this._throwExceptionWhenEmailExistsInDatabase();
 
-        return {} as any;
+        await this._createUserInDatabaseIfDoesNotExist();
+
+        return this._createResponse();
     }
 
     private async _getPayloadFromGoogleTokenOrThrowException(token: string): Promise<void> {
@@ -34,6 +38,36 @@ export class GoogleLoginHandler {
         const userHasDifferentAccount = this._user && this._user.accountType !== Constants.AccountType.GOOGLE;
 
         if(userHasDifferentAccount) throw new EmailAlreadyExistsException();
+    }
+
+    private async _createUserInDatabaseIfDoesNotExist(): Promise<void> {
+       this._user = await this._usersService.get({ email: this._payload.email });
+        if(!this._user) this._createUser();
+    }
+
+    private _createResponse(): LoginResponseDTO {
+        const payload = this._createPayload();
+        const accessToken = this._jwtService.generateToken(Token.ACCESS, payload);
+
+        return { accessToken };
+    }
+
+    private _createPayload(): IAccessTokenPayload {
+        return {
+            id: this._user.id,
+            username: this._user.username,
+            email: this._user.email,
+            isTutor: this._user.isTutor
+        }
+    }
+
+    private async _createUser(): Promise<void> {
+        this._user = await this._usersService.create({
+            email: this._payload.email,
+            username: this._payload.email,
+            isConfirmed: true,
+            accountType: Constants.AccountType.GOOGLE
+        })
     }
 
     private async _getTicketOrThrowException(token: string): Promise<ITicket> {
