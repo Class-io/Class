@@ -1,4 +1,5 @@
 import { Schema } from 'mongoose';
+import { Constants } from '../../common/constants';
 
 export const UserSchema = new Schema({
     email: {
@@ -21,6 +22,11 @@ export const UserSchema = new Schema({
     isTutor: {
         type: Boolean,
         default: false
+    },
+    accountType: {
+        type: String,
+        enum: [Constants.AccountType.REGULAR, Constants.AccountType.GOOGLE, Constants.AccountType.GITHUB],
+        default: Constants.AccountType.REGULAR
     },
     isSocialMediaAccount: {
         type: Boolean,
