@@ -14,6 +14,7 @@ import Token from "../../common/constants/token";
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { Constants } from '../../common/constants';
 import { EmailNotConfirmedException } from '../../common/exceptions/email-not-confirmed.exception';
+import { OAuth2Client } from 'google-auth-library';
 
 @Injectable()
 export class AuthService {
@@ -32,11 +33,13 @@ export class AuthService {
         await this._throwExceptionWhenPasswordIsInvalid(input.password, user.password);
 
         this._throwExceptionWhenEmailIsNotConfirmed(user);
-        const response = this._createLoginResponse(user);
-        
-        return response;
+        return this._createLoginResponse(user);
     }
     
+    public async loginWithGoogle(): Promise<LoginResponseDTO> {
+
+    }   
+
     private async _throwExceptionWhenEmailExistsInDatabase(email: string): Promise<void> {
         const user = await this._usersService.get({ email });
         if(user) throw new EmailAlreadyExistsException();

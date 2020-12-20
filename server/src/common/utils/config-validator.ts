@@ -24,7 +24,8 @@ export class ConfigValidator {
                 PORT: number().required()
             },
             AUTH: {
-                ACCESS_TOKEN_SECRET: string().min(5)
+                ACCESS_TOKEN_SECRET: string().min(5),
+                GOOGLE_CLIENT_ID: string().required()
             },
             DATABASE: {
                 NAME: string(),
