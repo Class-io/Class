@@ -83,7 +83,7 @@ export class AccountService {
     }
 
     private _throwExceptionWhenAccountIsFromSocialMedia(user: IUser): void {
-        if(user.isSocialMediaAccount) throw new InvalidAccountTypeException();
+        if(user.accountType !== Constants.AccountType.REGULAR) throw new InvalidAccountTypeException();
     }
 
     private _throwExceptionWhenEmailIsAlreadyConfirmed(user: IUser): void {

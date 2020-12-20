@@ -1,4 +1,5 @@
 import { Document } from 'mongoose';
+import AccountType from '../../../common/constants/account-type';
 import { IConfirmationCode } from './IConfirmationCode';
 
 export interface IUser extends Document {
@@ -9,6 +10,6 @@ export interface IUser extends Document {
     readonly joinedAt: number;
     readonly isConfirmed: boolean;
     readonly isTutor: boolean;
-    readonly isSocialMediaAccount: boolean;
+    readonly accountType: AccountType;
     readonly confirmationCode: IConfirmationCode;
 }
