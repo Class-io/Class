@@ -1,7 +1,8 @@
 export default {
     Auth: {
+        REGISTER: '/auth/register',
         LOGIN: '/auth/login',
-        REGISTER: '/auth/register'
+        LOGIN_GOOGLE: '/auth/login-google'
     },
     Account: {
         CHANGE_PASSWORD: '/account/change-password',
