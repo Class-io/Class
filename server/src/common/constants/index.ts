@@ -5,6 +5,7 @@ import Endpoint from './endpoint';
 import Token from './token';
 import Event from './event';
 import Time from './time';
+import AccountType from './account-type';
 
 export const Constants = {
     AppMode,
@@ -13,5 +14,6 @@ export const Constants = {
     Endpoint,
     Token,
     Event,
-    Time
+    Time,
+    AccountType
 } as const;

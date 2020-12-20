@@ -26,6 +26,6 @@ export class AuthController {
 
     @Post(Constants.Endpoint.Auth.LOGIN_GOOGLE)
     public loginWithGoogle(@Body(new ValidationPipe(GoogleLoginValidationSchema)) body: GoogleLoginRequestDTO): Promise<LoginResponseDTO> {
-        return this._authService.loginWithGoogle();
+        return this._authService.loginWithGoogle(body);
     }
 }
