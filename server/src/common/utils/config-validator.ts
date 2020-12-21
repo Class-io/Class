@@ -25,7 +25,9 @@ export class ConfigValidator {
             },
             AUTH: {
                 ACCESS_TOKEN_SECRET: string().min(5),
-                GOOGLE_CLIENT_ID: string().required()
+                GOOGLE_CLIENT_ID: string().required(),
+                GITHUB_CLIENT_ID: string().required(),
+                GITHUB_CLIENT_SECRET: string().required()
             },
             DATABASE: {
                 NAME: string(),
