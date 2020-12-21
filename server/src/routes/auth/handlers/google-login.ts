@@ -19,7 +19,7 @@ export class GoogleLoginHandler {
     constructor(private readonly _input: GoogleLoginRequestDTO, private readonly _usersService: UsersService, private readonly _jwtService: JwtService) {}
 
     public async loginWithGoogle(): Promise<LoginResponseDTO> {
-        await this._getPayloadFromGoogleTokenOrThrowException(this._input.token)
+        await this._getPayloadFromTokenOrThrowException(this._input.token)
 
         await this._throwExceptionWhenEmailExistsInDatabase();
 
@@ -28,7 +28,7 @@ export class GoogleLoginHandler {
         return this._createResponse();
     }
 
-    private async _getPayloadFromGoogleTokenOrThrowException(token: string): Promise<void> {
+    private async _getPayloadFromTokenOrThrowException(token: string): Promise<void> {
         const ticket = await this._getTicketOrThrowException(token);
         this._payload = ticket.getPayload();
     }

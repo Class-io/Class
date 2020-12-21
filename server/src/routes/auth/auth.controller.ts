@@ -8,6 +8,8 @@ import { Constants } from "../../common/constants";
 import { LoginValidationSchema } from "./schemas/login.schema";
 import { GoogleLoginValidationSchema } from './schemas/google.schema';
 import { GoogleLoginRequestDTO } from './dto/google.dto';
+import { GithubLoginValidationSchema } from './schemas/github.schema';
+import { GithubLoginRequestDTO } from './dto/github.dto';
 
 @Controller('/')
 export class AuthController {
@@ -25,7 +27,14 @@ export class AuthController {
     }
 
     @Post(Constants.Endpoint.Auth.LOGIN_GOOGLE)
+    @HttpCode(200)
     public loginWithGoogle(@Body(new ValidationPipe(GoogleLoginValidationSchema)) body: GoogleLoginRequestDTO): Promise<LoginResponseDTO> {
         return this._authService.loginWithGoogle(body);
+    }
+
+    @Post(Constants.Endpoint.Auth.LOGIN_GITHUB)
+    @HttpCode(200)
+    public loginWithGithub(@Body(new ValidationPipe(GithubLoginValidationSchema)) body: GithubLoginRequestDTO): Promise<LoginResponseDTO> {
+        return this._authService.loginWithGithub(body);
     }
 }

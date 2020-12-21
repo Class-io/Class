@@ -2,7 +2,8 @@ export default {
     Auth: {
         REGISTER: '/auth/register',
         LOGIN: '/auth/login',
-        LOGIN_GOOGLE: '/auth/login-google'
+        LOGIN_GOOGLE: '/auth/login-google',
+        LOGIN_GITHUB: '/auth/login-github'
     },
     Account: {
         CHANGE_PASSWORD: '/account/change-password',
