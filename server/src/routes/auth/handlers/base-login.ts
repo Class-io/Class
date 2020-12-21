@@ -4,14 +4,13 @@ import { IUser } from '../../user/interfaces/IUser';
 import { UsersService } from '../../user/users.service';
 import { LoginResponseDTO } from '../dto/login.dto';
 import { IAccessTokenPayload } from '../interfaces/IAccessTokenPayload';
-import { IGithubPayload } from '../interfaces/IGithubPayload';
-import { LoginDTO } from '../../../types';
+import { AuthTokenPayload, LoginDTO } from '../../../types';
 import AccountType from '../../../common/constants/account-type';
 
 export abstract class BaseLoginHandler {
     protected abstract readonly _accountType: AccountType;
     protected _user: IUser;
-    protected _payload: IGithubPayload;
+    protected _payload: AuthTokenPayload;
 
     constructor(protected readonly _input: LoginDTO, protected readonly _usersService: UsersService, protected readonly _jwtService: JwtService) {}
 
@@ -29,14 +28,5 @@ export abstract class BaseLoginHandler {
             email: this._user.email,
             isTutor: this._user.isTutor
         }
-    }
-
-    protected async _createUser(): Promise<void> {
-        this._user = await this._usersService.create({
-            email: this._payload.email,
-            username: this._payload.login,
-            isConfirmed: true,
-            accountType: this._accountType
-        })
     }
 }

@@ -13,4 +13,13 @@ export abstract class SocialLoginHandler extends BaseLoginHandler {
        this._user = await this._usersService.get({ email: this._payload.email });
         if(!this._user) this._createUser();
     }
+
+    protected async _createUser(): Promise<void> {
+        this._user = await this._usersService.create({
+            email: this._payload.email,
+            username: this._payload.email,
+            isConfirmed: true,
+            accountType: this._accountType
+        })
+    }
 }
