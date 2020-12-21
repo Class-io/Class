@@ -26,7 +26,7 @@ export class LoginHandler {
 
     private async _getUserFromDatabaseByEmailOrThrowException(): Promise<void> {
         this._user = await this._usersService.get({ email: this._input.email });
-        const userDoesNotExistOrHasSocialMediaAccount = !this._user || this._user.accountType !== Constants.AccountType.REGULAR;
+        const userDoesNotExistOrHasSocialMediaAccount = !this._user || this._user.password === '';
 
         if(userDoesNotExistOrHasSocialMediaAccount) throw new InvalidCredentialsException();
     }

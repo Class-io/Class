@@ -19,7 +19,7 @@ export class GoogleLoginHandler {
     constructor(private readonly _input: GoogleLoginRequestDTO, private readonly _usersService: UsersService, private readonly _jwtService: JwtService) {}
 
     public async loginWithGoogle(): Promise<LoginResponseDTO> {
-        await this._getPayloadFromTokenOrThrowException(this._input.token)
+        await this._getPayloadFromGoogleTokenOrThrowException(this._input.token)
 
         await this._throwExceptionWhenEmailExistsInDatabase();
 
@@ -28,14 +28,10 @@ export class GoogleLoginHandler {
         return this._createResponse();
     }
 
-    private async _getPayloadFromTokenOrThrowException(token: string): Promise<void> {
-        const ticket = await this._getTicketOrThrowException(token);
-        this._payload = ticket.getPayload();
-    }
 
     private async _throwExceptionWhenEmailExistsInDatabase(): Promise<void> {
         this._user = await this._usersService.get({ email: this._payload.email });
-        const userHasDifferentAccount = this._user && this._user.accountType !== Constants.AccountType.GOOGLE;
+        const userHasDifferentAccount = this._user && this._user.accountType !== Constants.AccountType.GITHUB;
 
         if(userHasDifferentAccount) throw new EmailAlreadyExistsException();
     }
@@ -66,14 +62,7 @@ export class GoogleLoginHandler {
             email: this._payload.email,
             username: this._payload.email,
             isConfirmed: true,
-            accountType: Constants.AccountType.GOOGLE
+            accountType: Constants.AccountType.GITHUB
         })
-    }
-
-    private async _getTicketOrThrowException(token: string): Promise<ITicket> {
-        return await this._client.verifyIdToken({
-            idToken: token,
-            audience: config.AUTH.GOOGLE_CLIENT_ID
-        });
     }
 }
