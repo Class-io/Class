@@ -27,11 +27,13 @@ export class AuthController {
     }
 
     @Post(Constants.Endpoint.Auth.LOGIN_GOOGLE)
+    @HttpCode(200)
     public loginWithGoogle(@Body(new ValidationPipe(GoogleLoginValidationSchema)) body: GoogleLoginRequestDTO): Promise<LoginResponseDTO> {
         return this._authService.loginWithGoogle(body);
     }
 
     @Post(Constants.Endpoint.Auth.LOGIN_GITHUB)
+    @HttpCode(200)
     public loginWithGithub(@Body(new ValidationPipe(GithubLoginValidationSchema)) body: GithubLoginRequestDTO): Promise<LoginResponseDTO> {
         return this._authService.loginWithGithub(body);
     }

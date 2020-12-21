@@ -21,6 +21,7 @@
     "@nestjs/mongoose": "^7.1.2",
     "@nestjs/platform-express": "^7.0.0",
     "@nestjs/schedule": "^0.4.1",
+    "axios": "^0.21.0",
     "bcrypt": "^5.0.0",
     "cross-env": "^7.0.3",
     "dotenv": "^8.2.0",
