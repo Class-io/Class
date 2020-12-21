@@ -9,7 +9,7 @@ import { LoginDTO } from '../../../types';
 import AccountType from '../../../common/constants/account-type';
 
 export abstract class BaseLoginHandler {
-    abstract readonly _accountType: AccountType;
+    protected abstract readonly _accountType: AccountType;
     protected _user: IUser;
     protected _payload: IGithubPayload;
 
