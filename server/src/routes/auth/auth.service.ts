@@ -8,6 +8,8 @@ import { GoogleLoginRequestDTO } from './dto/google.dto';
 import { RegisterHandler } from './handlers/register';
 import { LoginHandler } from './handlers/login';
 import { GoogleLoginHandler } from './handlers/google-login';
+import { GithubLoginRequestDTO } from './dto/github.dto';
+import { GithubLoginHandler } from './handlers/github-login';
 
 @Injectable()
 export class AuthService {
@@ -23,5 +25,9 @@ export class AuthService {
     
     public async loginWithGoogle(input: GoogleLoginRequestDTO): Promise<LoginResponseDTO> {
         return new GoogleLoginHandler(input, this._usersService, this._jwtService).loginWithGoogle();
-    }   
+    }
+
+    public async loginWithGithub(input: GithubLoginRequestDTO): Promise<LoginResponseDTO> {
+        return new GithubLoginHandler(input, this._usersService, this._jwtService).loginWithGithub();
+    }
 }
