@@ -1,3 +1,10 @@
+import { Constants } from '../../../common/constants';
+import { EmailAlreadyConfirmedException } from '../../../common/exceptions/email-already-confirmed.exception';
+import { EmailNotConfirmedException } from '../../../common/exceptions/email-not-confirmed.exception';
+import { ExpiredConfirmationCodeException } from '../../../common/exceptions/expired-confirmation-code.exception';
+import { InvalidAccountTypeException } from '../../../common/exceptions/invalid-account-type.exception';
+import { InvalidConfirmationCodeException } from '../../../common/exceptions/invalid-confirmation-code.exception';
+import { UserNotFoundException } from '../../../common/exceptions/user-not-found-exception';
 import { IUser } from '../../user/interfaces/IUser';
 import { UsersService } from '../../user/users.service';
 
