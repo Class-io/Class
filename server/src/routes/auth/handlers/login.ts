@@ -2,7 +2,7 @@ import { EmailNotConfirmedException } from '../../../common/exceptions/email-not
 import { InvalidCredentialsException } from '../../../common/exceptions/invalid-credentials.exception';
 import { compareStringToHash } from '../../../common/helpers/compare-string-to-hash';
 import { LoginRequestDTO, LoginResponseDTO } from '../dto/login.dto';
-import { BaseLoginHandler } from './base-login';
+import { BaseLoginHandler } from './base';
 
 export class LoginHandler extends BaseLoginHandler {
     public async login(): Promise<LoginResponseDTO> {

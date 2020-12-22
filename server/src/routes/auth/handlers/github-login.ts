@@ -3,7 +3,7 @@ import { LoginResponseDTO } from '../dto/login.dto';
 import axios from 'axios';
 import config from '../../../config';
 import { UnauthorizedException } from '../../../common/exceptions/unauthorized.exception';
-import { SocialLoginHandler } from './social-login';
+import { SocialLoginHandler } from './social';
 import { GithubLoginRequestDTO } from '../dto/github.dto';
 
 export class GithubLoginHandler extends SocialLoginHandler {
