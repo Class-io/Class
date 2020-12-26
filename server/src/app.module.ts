@@ -8,6 +8,7 @@ import { TasksModule } from './tasks/tasks.module';
 import { UserSeederModule } from './database/seeders/user/user-seeder.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { EventModule } from './events/event.module';
+import { AccountModule } from './routes/account/account.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { EventModule } from './events/event.module';
     EventEmitterModule.forRoot(),
     UserSeederModule,
     AuthModule,
+    AccountModule,
     UsersModule,
     ScheduleModule.forRoot(),
     TasksModule,
