@@ -1,4 +1,4 @@
-import { Body, Controller, HttpCode, Post } from "@nestjs/common";
+import { Body, Controller, HttpCode, Post, Res } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { LoginRequestDTO, LoginResponseDTO } from "./dto/login.dto";
 import { ValidationPipe } from "../../common/pipes/validation.pipe";
@@ -10,6 +10,7 @@ import { GoogleLoginValidationSchema } from './schemas/google.schema';
 import { GoogleLoginRequestDTO } from './dto/google.dto';
 import { GithubLoginValidationSchema } from './schemas/github.schema';
 import { GithubLoginRequestDTO } from './dto/github.dto';
+import { Response } from 'express';
 
 @Controller('/')
 export class AuthController {
@@ -22,19 +23,19 @@ export class AuthController {
 
     @Post(Constants.Endpoint.Auth.LOGIN)
     @HttpCode(200)
-    public login(@Body(new ValidationPipe(LoginValidationSchema)) body: LoginRequestDTO): Promise<LoginResponseDTO> {
-        return this._authService.login(body);
+    public login(@Res({ passthrough: true }) response: Response, @Body(new ValidationPipe(LoginValidationSchema)) body: LoginRequestDTO): Promise<LoginResponseDTO> {
+        return this._authService.login(body, response);
     }
 
     @Post(Constants.Endpoint.Auth.LOGIN_GOOGLE)
     @HttpCode(200)
-    public loginWithGoogle(@Body(new ValidationPipe(GoogleLoginValidationSchema)) body: GoogleLoginRequestDTO): Promise<LoginResponseDTO> {
-        return this._authService.loginWithGoogle(body);
+    public loginWithGoogle(@Res({ passthrough: true }) response: Response, @Body(new ValidationPipe(GoogleLoginValidationSchema)) body: GoogleLoginRequestDTO): Promise<LoginResponseDTO> {
+        return this._authService.loginWithGoogle(body, response);
     }
 
     @Post(Constants.Endpoint.Auth.LOGIN_GITHUB)
     @HttpCode(200)
-    public loginWithGithub(@Body(new ValidationPipe(GithubLoginValidationSchema)) body: GithubLoginRequestDTO): Promise<LoginResponseDTO> {
-        return this._authService.loginWithGithub(body);
+    public loginWithGithub(@Res({ passthrough: true }) response: Response, @Body(new ValidationPipe(GithubLoginValidationSchema)) body: GithubLoginRequestDTO): Promise<LoginResponseDTO> {
+        return this._authService.loginWithGithub(body, response);
     }
 }

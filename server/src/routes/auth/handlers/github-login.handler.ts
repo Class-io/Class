@@ -1,24 +1,24 @@
 import { Constants } from '../../../common/constants';
-import { LoginResponseDTO } from '../dto/login.dto';
 import axios from 'axios';
 import config from '../../../config';
 import { UnauthorizedException } from '../../../common/exceptions/unauthorized.exception';
 import { GithubLoginRequestDTO } from '../dto/github.dto';
 import { BaseLoginHandler } from './base.handler';
+import { Response } from 'express';
 
 export class GithubLoginHandler extends BaseLoginHandler {
     private readonly ACCESS_TOKEN_URL = 'https://github.com/login/oauth/access_token';
     private readonly PAYLOAD_URL = 'https://api.github.com/user';
     protected readonly _accountType = Constants.AccountType.GITHUB;
 
-    public async loginWithGithub(input: GithubLoginRequestDTO): Promise<LoginResponseDTO> {
+    public async loginWithGithub(input: GithubLoginRequestDTO, response: Response): Promise<void> {
         await this._getPayloadFromTokenOrThrowException(input.code);
 
         await this._throwExceptionWhenEmailExistsInDatabase(); 
 
         await this._createUserInDatabaseIfDoesNotExist();
 
-        return this._createResponse();
+        this._setCookie(response);
     }
 
     private async _getPayloadFromTokenOrThrowException(code: string): Promise<void> {

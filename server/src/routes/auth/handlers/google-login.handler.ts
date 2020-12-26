@@ -2,22 +2,22 @@ import { OAuth2Client } from 'google-auth-library';
 import { Constants } from '../../../common/constants';
 import config from '../../../config';
 import { GoogleLoginRequestDTO } from '../dto/google.dto';
-import { LoginResponseDTO } from '../dto/login.dto';
 import { ITicket } from '../interfaces/ITicket';
 import { BaseLoginHandler } from './base.handler';
+import { Response } from 'express';
 
 export class GoogleLoginHandler extends BaseLoginHandler {
     private readonly _client = new OAuth2Client(config.AUTH.GOOGLE_CLIENT_ID);
     protected readonly _accountType = Constants.AccountType.GOOGLE;
 
-    public async loginWithGoogle(input: GoogleLoginRequestDTO): Promise<LoginResponseDTO> {
+    public async loginWithGoogle(input: GoogleLoginRequestDTO, response: Response): Promise<void> {
         await this._getPayloadFromTokenOrThrowException(input.token)
 
         await this._throwExceptionWhenEmailExistsInDatabase();
 
         await this._createUserInDatabaseIfDoesNotExist();
 
-        return this._createResponse();
+        this._setCookie(response);
     }
 
     private async _getPayloadFromTokenOrThrowException(token: string): Promise<void> {

@@ -3,20 +3,21 @@ import AccountType from '../../../common/constants/account-type';
 import { EmailNotConfirmedException } from '../../../common/exceptions/email-not-confirmed.exception';
 import { InvalidCredentialsException } from '../../../common/exceptions/invalid-credentials.exception';
 import { compareStringToHash } from '../../../common/helpers/compare-string-to-hash';
-import { LoginRequestDTO, LoginResponseDTO } from '../dto/login.dto';
+import { LoginRequestDTO } from '../dto/login.dto';
 import { BaseLoginHandler } from './base.handler';
+import { Response } from 'express';
 
 export class LoginHandler extends BaseLoginHandler {
     protected _accountType: AccountType = Constants.AccountType.REGULAR;
 
-    public async login(input: LoginRequestDTO): Promise<LoginResponseDTO> {
+    public async login(input: LoginRequestDTO, response: Response): Promise<void> {
         await this._getUserFromDatabaseByEmailOrThrowException(input.email);
         
         await this._throwExceptionWhenPasswordIsInvalid(input.password);
 
         this._throwExceptionWhenEmailIsNotConfirmed();
 
-        return this._createResponse();
+        this._setCookie(response);
     }
 
     private async _getUserFromDatabaseByEmailOrThrowException(email: string): Promise<void> {
