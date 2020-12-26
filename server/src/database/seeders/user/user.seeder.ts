@@ -22,7 +22,7 @@ export class UserSeeder {
 
         await this._saveUserAccount();
 
-        await this._printFakeUserDataAfterSleep();
+        await this._printUserCredentialsAfterSleep();
     }
 
     private _generateFakeData(isTutor: boolean): void {
@@ -47,7 +47,7 @@ export class UserSeeder {
         }
     }
 
-    private async _printFakeUserDataAfterSleep(): Promise<void> {
+    private async _printUserCredentialsAfterSleep(): Promise<void> {
         logger.green('User generated successfully');
 
         await sleep(1500);
