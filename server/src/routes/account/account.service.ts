@@ -20,7 +20,7 @@ import { ResetPasswordRequestDTO } from './dto/reset-password.dto';
 
 @Injectable()
 export class AccountService {
-    constructor(private readonly _usersSerivce: UsersService,  private readonly _eventEmitter: EventEmitter2) {}
+    constructor(private readonly _usersSerivce: UsersService, private readonly _eventEmitter: EventEmitter2) {}
 
     public async sendConfirmationMail(input: SendConfirmationMailRequestDTO): Promise<void> {
         const user = await this._usersSerivce.get({ email: input.email });
