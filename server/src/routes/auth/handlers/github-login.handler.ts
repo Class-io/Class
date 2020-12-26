@@ -3,10 +3,10 @@ import { LoginResponseDTO } from '../dto/login.dto';
 import axios from 'axios';
 import config from '../../../config';
 import { UnauthorizedException } from '../../../common/exceptions/unauthorized.exception';
-import { SocialLoginHandler } from './social.handler';
 import { GithubLoginRequestDTO } from '../dto/github.dto';
+import { BaseLoginHandler } from './base.handler';
 
-export class GithubLoginHandler extends SocialLoginHandler {
+export class GithubLoginHandler extends BaseLoginHandler {
     private readonly ACCESS_TOKEN_URL = 'https://github.com/login/oauth/access_token';
     private readonly PAYLOAD_URL = 'https://api.github.com/user';
     protected readonly _accountType = Constants.AccountType.GITHUB;

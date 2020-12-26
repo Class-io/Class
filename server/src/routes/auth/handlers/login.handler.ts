@@ -1,3 +1,5 @@
+import { Constants } from '../../../common/constants';
+import AccountType from '../../../common/constants/account-type';
 import { EmailNotConfirmedException } from '../../../common/exceptions/email-not-confirmed.exception';
 import { InvalidCredentialsException } from '../../../common/exceptions/invalid-credentials.exception';
 import { compareStringToHash } from '../../../common/helpers/compare-string-to-hash';
@@ -5,6 +7,8 @@ import { LoginRequestDTO, LoginResponseDTO } from '../dto/login.dto';
 import { BaseLoginHandler } from './base.handler';
 
 export class LoginHandler extends BaseLoginHandler {
+    protected _accountType: AccountType = Constants.AccountType.REGULAR;
+
     public async login(): Promise<LoginResponseDTO> {
         await this._getUserFromDatabaseByEmailOrThrowException();
         

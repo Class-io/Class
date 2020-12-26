@@ -4,9 +4,9 @@ import config from '../../../config';
 import { GoogleLoginRequestDTO } from '../dto/google.dto';
 import { LoginResponseDTO } from '../dto/login.dto';
 import { ITicket } from '../interfaces/ITicket';
-import { SocialLoginHandler } from './social.handler';
+import { BaseLoginHandler } from './base.handler';
 
-export class GoogleLoginHandler extends SocialLoginHandler {
+export class GoogleLoginHandler extends BaseLoginHandler {
     private readonly _client = new OAuth2Client(config.AUTH.GOOGLE_CLIENT_ID);
     protected readonly _accountType = Constants.AccountType.GOOGLE;
 
