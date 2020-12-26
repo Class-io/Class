@@ -18,6 +18,7 @@ import { hashString } from '../../common/helpers/hash-string';
 import { ResetPasswordRequestDTO } from './dto/reset-password.dto';
 import { SendConfirmationMailHandler } from './handlers/send-confirmation-mail.handler';
 import { ConfirmEmailHandler } from './handlers/confirm-email.handler';
+import { ResetPasswordHandler } from './handlers/reset-password.handler';
 
 @Injectable()
 export class AccountService {
@@ -32,19 +33,7 @@ export class AccountService {
     }
 
     public async resetPassword(input: ResetPasswordRequestDTO): Promise<void> {
-        const user = await this._usersSerivce.get({ email: input.email });
-
-        this._throwExceptionWhenUserDoesNotExist(user);
-
-        this._throwExceptionWhenAccountIsFromSocialMedia(user);
-
-        this._throwExceptionWhenEmailIsNotConfirmed(user)
-
-        this._throwExceptionWhenConfirmationCodeIsInvalid(user, input.code);
-
-        this._throwExceptionWhenConfirmationCodeIsExpired(user);
-
-        await this._updatePasswordInDatabase(user.id, input.password);
+        await new ResetPasswordHandler(this._usersSerivce).resetPassword(input);
     }
 
     public async changePassword(request: Request, input: ChangePasswordRequestDTO): Promise<void> {
@@ -59,24 +48,12 @@ export class AccountService {
         await this._updatePasswordInDatabase(user.id, input.newPassword);
     }
 
-    private _throwExceptionWhenUserDoesNotExist(user: IUser | null): void {
-        if(!user) throw new UserNotFoundException();
-    }
-
     private _throwExceptionWhenAccountIsFromSocialMedia(user: IUser): void {
         if(user.accountType !== Constants.AccountType.REGULAR) throw new InvalidAccountTypeException();
     }
 
     private _throwExceptionWhenEmailIsNotConfirmed(user: IUser): void {
         if(!user.isConfirmed) throw new EmailNotConfirmedException();
-    }
-
-    private _throwExceptionWhenConfirmationCodeIsInvalid(user: IUser, code: string): void {
-        if(user.confirmationCode.code !== code) throw new InvalidConfirmationCodeException();
-    }
-
-    private _throwExceptionWhenConfirmationCodeIsExpired(user: IUser): void {
-        if(Date.now() > user.confirmationCode.expiresAt) throw new ExpiredConfirmationCodeException();
     }
 
     private async _throwExceptionWhenPasswordIsInvalid(password: string, hashedPassword: string): Promise<void> {

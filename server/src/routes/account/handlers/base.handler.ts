@@ -5,6 +5,7 @@ import { ExpiredConfirmationCodeException } from '../../../common/exceptions/exp
 import { InvalidAccountTypeException } from '../../../common/exceptions/invalid-account-type.exception';
 import { InvalidConfirmationCodeException } from '../../../common/exceptions/invalid-confirmation-code.exception';
 import { UserNotFoundException } from '../../../common/exceptions/user-not-found-exception';
+import { hashString } from '../../../common/helpers/hash-string';
 import { IUser } from '../../user/interfaces/IUser';
 import { UsersService } from '../../user/users.service';
 
@@ -33,5 +34,10 @@ export class BaseAccountHandler {
 
     protected _throwExceptionWhenConfirmationCodeIsExpired(user: IUser): void {
         if(Date.now() > user.confirmationCode.expiresAt) throw new ExpiredConfirmationCodeException();
+    }
+
+    protected async _updatePasswordInDatabase(id: string, password: string): Promise<void> {
+        const hashedPassword = await hashString(password);
+        await this._usersSerivce.updateById(id, { password: hashedPassword });
     }
 }
