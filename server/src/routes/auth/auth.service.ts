@@ -20,14 +20,14 @@ export class AuthService {
     }
 
     public async login(input: LoginRequestDTO): Promise<LoginResponseDTO> {
-        return new LoginHandler(input, this._usersService, this._jwtService).login();
+        return new LoginHandler(this._usersService, this._jwtService).login(input);
     }
     
     public async loginWithGoogle(input: GoogleLoginRequestDTO): Promise<LoginResponseDTO> {
-        return new GoogleLoginHandler(input, this._usersService, this._jwtService).loginWithGoogle();
+        return new GoogleLoginHandler(this._usersService, this._jwtService).loginWithGoogle(input);
     }
 
     public async loginWithGithub(input: GithubLoginRequestDTO): Promise<LoginResponseDTO> {
-        return new GithubLoginHandler(input, this._usersService, this._jwtService).loginWithGithub();
+        return new GithubLoginHandler(this._usersService, this._jwtService).loginWithGithub(input);
     }
 }
