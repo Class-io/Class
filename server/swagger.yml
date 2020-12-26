@@ -31,36 +31,24 @@ paths:
           content:
             application/json:
               examples:
-                  Successfully registered:
-                    value: "{\n\n\n\n}"
+                  Registered successfully:
+                    value: Empty response
         401:
           content:
             application/json:
               examples:
-                Incorrect input:
+                Invalid request body:
                   value:
                     error:
-                      message: Provided data did not pass the validation proccess
-                      id: 200
+                      id: 100
                 Email already exists:
                   value:
                     error:
-                      message: Email already exists
-                      id: 500 
+                      id: 104 
                 Username already exists:
                   value:
                     error:
-                      message: Username already exists
-                      id: 501 
-        403:
-          content:
-            application/json:
-              examples:
-                Already logged in:
-                  value:
-                    error:
-                      message: You must log out before performing this action
-                      id: 201
+                      id: 105
   /api/v1/auth/login:
     post:
       tags:
