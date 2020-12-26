@@ -1,4 +1,4 @@
-import { BaseLoginHandler } from './base';
+import { BaseLoginHandler } from './base.handler';
 import { EmailAlreadyExistsException } from '../../../common/exceptions/email-already-exists.exception';
 import AccountType from '../../../common/constants/account-type';
 import { AuthTokenPayload } from '../../../types';

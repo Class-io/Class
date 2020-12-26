@@ -2,7 +2,7 @@ import { EventEmitter2 } from '@nestjs/event-emitter';
 import { Constants } from '../../../common/constants';
 import { UsersService } from '../../user/users.service';
 import { SendConfirmationMailRequestDTO } from '../dto/send-confirmation-mail.dto';
-import { BaseAccountHandler } from './base';
+import { BaseAccountHandler } from './base.handler';
 
 export class SendConfirmationMailHandler extends BaseAccountHandler {
     constructor(protected readonly _usersSerivce: UsersService, private readonly _eventEmitter: EventEmitter2) {

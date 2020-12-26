@@ -17,21 +17,14 @@ import { compareStringToHash } from '../../common/helpers/compare-string-to-hash
 import { InvalidCredentialsException } from '../../common/exceptions/invalid-credentials.exception';
 import { hashString } from '../../common/helpers/hash-string';
 import { ResetPasswordRequestDTO } from './dto/reset-password.dto';
+import { SendConfirmationMailHandler } from './handlers/send-confirmation-mail.handler';
 
 @Injectable()
 export class AccountService {
     constructor(private readonly _usersSerivce: UsersService, private readonly _eventEmitter: EventEmitter2) {}
 
     public async sendConfirmationMail(input: SendConfirmationMailRequestDTO): Promise<void> {
-        const user = await this._usersSerivce.get({ email: input.email });
-
-        this._throwExceptionWhenUserDoesNotExist(user);
-
-        this._throwExceptionWhenAccountIsFromSocialMedia(user);
-
-        this._throwExceptionWhenEmailIsAlreadyConfirmed(user);
-
-        this._sendConfirmationCode(user.id, user.email);
+        await new SendConfirmationMailHandler(this._usersSerivce, this._eventEmitter).sendConfirmationMail(input);
     }
 
     public async confirmEmail(input: ConfirmEmailRequestDTO): Promise<void> {

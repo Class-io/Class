@@ -5,11 +5,11 @@ import { LoginRequestDTO, LoginResponseDTO } from "./dto/login.dto";
 import { JwtService } from "../../services/jwt/jwt.service";
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { GoogleLoginRequestDTO } from './dto/google.dto';
-import { RegisterHandler } from './handlers/register';
-import { LoginHandler } from './handlers/login';
-import { GoogleLoginHandler } from './handlers/google-login';
+import { RegisterHandler } from './handlers/register.handler';
+import { LoginHandler } from './handlers/login.handler';
+import { GoogleLoginHandler } from './handlers/google-login.handler';
 import { GithubLoginRequestDTO } from './dto/github.dto';
-import { GithubLoginHandler } from './handlers/github-login';
+import { GithubLoginHandler } from './handlers/github-login.handler';
 
 @Injectable()
 export class AuthService {
