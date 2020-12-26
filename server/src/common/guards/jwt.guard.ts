@@ -7,7 +7,7 @@ import { UserNotFoundException } from '../exceptions/user-not-found-exception';
 
 @Injectable()
 export class JwtGuard implements CanActivate {
-    constructor(@Inject('JwtService') private readonly _jwtService: JwtService, @Inject('AuthService') private readonly _usersService: UsersService) {}
+    constructor(@Inject('JwtService') private readonly _jwtService: JwtService, @Inject('UsersService') private readonly _usersService: UsersService) {}
 
     public async canActivate(context: ExecutionContext): Promise<boolean> {
         const token = this._getTokenFromContext(context);

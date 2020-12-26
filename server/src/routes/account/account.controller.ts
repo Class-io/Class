@@ -14,7 +14,7 @@ import { ResetPasswordValidationSchema } from './schemas/reset-password.schema';
 import { ResetPasswordRequestDTO } from './dto/reset-password.dto';
 
 @Controller('/')
-export class AuthController {
+export class AccountController {
     constructor(private readonly _accountService: AccountService) {}
     
     @Post(Constants.Endpoint.Account.SEND_CONFIRMATION_MAIL)

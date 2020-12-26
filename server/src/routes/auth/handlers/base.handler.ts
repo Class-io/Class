@@ -31,7 +31,7 @@ export abstract class BaseLoginHandler {
         const payload = this._createPayload();
         const accessToken = this._jwtService.generateToken(Token.ACCESS, payload);
 
-        response.cookie('authorization', `Bearer ${accessToken}`, { httpOnly: true, secure: true });
+        response.cookie('authorization', accessToken, { httpOnly: true });
     }
 
     protected async _createUser(): Promise<void> {
