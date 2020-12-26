@@ -5,7 +5,6 @@ import { UserNotFoundException } from '../../common/exceptions/user-not-found-ex
 import { InvalidAccountTypeException } from '../../common/exceptions/invalid-account-type.exception';
 import { InvalidConfirmationCodeException } from '../../common/exceptions/invalid-confirmation-code.exception';
 import { ExpiredConfirmationCodeException } from '../../common/exceptions/expired-confirmation-code.exception';
-import { EmailAlreadyConfirmedException } from '../../common/exceptions/email-already-confirmed.exception';
 import { IUser } from '../user/interfaces/IUser';
 import { SendConfirmationMailRequestDTO } from './dto/send-confirmation-mail.dto';
 import { EventEmitter2 } from '@nestjs/event-emitter';
@@ -18,6 +17,7 @@ import { InvalidCredentialsException } from '../../common/exceptions/invalid-cre
 import { hashString } from '../../common/helpers/hash-string';
 import { ResetPasswordRequestDTO } from './dto/reset-password.dto';
 import { SendConfirmationMailHandler } from './handlers/send-confirmation-mail.handler';
+import { ConfirmEmailHandler } from './handlers/confirm-email.handler';
 
 @Injectable()
 export class AccountService {
@@ -28,19 +28,7 @@ export class AccountService {
     }
 
     public async confirmEmail(input: ConfirmEmailRequestDTO): Promise<void> {
-        const user = await this._usersSerivce.get({ email: input.email });
-
-        this._throwExceptionWhenUserDoesNotExist(user);
-
-        this._throwExceptionWhenAccountIsFromSocialMedia(user);
-
-        this._throwExceptionWhenEmailIsAlreadyConfirmed(user);
-
-        this._throwExceptionWhenConfirmationCodeIsInvalid(user, input.code);
-
-        this._throwExceptionWhenConfirmationCodeIsExpired(user);
-
-        await this._confirmEmailInDatabase(user);
+        await new ConfirmEmailHandler(this._usersSerivce).confirmEmail(input);
     }
 
     public async resetPassword(input: ResetPasswordRequestDTO): Promise<void> {
@@ -79,10 +67,6 @@ export class AccountService {
         if(user.accountType !== Constants.AccountType.REGULAR) throw new InvalidAccountTypeException();
     }
 
-    private _throwExceptionWhenEmailIsAlreadyConfirmed(user: IUser): void {
-        if(user.isConfirmed) throw new EmailAlreadyConfirmedException();
-    }
-
     private _throwExceptionWhenEmailIsNotConfirmed(user: IUser): void {
         if(!user.isConfirmed) throw new EmailNotConfirmedException();
     }
@@ -100,16 +84,8 @@ export class AccountService {
         if(!isPasswordValid) throw new InvalidCredentialsException();
     }
 
-    private async _confirmEmailInDatabase(user: IUser): Promise<void> {
-        await this._usersSerivce.updateById(user.id, { confirmationCode: { code: '', expiresAt: Date.now() }, isConfirmed: true });
-    }
-
     private async _updatePasswordInDatabase(id: string, password: string): Promise<void> {
         const hashedPassword = await hashString(password);
         await this._usersSerivce.updateById(id, { password: hashedPassword });
-    }
-
-    private _sendConfirmationCode(id: string, email: string): void {
-        this._eventEmitter.emit(Constants.Event.SEND_CONFIRMATION_CODE, { id, email });
     }
 }
