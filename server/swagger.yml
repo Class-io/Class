@@ -1,0 +1,804 @@
+openapi: 3.0.0
+info:
+  title: Class API
+  description: REST API documentation
+  version: 1.0.0
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+  - url: http://localhost:4000
+    description: Internal staging server for testing
+paths:
+  /api/v1/auth/register:
+    post:
+      tags:
+        - AUTH
+      summary: Create new user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                username:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        201:
+          content:
+            application/json:
+              examples:
+                  Successfully registered:
+                    value: "{\n\n\n\n}"
+        401:
+          content:
+            application/json:
+              examples:
+                Incorrect input:
+                  value:
+                    error:
+                      message: Provided data did not pass the validation proccess
+                      id: 200
+                Email already exists:
+                  value:
+                    error:
+                      message: Email already exists
+                      id: 500 
+                Username already exists:
+                  value:
+                    error:
+                      message: Username already exists
+                      id: 501 
+        403:
+          content:
+            application/json:
+              examples:
+                Already logged in:
+                  value:
+                    error:
+                      message: You must log out before performing this action
+                      id: 201
+  /api/v1/auth/login:
+    post:
+      tags:
+        - AUTH
+      summary: Authenticate user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        200:
+          headers:
+            Set-Cookie:
+              type: string
+              description: Set authorization cookie
+        401:
+          content:
+            application/json:
+              examples:
+                Invalid email or password:
+                  value:
+                    error:
+                      message: Invalid email or password
+                      id: 100
+                Incorrect input:
+                  value:
+                    error:
+                      message: Provided data did not pass the validation proccess
+                      id: 200
+                Unknown location:
+                  value:
+                    error:
+                      message: Detected login attempt from a different location
+                      id: 301
+        403:
+          content:
+            application/json:
+              examples:
+                Already logged in:
+                  value:
+                    error:
+                      message: You must log out before performing this action
+                      id: 201
+                Email not confirmed yet:
+                  value:
+                    error:
+                      message: Email has not been confirmed yet
+                      id: 500
+  /api/v1/auth/logout:
+    post:
+      tags:
+        - AUTH
+      summary: Log out user
+      responses:
+        200:
+          headers:
+            Set-Cookie:
+              type: string
+              description: Remove authorization cookie
+
+  /api/v1/account/add-location:
+    post:
+      tags:
+        - ACCOUNT
+      summary: Add new trusted location
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                id:
+                  type: string
+                token:
+                  type: string
+      responses:
+        200:
+          content:
+            application/json:
+              examples:
+                  Location added successfully:
+                    value: "{\n\n\n\n}"
+        401:
+          content:
+            application/json:
+              examples:
+                Invalid token:
+                  value:
+                    error:
+                      message: Token has already expired or is invalid
+                      id: 102
+                Incorrect input:
+                  value:
+                    error:
+                      message: Provided data did not pass the validation proccess
+                      id: 200
+                Location is already added:
+                  value:
+                    error:
+                      message: Location has already been added to trusted
+                      id: 302
+                User does not exist:
+                  value:
+                    error:
+                      message: User does not exist
+                      id: 400
+                Invalid user:
+                  value:
+                    error:
+                      message: Provided user does not match the decoded user
+                      id: 401            
+        403:
+          content:
+            application/json:
+              examples:
+                Email is not cofirmed yet:
+                  value:
+                    error:
+                      message: Email has not been confirmed yet
+                      id: 500
+  /api/v1/account/confirm-email:
+    post:
+      tags:
+        - ACCOUNT
+      summary: Confirm user's mail account
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                id:
+                  type: string
+                token:
+                  type: string
+      responses:
+        200:
+          content:
+            application/json:
+              examples:
+                  Email confirmed successfully:
+                    value: "{\n\n\n\n}"
+        401:
+          content:
+            application/json:
+              examples:
+                Invalid token:
+                  value:
+                    error:
+                      message: Token has already expired or is invalid
+                      id: 102
+                Incorrect input:
+                  value:
+                    error:
+                      message: Provided data did not pass the validation proccess
+                      id: 200
+                User does not exist:
+                  value:
+                    error:
+                      message: User does not exist
+                      id: 400
+                Invalid user:
+                  value:
+                    error:
+                      message: Provided user does not match the decoded user
+                      id: 401
+        403:
+          content:
+            application/json:
+              examples:
+                Email is already confirmed:
+                  value:
+                    error:
+                      message: Email has already been confirmed
+                      id: 501
+  /api/v1/account/forgot-password:
+    post:
+      tags:
+        - ACCOUNT
+      summary: Request new password change
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                email:
+                  type: string
+      responses:
+        200:
+          content:
+            application/json:
+              examples:
+                  Mail sent successfully:
+                    value: "{\n\n\n\n}"
+        401:
+          content:
+            application/json:
+              examples:
+                Incorrect input:
+                  value:
+                    error:
+                      message: Provided data did not pass the validation proccess
+                      id: 200
+                You are already logged in:
+                  value:
+                    error:
+                      message: You must log out before performing this action
+                      id: 201
+                User does not exist:
+                  value:
+                    error:
+                      message: User does not exist
+                      id: 400
+        403:
+          content:
+            application/json:
+              examples:
+                Email is not confirmed yet:
+                  value:
+                    error:
+                      message: Email has not been confirmed yet
+                      id: 500
+  /api/v1/account/reset-password:
+    post:
+      tags:
+        - ACCOUNT
+      summary: Change user's password
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                id:
+                  type: string
+                token:
+                  type: string
+                password:
+                  type: string
+      responses:
+        200:
+          content:
+            application/json:
+              examples:
+                  Password changed successfully:
+                    value: "{\n\n\n\n}"
+        401:
+          content:
+            application/json:
+              examples:
+                Invalid token:
+                  value:
+                    error:
+                      message: Token has already expired or is invalid
+                      id: 102
+                Incorrect input:
+                  value:
+                    error:
+                      message: Provided data did not pass the validation proccess
+                      id: 200
+                You are already logged in:
+                  value:
+                    error:
+                      message: You must log out before performing this action
+                      id: 201
+                User does not exist:
+                  value:
+                    error:
+                      message: User does not exist
+                      id: 400
+                Invalid user:
+                  value:
+                    error:
+                      message: Provided user does not match the decoded user
+                      id: 401
+        403:
+          content:
+            application/json:
+              examples:
+                Email is not confirmed yet:
+                  value:
+                    error:
+                      message: Email has not been confirmed yet
+                      id: 500
+  /api/v1/account/send-confirmation-mail:
+    post:
+      tags:
+        - ACCOUNT
+      summary: Request new confirmation mail link
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                email:
+                  type: string
+      responses:
+        200:
+          content:
+            application/json:
+              examples:
+                  Mail sent successfully:
+                    value: "{\n\n\n\n}"
+        401:
+          content:
+            application/json:
+              examples:
+                Incorrect input:
+                  value:
+                    error:
+                      message: Provided data did not pass the validation proccess
+                      id: 200
+                You are already logged in:
+                  value:
+                    error:
+                      message: You must log out before performing this action
+                      id: 201
+                User does not exist:
+                  value:
+                    error:
+                      message: User does not exist
+                      id: 400
+        403:
+          content:
+            application/json:
+              examples:
+                Email is already confirmed:
+                  value:
+                    error:
+                      message: Email has already been confirmed
+                      id: 501
+  /api/v1/category:
+    parameters:
+      - in: cookie
+        name: jid
+        description: Authorization token
+        schema:
+          type: string
+    get:
+      tags:
+        - CATEGORY
+      summary: Get all user's categories
+      responses:
+        200:
+          content:
+            application/json:
+              examples:
+                  Categories retrieved successfully:
+                    value:
+                      categories: {}
+    post:
+      tags:
+        - CATEGORY
+      summary: Create new category
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                name:
+                  type: string
+      responses:
+        201:
+          content:
+            application/json:
+              examples:
+                  Category created successfully:
+                    value:
+                      category: {}
+        401:
+          content:
+            application/json:
+              examples:
+                Incorrect input:
+                  value:
+                    error:
+                      message: Provided data did not pass the validation proccess
+                      id: 200
+  /api/v1/category/:id:
+    parameters:
+      - in: cookie
+        name: jid
+        description: Authorization token
+        schema:
+          type: string
+    delete:
+      tags:
+        - CATEGORY
+      summary: Delete existing category
+      responses:
+        200:
+          content:
+            application/json:
+              examples:
+                  Category removed successfully:
+                    value: "{\n\n\n\n}"
+        401:
+          content:
+            application/json:
+              examples:
+                Incorrect input:
+                  value:
+                    error:
+                      message: Provided data did not pass the validation proccess
+                      id: 200
+        404:
+          content:
+            application/json:
+              examples:
+                Category does not exist:
+                  value:
+                    error:
+                      message: Category does not exist
+                      id: 601
+    patch:
+      tags:
+        - CATEGORY
+      summary: Update existing category
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                field:
+                  type: string
+                value:
+                  type: string
+      responses:
+        200:
+          content:
+            application/json:
+              examples:
+                  Category updated successfully:
+                    value: "{\n\n\n\n}"
+        401:
+          content:
+            application/json:
+              examples:
+                Incorrect input:
+                  value:
+                    error:
+                      message: Provided data did not pass the validation proccess
+                      id: 200
+        404:
+          content:
+            application/json:
+              examples:
+                Category does not exist:
+                  value:
+                    error:
+                      message: Category does not exist
+                      id: 601
+  /api/v1/note/public:
+    get:
+      parameters:
+        - in: query
+          name: noteId
+          description: Note id
+          schema:
+            type: string
+        - in: query
+          name: userId
+          description: User id
+          schema:
+            type: string
+      tags:
+        - NOTE
+      summary: Get a public note
+      responses:
+        200:
+          content:
+            application/json:
+              examples:
+                  Note retrieved successfully:
+                    value:
+                      note: {}
+        401:
+          content:
+            application/json:
+              examples:
+                Incorrect input:
+                  value:
+                    error:
+                      message: Provided data did not pass the validation proccess
+                      id: 200
+                Inaccessible note:
+                  value:
+                    error:
+                      message: You do not have access to this note
+                      id: 601
+        404:
+          content:
+            application/json:
+              examples:
+                Note does not exist:
+                  value:
+                    error:
+                      message: Note does not exist
+                      id: 600
+  /api/v1/note:
+    parameters:
+      - in: cookie
+        name: jid
+        description: Authorization token
+        schema:
+          type: string
+    get:
+      parameters:
+        - in: query
+          name: id
+          description: Category id
+          schema:
+            type: string
+      tags:
+        - NOTE
+      summary: Get all notes in the specific category
+      responses:
+        200:
+          content:
+            application/json:
+              examples:
+                  Notes retrieved successfully:
+                    value:
+                      notes: {}
+    post:
+      tags:
+        - NOTE
+      summary: Create new note
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                categoryId:
+                  type: string
+      responses:
+        201:
+          content:
+            application/json:
+              examples:
+                  Note created successfully:
+                    value:
+                      note: {}
+        401:
+          content:
+            application/json:
+              examples:
+                Incorrect input:
+                  value:
+                    error:
+                      message: Provided data did not pass the validation proccess
+                      id: 200
+                Category does not exist:
+                  value:
+                    error:
+                      message: Category does not exist
+                      id: 601
+  /api/v1/note/:id:
+    parameters:
+      - in: cookie
+        name: jid
+        description: Authorization token
+        schema:
+          type: string
+    get:
+      tags:
+        - NOTE
+      summary: Get a single note
+      responses:
+        200:
+          content:
+            application/json:
+              examples:
+                  Note retrieved successfully:
+                    value:
+                      note: {}
+        401:
+          content:
+            application/json:
+              examples:
+                Incorrect input:
+                  value:
+                    error:
+                      message: Provided data did not pass the validation proccess
+                      id: 200
+        404:
+          content:
+            application/json:
+              examples:
+                Note does not exist:
+                  value:
+                    error:
+                      message: Note does not exist
+                      id: 600
+    delete:
+      tags:
+        - NOTE
+      summary: Delete existing note
+      responses:
+        200:
+          content:
+            application/json:
+              examples:
+                  Note removed successfully:
+                    value: "{\n\n\n\n}"
+        401:
+          content:
+            application/json:
+              examples:
+                Incorrect input:
+                  value:
+                    error:
+                      message: Provided data did not pass the validation proccess
+                      id: 200
+        404:
+          content:
+            application/json:
+              examples:
+                Note does not exist:
+                  value:
+                    error:
+                      message: Note does not exist
+                      id: 600
+    put:
+      tags:
+        - NOTE
+      summary: Update multiple notes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                notes:
+                  type: object
+      responses:
+        200:
+          content:
+            application/json:
+              examples:
+                  Notes updated successfully:
+                    value: "{\n\n\n\n}"
+        401:
+          content:
+            application/json:
+              examples:
+                Incorrect input:
+                  value:
+                    error:
+                      message: Provided data did not pass the validation proccess
+                      id: 200
+        404:
+          content:
+            application/json:
+              examples:
+                Note does not exist:
+                  value:
+                    error:
+                      message: Note does not exist
+                      id: 600
+  /api/v1/user:
+    parameters:
+      - in: cookie
+        name: jid
+        description: Authorization token
+        schema:
+          type: string
+    get:
+      tags:
+        - USER
+      summary: Get user's data
+      responses:
+        200:
+          content:
+            application/json:
+              examples:
+                  User's data retrieved successfully:
+                    value:
+                      user: {}
+    patch:
+      tags:
+        - USER
+      summary: Update user's data
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                field:
+                  type: string
+                value:
+                  type: string
+      responses:
+        200:
+          content:
+            application/json:
+              examples:
+                  User updated successfully:
+                    value: "{\n\n\n\n}"
+        401:
+          content:
+            application/json:
+              examples:
+                Incorrect input:
+                  value:
+                    error:
+                      message: Provided data did not pass the validation proccess
+                      id: 200
+                User does not exist:
+                  value:
+                    error:
+                      message: User does not exist
+                      id: 400
+  /api/v1/user/avatar:
+    parameters:
+      - in: cookie
+        name: jid
+        description: Authorization token
+        schema:
+          type: string
+    patch:
+      tags:
+        - USER
+      summary: Update user's avatar
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              properties:
+                avatar:
+                  type: string
+                  format: binary
+      responses:
+        200:
+          content:
+            application/json:
+              examples:
+                  Avatar updated successfully:
+                    value:
+                      filename: string
