@@ -16,7 +16,7 @@ export class AuthService {
     constructor(private readonly _usersService: UsersService, private readonly _jwtService: JwtService, private readonly _eventEmitter: EventEmitter2) {}
 
     public async register(input: RegisterRequestDTO): Promise<void> {
-        new RegisterHandler(input, this._usersService, this._eventEmitter).register();
+        new RegisterHandler(this._usersService, this._eventEmitter).register(input);
     }
 
     public async login(input: LoginRequestDTO): Promise<LoginResponseDTO> {
