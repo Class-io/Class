@@ -20,7 +20,7 @@ export class JwtGuard implements CanActivate {
     }
 
     private _getTokenFromContext(context: ExecutionContext): string {
-        return context.switchToHttp().getRequest().headers.authorization;
+        return context.switchToHttp().getRequest().cookies['authorization'];
     }
 
     private _getPayloadOrThrowException(token: string): IAccessTokenPayload {
