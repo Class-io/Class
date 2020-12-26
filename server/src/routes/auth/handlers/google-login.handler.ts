@@ -10,8 +10,8 @@ export class GoogleLoginHandler extends BaseLoginHandler {
     private readonly _client = new OAuth2Client(config.AUTH.GOOGLE_CLIENT_ID);
     protected readonly _accountType = Constants.AccountType.GOOGLE;
 
-    public async loginWithGoogle(): Promise<LoginResponseDTO> {
-        await this._getPayloadFromTokenOrThrowException()
+    public async loginWithGoogle(input: GoogleLoginRequestDTO): Promise<LoginResponseDTO> {
+        await this._getPayloadFromTokenOrThrowException(input)
 
         await this._throwExceptionWhenEmailExistsInDatabase();
 
@@ -20,8 +20,8 @@ export class GoogleLoginHandler extends BaseLoginHandler {
         return this._createResponse();
     }
 
-    private async _getPayloadFromTokenOrThrowException(): Promise<void> {
-        const ticket = await this._getTicket((this._input as GoogleLoginRequestDTO).token);
+    private async _getPayloadFromTokenOrThrowException(input: GoogleLoginRequestDTO): Promise<void> {
+        const ticket = await this._getTicket(input.token);
         this._payload = ticket.getPayload();
     }
     
