@@ -9908,7 +9908,8 @@ body {
 }
 
 .Header {
-  background-position: 0rem 65rem;
+  background-image: url("../../assets/images/introduction/background.png");
+  background-position: 0rem 80rem;
   width: 100vw;
   height: 100vh;
   color: white;
@@ -9927,12 +9928,6 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 100vw;
-  height: 100vh;
-}
-
-.Tutors {
-  background-color: #FAF9F6;
   width: 100vw;
   height: 100vh;
 }
