@@ -24,7 +24,7 @@ export class ConfigValidator {
                 PORT: number().required()
             },
             AUTH: {
-                ACCESS_TOKEN_SECRET: string().min(5),
+                ACCESS_TOKEN_SECRET: string().min(32),
                 GOOGLE_CLIENT_ID: string().required(),
                 GITHUB_CLIENT_ID: string().required(),
                 GITHUB_CLIENT_SECRET: string().required()
@@ -37,7 +37,7 @@ export class ConfigValidator {
                 CLIENT_ID: string().required(),
                 CLIENT_SECRET: string().required(),
                 REFRESH_TOKEN: string().required(),
-                USER: string().required()
+                USER: string().email()
             }
         });
     }

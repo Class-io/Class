@@ -11,7 +11,6 @@ import { UnauthorizedException } from '../../common/exceptions/unauthorized.exce
 export class JwtService {
     public generateToken(type: Token.ACCESS, payload: IAccessTokenPayload): string
     public generateToken(type: Token, payload: TokenPayload): string {
-        this._checkIfPayloadExists(payload);
         return this._createToken(type, payload);
     }
 
@@ -19,12 +18,6 @@ export class JwtService {
     public verifyTokenAndGetPayload(type: Token, token: string): TokenPayload {
         this._checkIfTokenExistsAndHasTypeString(token);
         return this._getPayloadOrThrowError(type, token);
-    }
-
-    private _checkIfPayloadExists(payload: TokenPayload): void {
-        if(!payload) {
-            throw new Error('Payload has to be provided');
-        }
     }
 
     private _createToken(type: Token, payload: TokenPayload): string {
