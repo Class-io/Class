@@ -219,7 +219,59 @@ paths:
           content:
             application/json:
               examples:
-                Mail sent successfully:
+                Email confirmed successfully:
+                  value: Empty response
+        401:
+          content:
+            application/json:
+              examples:
+                Invalid request body:
+                  value:
+                    error:
+                      id: 100       
+                User does not exist:
+                  value:
+                    error:
+                      id: 101
+                Account type is invalid:
+                  value:
+                    error:
+                      id: 106
+                Confirmation code is invalid:
+                  value:
+                    error:
+                      id: 107
+                Confirmation code is expired:
+                  value:
+                    error:
+                      id: 108
+                Email has been already confirmed:
+                  value:
+                    error:
+                      id: 109
+  
+  /api/v1/account/reset-password:
+    post:
+      tags:
+        - ACCOUNT
+      summary: Reset user's password
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                email:
+                  type: string
+                code:
+                  type: string
+                password:
+                  type: string
+      responses:
+        200:
+          content:
+            application/json:
+              examples:
+                Password reset successfully:
                   value: Empty response
         401:
           content:
