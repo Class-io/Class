@@ -159,6 +159,7 @@ paths:
                     value:
                       error:
                         id: 104
+
   /api/v1/account/send-confirmation-mail:
       post:
         tags:
@@ -197,4 +198,54 @@ paths:
                   Email has been already confirmed:
                     value:
                       error:
-                        id: 109     
+                        id: 109
+  
+  /api/v1/account/confirm-email:
+    post:
+      tags:
+        - ACCOUNT
+      summary: Confirm user's email
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                email:
+                  type: string
+                code:
+                  type: string
+      responses:
+        200:
+          content:
+            application/json:
+              examples:
+                Mail sent successfully:
+                  value: Empty response
+        401:
+          content:
+            application/json:
+              examples:
+                Invalid request body:
+                  value:
+                    error:
+                      id: 100       
+                User does not exist:
+                  value:
+                    error:
+                      id: 101
+                Account type is invalid:
+                  value:
+                    error:
+                      id: 106
+                Confirmation code is invalid:
+                  value:
+                    error:
+                      id: 107
+                Confirmation code is expired:
+                  value:
+                    error:
+                      id: 108
+                Email has been already confirmed:
+                  value:
+                    error:
+                      id: 109
