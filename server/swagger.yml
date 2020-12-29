@@ -49,6 +49,7 @@ paths:
                   value:
                     error:
                       id: 105
+
   /api/v1/auth/login:
     post:
       tags:
@@ -89,18 +90,46 @@ paths:
                   value:
                     error:
                       id: 110
-  /api/v1/auth/logout:
-    post:
-      tags:
-        - AUTH
-      summary: Log out user
-      responses:
-        200:
-          headers:
-            Set-Cookie:
-              type: string
-              description: Remove authorization cookie
 
+  /api/v1/auth/login-google:
+      post:
+        tags:
+          - AUTH
+        summary: Authenticate user using google account
+        requestBody:
+          content:
+            application/json:
+              schema:
+                properties:
+                  token:
+                    type: string
+        responses:
+          200:
+            headers:
+              Set-Cookie:
+                type: string
+                description: Set authorization cookie
+          401:
+            content:
+              application/json:
+                examples:
+                  Invalid request body:
+                    value:
+                      error:
+                        id: 100       
+                  Invalid credentials:
+                    value:
+                      error:
+                        id: 102
+          403:
+            content:
+              application/json:
+                examples:
+                  Email not confirmed yet:
+                    value:
+                      error:
+                        id: 110
+                      
   /api/v1/account/add-location:
     post:
       tags:
