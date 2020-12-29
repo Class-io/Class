@@ -95,7 +95,7 @@ paths:
       post:
         tags:
           - AUTH
-        summary: Authenticate user using google account
+        summary: Authenticate user using Google account
         requestBody:
           content:
             application/json:
@@ -129,13 +129,13 @@ paths:
       post:
         tags:
           - AUTH
-        summary: Authenticate user using google account
+        summary: Authenticate user using GitHub account
         requestBody:
           content:
             application/json:
               schema:
                 properties:
-                  token:
+                  code:
                     type: string
         responses:
           200:
