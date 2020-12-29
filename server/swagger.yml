@@ -301,3 +301,47 @@ paths:
                   value:
                     error:
                       id: 109
+                  
+  /api/v1/account/change-password:
+    parameters:
+      - in: cookie
+        name: jid
+        description: Authorization token
+        schema:
+          type: string
+    post:
+      tags:
+        - ACCOUNT
+      summary: Change user's password
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                password:
+                  type: string
+                newPassword:
+                  type: string
+      responses:
+        200:
+          content:
+            application/json:
+              examples:
+                Password changed successfully:
+                  value: Empty response
+        401:
+          content:
+            application/json:
+              examples:
+                Invalid request body:
+                  value:
+                    error:
+                      id: 100
+                Credentials are invalid:
+                    value:
+                      error:
+                        id: 102
+                Account type is invalid:
+                  value:
+                    error:
+                      id: 106

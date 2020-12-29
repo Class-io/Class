@@ -10,8 +10,6 @@ export class ChangePasswordHandler extends BaseAccountHandler {
 
         this._throwExceptionWhenAccountIsFromSocialMedia(user);
 
-        this._throwExceptionWhenEmailIsNotConfirmed(user);
-
         await this._throwExceptionWhenPasswordIsInvalid(input.password, user.password);
 
         await this._updatePasswordInDatabase(user.id, input.newPassword);
