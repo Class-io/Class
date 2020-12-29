@@ -305,7 +305,7 @@ paths:
   /api/v1/account/change-password:
     parameters:
       - in: cookie
-        name: jid
+        name: authorization
         description: Authorization token
         schema:
           type: string
