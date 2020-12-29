@@ -5,6 +5,7 @@ import { GoogleLoginRequestDTO } from '../dto/google.dto';
 import { ITicket } from '../interfaces/ITicket';
 import { BaseLoginHandler } from './base.handler';
 import { Response } from 'express';
+import { InvalidCredentialsException } from '../../../common/exceptions/invalid-credentials.exception';
 
 export class GoogleLoginHandler extends BaseLoginHandler {
     private readonly _client = new OAuth2Client(config.AUTH.GOOGLE_CLIENT_ID);
@@ -21,14 +22,18 @@ export class GoogleLoginHandler extends BaseLoginHandler {
     }
 
     private async _getPayloadFromTokenOrThrowException(token: string): Promise<void> {
-        const ticket = await this._getTicket(token);
-        this._payload = ticket.getPayload();
+        try {
+            const ticket = await this._getTicket(token);
+            this._payload = ticket.getPayload();
+        } catch(error) {
+            throw new InvalidCredentialsException();
+        }
     }
     
     private async _getTicket(token: string): Promise<ITicket> {
-        return await this._client.verifyIdToken({
+        return this._client.verifyIdToken({
             idToken: token,
             audience: config.AUTH.GOOGLE_CLIENT_ID
-        });
+        });    
     }
 }

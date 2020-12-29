@@ -1,11 +1,11 @@
-import appConfig from './app';
-import databaseConfig from './database';
-import authConfig from './auth';
-import mailConfig from './mail';
+import APP from './app';
+import AUTH from './auth';
+import DATABASE from './database';
+import MAIL from './mail';
 
 export default {
-    APP: appConfig,
-    AUTH: authConfig,
-    DATABASE: databaseConfig,
-    MAIL: mailConfig
+    APP,
+    AUTH,
+    DATABASE,
+    MAIL
 } as const;

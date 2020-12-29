@@ -1,10 +1,10 @@
 import { Constants } from '../../../common/constants';
 import axios from 'axios';
 import config from '../../../config';
-import { UnauthorizedException } from '../../../common/exceptions/unauthorized.exception';
 import { GithubLoginRequestDTO } from '../dto/github.dto';
 import { BaseLoginHandler } from './base.handler';
 import { Response } from 'express';
+import { InvalidCredentialsException } from '../../../common/exceptions/invalid-credentials.exception';
 
 export class GithubLoginHandler extends BaseLoginHandler {
     private readonly ACCESS_TOKEN_URL = 'https://github.com/login/oauth/access_token';
@@ -26,7 +26,7 @@ export class GithubLoginHandler extends BaseLoginHandler {
             const accessToken = await this._requestAccessToken(code);
             await this._requestPayload(accessToken);
         } catch(error) {
-            throw new UnauthorizedException();
+            throw new InvalidCredentialsException();
         }
     }
 

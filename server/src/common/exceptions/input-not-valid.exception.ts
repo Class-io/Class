@@ -3,7 +3,7 @@ import { BaseException } from "./base.exception";
 
 export class InputNotValidException extends BaseException {
     id = Constants.Exception.INPUT_NOT_VALID;
-    statusCode = 400;
+    statusCode = 401;
     message = '';
 
     public constructor(message: string) {

@@ -1,0 +1,161 @@
+openapi: 3.0.0
+info:
+  title: Class API
+  description: REST API documentation
+  version: 1.0.0
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+  - url: http://localhost:4000
+    description: Internal staging server for testing
+paths:
+  /api/v1/auth/register:
+    post:
+      tags:
+        - AUTH
+      summary: Create new user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                username:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        201:
+          content:
+            application/json:
+              examples:
+                  Registered successfully:
+                    value: Empty response
+        401:
+          content:
+            application/json:
+              examples:
+                Invalid request body:
+                  value:
+                    error:
+                      id: 100
+                Email already exists:
+                  value:
+                    error:
+                      id: 104 
+                Username already exists:
+                  value:
+                    error:
+                      id: 105
+
+  /api/v1/auth/login:
+    post:
+      tags:
+        - AUTH
+      summary: Authenticate user using email and password
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        200:
+          headers:
+            Set-Cookie:
+              type: string
+              description: Set authorization cookie
+        401:
+          content:
+            application/json:
+              examples:
+                Invalid request body:
+                  value:
+                    error:
+                      id: 100       
+                Invalid credentials:
+                  value:
+                    error:
+                      id: 102
+        403:
+          content:
+            application/json:
+              examples:
+                Email not confirmed yet:
+                  value:
+                    error:
+                      id: 110
+
+  /api/v1/auth/login-google:
+      post:
+        tags:
+          - AUTH
+        summary: Authenticate user using Google account
+        requestBody:
+          content:
+            application/json:
+              schema:
+                properties:
+                  token:
+                    type: string
+        responses:
+          200:
+            headers:
+              Set-Cookie:
+                type: string
+                description: Set authorization cookie
+          401:
+            content:
+              application/json:
+                examples:
+                  Invalid request body:
+                    value:
+                      error:
+                        id: 100       
+                  Invalid credentials:
+                    value:
+                      error:
+                        id: 102
+                  Email already exists:
+                    value:
+                      error:
+                        id: 104
+  /api/v1/auth/login-github:
+      post:
+        tags:
+          - AUTH
+        summary: Authenticate user using GitHub account
+        requestBody:
+          content:
+            application/json:
+              schema:
+                properties:
+                  code:
+                    type: string
+        responses:
+          200:
+            headers:
+              Set-Cookie:
+                type: string
+                description: Set authorization cookie
+          401:
+            content:
+              application/json:
+                examples:
+                  Invalid request body:
+                    value:
+                      error:
+                        id: 100       
+                  Invalid credentials:
+                    value:
+                      error:
+                        id: 102
+                  Email already exists:
+                    value:
+                      error:
+                        id: 104
