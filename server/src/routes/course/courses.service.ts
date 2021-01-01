@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
+import { CreateCourseDTO } from './dto/create.dto';
 import { GetCourseDTO } from './dto/get.dto';
 import { ICourse } from './interfaces/ICourse';
 
@@ -18,5 +19,7 @@ export class CoursesService {
         return course;
     }
 
-    public async create(data: )
+    public async create(data: CreateCourseDTO): Promise<ICourse> {
+        
+    }
 }
