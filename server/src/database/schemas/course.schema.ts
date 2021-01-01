@@ -1,7 +1,7 @@
 import { Schema } from 'mongoose';
 import { Constants } from '../../common/constants';
 
-export const UserSchema = new Schema({
+export const CourseSchema = new Schema({
     authorId: {
         type: String,
         required: true
@@ -29,6 +29,15 @@ export const UserSchema = new Schema({
         type: Number,
         default: 0
     },
+    level: {
+        type: String,
+        enum: [
+            Constants.COURSE_LEVEL.BEGINNER,
+            Constants.COURSE_LEVEL.INTERMEDIATE,
+            Constants.COURSE_LEVEL.ADVANCED
+        ],
+        required: true
+    },
     createdAt: {
         type: Number,
         default: Date.now()
@@ -38,6 +47,14 @@ export const UserSchema = new Schema({
         default: Date.now()
     },
     description: {
+        type: String,
+        required: true
+    },
+    duration: {
+        type: Number,
+        required: true
+    },
+    image: {
         type: String,
         required: true
     }
