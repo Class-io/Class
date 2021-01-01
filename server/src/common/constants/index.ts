@@ -6,6 +6,7 @@ import TOKEN from './token';
 import EVENT from './event';
 import TIME from './time';
 import ACCOUNT_TYPE from './account-type';
+import RATING from './rating';
 
 export const Constants = {
     APP_MODE,
@@ -15,5 +16,6 @@ export const Constants = {
     TOKEN,
     EVENT,
     TIME,
-    ACCOUNT_TYPE
+    ACCOUNT_TYPE,
+    RATING
 } as const;
