@@ -17,27 +17,31 @@ export class AuthController {
     constructor(private readonly _authService: AuthService) {}
     
     @Post(Constants.ENDPOINT.AUTH.REGISTER)
-    public async register(@Body(new ValidationPipe(RegisterValidationSchema)) body: RegisterRequestDTO): Promise<void> {
+    public async register(@Body(new ValidationPipe(RegisterValidationSchema)) body: RegisterRequestDTO) {
         await this._authService.register(body);
     }
 
     @Post(Constants.ENDPOINT.AUTH.LOGIN)
     @HttpCode(200)
-    public async login(@Res({ passthrough: true }) response: Response, @Body(new ValidationPipe(LoginValidationSchema)) body: LoginRequestDTO): Promise<void> {
+    public async login(@Res({ passthrough: true }) response: Response, @Body(new ValidationPipe(LoginValidationSchema)) body: LoginRequestDTO) {
         await this._authService.login(body, response);
     }
 
     @Post(Constants.ENDPOINT.AUTH.LOGIN_GOOGLE)
     @HttpCode(200)
-    public async loginWithGoogle(@Res({ passthrough: true }) response: Response, @Body(new ValidationPipe(GoogleLoginValidationSchema)) body: GoogleLoginRequestDTO): Promise<void> {
+    public async loginWithGoogle(@Res({ passthrough: true }) response: Response, @Body(new ValidationPipe(GoogleLoginValidationSchema)) body: GoogleLoginRequestDTO) {
         await this._authService.loginWithGoogle(body, response);
     }
 
     @Post(Constants.ENDPOINT.AUTH.LOGIN_GITHUB)
     @HttpCode(200)
-    public async loginWithGithub(@Res({ passthrough: true }) response: Response, @Body(new ValidationPipe(GithubLoginValidationSchema)) body: GithubLoginRequestDTO): Promise<void> {
+    public async loginWithGithub(@Res({ passthrough: true }) response: Response, @Body(new ValidationPipe(GithubLoginValidationSchema)) body: GithubLoginRequestDTO) {
         await this._authService.loginWithGithub(body, response);
     }
 
     @Post(Constants.ENDPOINT.AUTH.LOGOUT)
+    @HttpCode(200)
+    public logout(@Res({ passthrough: true }) response: Response) {
+        this._authService.logout(response);
+    }
 }
