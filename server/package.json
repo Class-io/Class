@@ -11,6 +11,7 @@
     "start:dev": "cross-env APP_MODE=development nodemon --config nodemon.json",
     "start:prod": "cross-env APP_MODE=production node dist/main",
     "seed:user": "nestjs-command seed:user",
+    "seed:course": "nestjs-command seed:course",
     "test": "cross-env APP_MODE=testing jest",
     "lint": "eslint src"
   },

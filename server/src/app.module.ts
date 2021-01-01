@@ -10,12 +10,14 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
 import { EventModule } from './events/event.module';
 import { AccountModule } from './routes/account/account.module';
 import { CoursesModule } from './routes/course/courses.module';
+import { CourseSeederModule } from './database/seeders/course/course-seeder.module';
 
 @Module({
   imports: [
     MongooseModule.forRoot(config.DATABASE.URL, { dbName: config.DATABASE.NAME, useFindAndModify: false }),
     EventEmitterModule.forRoot(),
     UserSeederModule,
+    CourseSeederModule,
     AuthModule,
     AccountModule,
     UsersModule,
