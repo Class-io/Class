@@ -1,5 +1,3 @@
-# Backend
-
 ## Technologies used
 * NodeJS
 * NestJS
