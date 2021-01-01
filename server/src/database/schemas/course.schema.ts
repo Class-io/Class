@@ -29,9 +29,13 @@ export const CourseSchema = new Schema({
         ],
         default: Constants.COURSE_RATING.EMPTY
     },
-    reviewsNumber: {
-        type: Number,
-        default: 0
+    topic: {
+        type: String,
+        enum: [
+            Constants.COURSE_TOPIC.JAVASCRIPT,
+            Constants.COURSE_TOPIC.TYPESCRIPT
+        ],
+        required: true
     },
     level: {
         type: String,
@@ -42,13 +46,9 @@ export const CourseSchema = new Schema({
         ],
         required: true
     },
-    createdAt: {
+    reviewsNumber: {
         type: Number,
-        default: Date.now()
-    },
-    updatedAt: {
-        type: Number,
-        default: Date.now()
+        default: 0
     },
     description: {
         type: String,
@@ -62,12 +62,12 @@ export const CourseSchema = new Schema({
         type: String,
         required: true
     },
-    topic: {
-        type: String,
-        enum: [
-            Constants.COURSE_TOPIC.JAVASCRIPT,
-            Constants.COURSE_TOPIC.TYPESCRIPT
-        ],
-        required: true
-    }
+    createdAt: {
+        type: Number,
+        default: Date.now()
+    },
+    updatedAt: {
+        type: Number,
+        default: Date.now()
+    },
 });
