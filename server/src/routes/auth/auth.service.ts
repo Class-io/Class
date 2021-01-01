@@ -11,6 +11,7 @@ import { GoogleLoginHandler } from './handlers/google-login.handler';
 import { GithubLoginRequestDTO } from './dto/github.dto';
 import { GithubLoginHandler } from './handlers/github-login.handler';
 import { Response } from 'express';
+import { LogoutHandler } from './handlers/logout.handler';
 
 @Injectable()
 export class AuthService {
@@ -21,14 +22,18 @@ export class AuthService {
     }
 
     public async login(input: LoginRequestDTO, response: Response): Promise<void> {
-        return new LoginHandler(this._usersService, this._jwtService).login(input, response);
+        new LoginHandler(this._usersService, this._jwtService).login(input, response);
     }
     
     public async loginWithGoogle(input: GoogleLoginRequestDTO, response: Response): Promise<void> {
-        return new GoogleLoginHandler(this._usersService, this._jwtService).loginWithGoogle(input, response);
+        new GoogleLoginHandler(this._usersService, this._jwtService).loginWithGoogle(input, response);
     }
 
     public async loginWithGithub(input: GithubLoginRequestDTO, response: Response): Promise<void> {
-        return new GithubLoginHandler(this._usersService, this._jwtService).loginWithGithub(input, response);
+        new GithubLoginHandler(this._usersService, this._jwtService).loginWithGithub(input, response);
+    }
+
+    public logout(response: Response): void {
+        new LogoutHandler().logout(response);
     }
 }
