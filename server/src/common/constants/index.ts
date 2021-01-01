@@ -7,6 +7,7 @@ import EVENT from './event';
 import TIME from './time';
 import ACCOUNT_TYPE from './account-type';
 import RATING from './rating';
+import COURSE_LEVEL from './course-level';
 
 export const Constants = {
     APP_MODE,
@@ -17,5 +18,6 @@ export const Constants = {
     EVENT,
     TIME,
     ACCOUNT_TYPE,
-    RATING
+    RATING,
+    COURSE_LEVEL
 } as const;
