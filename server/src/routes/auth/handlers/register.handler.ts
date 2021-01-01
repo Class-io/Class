@@ -38,6 +38,6 @@ export class RegisterHandler {
     }
     
     private _sendConfirmationCode(): void {
-        this._eventEmitter.emit(Constants.Event.SEND_CONFIRMATION_CODE, { id: this._user.id, email: this._user.email });
+        this._eventEmitter.emit(Constants.EVENT.SEND_CONFIRMATION_CODE, { id: this._user.id, email: this._user.email });
     }
 }

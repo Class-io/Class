@@ -1,19 +1,19 @@
-import AppMode from './app-mode';
-import DefaultException from './default-exception';
-import Exception from './exception';
-import Endpoint from './endpoint';
-import Token from './token';
-import Event from './event';
-import Time from './time';
-import AccountType from './account-type';
+import APP_MODE from './app-mode';
+import DEFAULT_EXCEPTION from './default-exception';
+import EXCEPTION from './exception';
+import ENDPOINT from './endpoint';
+import TOKEN from './token';
+import EVENT from './event';
+import TIME from './time';
+import ACCOUNT_TYPE from './account-type';
 
 export const Constants = {
-    AppMode,
-    DefaultException,
-    Exception,
-    Endpoint,
-    Token,
-    Event,
-    Time,
-    AccountType
+    APP_MODE,
+    DEFAULT_EXCEPTION,
+    EXCEPTION,
+    ENDPOINT,
+    TOKEN,
+    EVENT,
+    TIME,
+    ACCOUNT_TYPE
 } as const;

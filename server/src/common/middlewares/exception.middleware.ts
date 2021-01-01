@@ -5,9 +5,9 @@ import { BaseException } from "../exceptions/base.exception";
 
 @Catch()
 export class ExceptionMiddleware implements ExceptionFilter {
-    private _id: number = Constants.DefaultException.ID;
-    private _status: number = Constants.DefaultException.STATUS;
-    private _message: string = Constants.DefaultException.MESSAGE;
+    private _id: number = Constants.DEFAULT_EXCEPTION.ID;
+    private _status: number = Constants.DEFAULT_EXCEPTION.STATUS;
+    private _message: string = Constants.DEFAULT_EXCEPTION.MESSAGE;
 
     public catch(exception: unknown, host: ArgumentsHost): void {
         const ctx = host.switchToHttp();
@@ -17,7 +17,7 @@ export class ExceptionMiddleware implements ExceptionFilter {
 
         this._sendResponse(response);
         
-        Logger.error(`Exception occured: ${this._message}`);
+        Logger.error(`EXCEPTION occured: ${this._message}`);
     }
 
     private _updateFieldsBasedOnExceptionType(exception: unknown): void {

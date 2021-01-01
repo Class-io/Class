@@ -9,7 +9,7 @@ import { InvalidCredentialsException } from '../../../common/exceptions/invalid-
 
 export class GoogleLoginHandler extends BaseLoginHandler {
     private readonly _client = new OAuth2Client(config.AUTH.GOOGLE_CLIENT_ID);
-    protected readonly _accountType = Constants.AccountType.GOOGLE;
+    protected readonly _accountType = Constants.ACCOUNT_TYPE.GOOGLE;
 
     public async loginWithGoogle(input: GoogleLoginRequestDTO, response: Response): Promise<void> {
         await this._getPayloadFromTokenOrThrowException(input.token)

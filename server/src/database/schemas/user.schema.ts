@@ -26,8 +26,8 @@ export const UserSchema = new Schema({
     },
     accountType: {
         type: String,
-        enum: [Constants.AccountType.REGULAR, Constants.AccountType.GOOGLE, Constants.AccountType.GITHUB],
-        default: Constants.AccountType.REGULAR
+        enum: [Constants.ACCOUNT_TYPE.REGULAR, Constants.ACCOUNT_TYPE.GOOGLE, Constants.ACCOUNT_TYPE.GITHUB],
+        default: Constants.ACCOUNT_TYPE.REGULAR
     },
     confirmationCode: {
         code: {

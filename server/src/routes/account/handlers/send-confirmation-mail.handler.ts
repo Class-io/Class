@@ -22,6 +22,6 @@ export class SendConfirmationMailHandler extends BaseAccountHandler {
     }
 
     private _sendConfirmationCode(id: string, email: string): void {
-        this._eventEmitter.emit(Constants.Event.SEND_CONFIRMATION_CODE, { id, email });
+        this._eventEmitter.emit(Constants.EVENT.SEND_CONFIRMATION_CODE, { id, email });
     }
 }

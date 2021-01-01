@@ -17,7 +17,7 @@ export class BaseAccountHandler {
     }
 
     protected _throwExceptionWhenAccountIsFromSocialMedia(user: IUser): void {
-        if(user.accountType !== Constants.AccountType.REGULAR) throw new InvalidAccountTypeException();
+        if(user.accountType !== Constants.ACCOUNT_TYPE.REGULAR) throw new InvalidAccountTypeException();
     }
 
     protected _throwExceptionWhenEmailIsAlreadyConfirmed(user: IUser): void {

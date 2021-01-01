@@ -9,7 +9,7 @@ import { InvalidCredentialsException } from '../../../common/exceptions/invalid-
 export class GithubLoginHandler extends BaseLoginHandler {
     private readonly ACCESS_TOKEN_URL = 'https://github.com/login/oauth/access_token';
     private readonly PAYLOAD_URL = 'https://api.github.com/user';
-    protected readonly _accountType = Constants.AccountType.GITHUB;
+    protected readonly _accountType = Constants.ACCOUNT_TYPE.GITHUB;
 
     public async loginWithGithub(input: GithubLoginRequestDTO, response: Response): Promise<void> {
         await this._getPayloadFromTokenOrThrowException(input.code);
