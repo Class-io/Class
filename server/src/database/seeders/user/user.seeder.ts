@@ -15,7 +15,7 @@ export class UserSeeder {
     constructor(private readonly _usersService: UsersService) {}
 
     @Command({ command: 'seed:user', describe: 'Create new user', autoExit: true })
-    public async run(@Option({ name: 'tutor', alias: 't', type: 'boolean' }) isTutor: boolean): Promise<void> {
+    public async run(@Option({ name: 'tutor', alias: 't', type: 'boolean', default: false }) isTutor: boolean): Promise<void> {
         this._generateFakeData(isTutor);
 
         await this._createFakeDataWithHashedPassword();
