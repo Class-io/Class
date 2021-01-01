@@ -17,13 +17,13 @@ export const UserSchema = new Schema({
     rating: {
         type: Number,
         enum: [
-            Constants.RATING.EMPTY, Constants.RATING.ONE_STAR,
-            Constants.RATING.ONE_AND_HALF_STARS, Constants.RATING.TWO_STARS,
-            Constants.RATING.TWO_AND_HALF_STARS, Constants.RATING.THREE_STARS,
-            Constants.RATING.THREE_AND_HALF_STARS, Constants.RATING.FOUR_STARS,
-            Constants.RATING.FOUR_AND_HALF_STARS, Constants.RATING.FIVE_STARS
+            Constants.COURSE_RATING.EMPTY, Constants.COURSE_RATING.ONE_STAR,
+            Constants.COURSE_RATING.ONE_AND_HALF_STARS, Constants.COURSE_RATING.TWO_STARS,
+            Constants.COURSE_RATING.TWO_AND_HALF_STARS, Constants.COURSE_RATING.THREE_STARS,
+            Constants.COURSE_RATING.THREE_AND_HALF_STARS, Constants.COURSE_RATING.FOUR_STARS,
+            Constants.COURSE_RATING.FOUR_AND_HALF_STARS, Constants.COURSE_RATING.FIVE_STARS
         ],
-        default: Constants.RATING.EMPTY
+        default: Constants.COURSE_RATING.EMPTY
     },
     reviewsNumber: {
         type: Number,
