@@ -2,7 +2,7 @@ import { Constants } from "../constants";
 import { BaseException } from "./base.exception";
 
 export class InputNotValidException extends BaseException {
-    id = Constants.Exception.INPUT_NOT_VALID;
+    id = Constants.EXCEPTION.INPUT_NOT_VALID;
     statusCode = 401;
     message = '';
 

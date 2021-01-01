@@ -12,7 +12,7 @@ export class EventService {
     private readonly logger: Logger = new Logger();
     constructor(private readonly _usersSerivce: UsersService, private readonly _mailService: MailService) {}
 
-    @OnEvent(Constants.Event.SEND_CONFIRMATION_CODE)
+    @OnEvent(Constants.EVENT.SEND_CONFIRMATION_CODE)
     public async sendConfirmationCode(payload: ISendConfirmationCodeEventPayload): Promise<void> {
         const confirmationCode = generateConfirmationCode();
 

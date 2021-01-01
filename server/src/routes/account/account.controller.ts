@@ -17,25 +17,25 @@ import { ResetPasswordRequestDTO } from './dto/reset-password.dto';
 export class AccountController {
     constructor(private readonly _accountService: AccountService) {}
     
-    @Post(Constants.Endpoint.Account.SEND_CONFIRMATION_MAIL)
+    @Post(Constants.ENDPOINT.Account.SEND_CONFIRMATION_MAIL)
     @HttpCode(200)
     public sendConfirmationMail(@Body(new ValidationPipe(SendConfirmationMailValidationSchema)) body: SendConfirmationMailRequestDTO): Promise<void> {
         return this._accountService.sendConfirmationMail(body);
     }
 
-    @Post(Constants.Endpoint.Account.CONFIRM_EMAIL)
+    @Post(Constants.ENDPOINT.Account.CONFIRM_EMAIL)
     @HttpCode(200)
     public confirmEmail(@Body(new ValidationPipe(ConfirmEmailValidationSchema)) body: ConfirmEmailRequestDTO): Promise<void> {
         return this._accountService.confirmEmail(body);
     }
 
-    @Post(Constants.Endpoint.Account.RESET_PASSWORD)
+    @Post(Constants.ENDPOINT.Account.RESET_PASSWORD)
     @HttpCode(200)
     public resetPassword(@Body(new ValidationPipe(ResetPasswordValidationSchema)) body: ResetPasswordRequestDTO): Promise<void> {
         return this._accountService.resetPassword(body);
     }
 
-    @Post(Constants.Endpoint.Account.CHANGE_PASSWORD)
+    @Post(Constants.ENDPOINT.Account.CHANGE_PASSWORD)
     @HttpCode(200)
     @UseGuards(JwtGuard)
     public changePassword(@Req() request: Request, @Body(new ValidationPipe(ChangePasswordValidationSchema)) body: ChangePasswordRequestDTO): Promise<void> {
