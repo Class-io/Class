@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+2import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { CreateUserDTO } from "./dto/create.dto";
@@ -10,18 +10,18 @@ import { IUser } from "./interfaces/IUser";
 export class UsersService {
     constructor(@InjectModel('User') private readonly _userModel: Model<IUser>) {}
 
-    public async getMany(searchData: GetUserDTO = {}): Promise<IUser[]> {
-        const users: IUser[] = await this._userModel.find(searchData);
+    public async getMany(data: GetUserDTO = {}): Promise<IUser[]> {
+        const users = await this._userModel.find(data);
         return users;
     }
 
-    public async get(searchData: GetUserDTO = {}): Promise<IUser | null> {
-        const user: IUser | null = await this._userModel.findOne(searchData);
+    public async get(data: GetUserDTO = {}): Promise<IUser | null> {
+        const user = await this._userModel.findOne(data);
         return user;
     }
 
     public async create(data: CreateUserDTO): Promise<IUser> {
-        const user: IUser = new this._userModel(data);
+        const user = new this._userModel(data);
         return user.save();
     }
 
