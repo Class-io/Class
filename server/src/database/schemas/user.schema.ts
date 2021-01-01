@@ -26,7 +26,11 @@ export const UserSchema = new Schema({
     },
     accountType: {
         type: String,
-        enum: [Constants.ACCOUNT_TYPE.REGULAR, Constants.ACCOUNT_TYPE.GOOGLE, Constants.ACCOUNT_TYPE.GITHUB],
+        enum: [
+            Constants.ACCOUNT_TYPE.REGULAR,
+            Constants.ACCOUNT_TYPE.GOOGLE,
+            Constants.ACCOUNT_TYPE.GITHUB
+        ],
         default: Constants.ACCOUNT_TYPE.REGULAR
     },
     confirmationCode: {
@@ -38,5 +42,9 @@ export const UserSchema = new Schema({
             type: Number,
             default: Date.now()
         }
+    },
+    courses: {
+        type: [String],
+        default: []
     }
 });
