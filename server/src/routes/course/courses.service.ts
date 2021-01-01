@@ -3,6 +3,7 @@ import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { CreateCourseDTO } from './dto/create.dto';
 import { GetCourseDTO } from './dto/get.dto';
+import { UpdateCourseDTO } from './dto/update.dto';
 import { ICourse } from './interfaces/ICourse';
 
 @Injectable()
