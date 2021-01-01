@@ -14,6 +14,10 @@ export const CourseSchema = new Schema({
         type: String,
         required: true
     },
+    price: {
+        type: Number,
+        required: true
+    },
     rating: {
         type: Number,
         enum: [
@@ -56,6 +60,14 @@ export const CourseSchema = new Schema({
     },
     image: {
         type: String,
+        required: true
+    },
+    topic: {
+        type: String,
+        enum: [
+            Constants.COURSE_TOPIC.JAVASCRIPT,
+            Constants.COURSE_TOPIC.TYPESCRIPT
+        ],
         required: true
     }
 });
