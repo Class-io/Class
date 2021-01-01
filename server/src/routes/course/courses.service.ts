@@ -20,6 +20,15 @@ export class CoursesService {
     }
 
     public async create(data: CreateCourseDTO): Promise<ICourse> {
-        
+        const course = new this._courseModel(data);
+        return course.save();
+    }
+
+    public async deleteById(id: string): Promise<void> {
+        await this._courseModel.deleteOne({ _id: id });
+    }
+
+    public async updateById(id: string, data: UpdateCourseDTO): Promise<void> {
+        await this._courseModel.findByIdAndUpdate(id, data);
     }
 }
