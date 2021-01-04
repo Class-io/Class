@@ -11,6 +11,7 @@ import { EventModule } from './events/event.module';
 import { AccountModule } from './routes/account/account.module';
 import { CourseModule } from './database/models/course/course.module';
 import { CourseSeederModule } from './database/seeders/course/course-seeder.module';
+import { ImageModule } from './services/image/image.module';
 
 @Module({
   imports: [
@@ -24,7 +25,8 @@ import { CourseSeederModule } from './database/seeders/course/course-seeder.modu
     CourseModule,
     ScheduleModule.forRoot(),
     TaskModule,
-    EventModule
+    EventModule,
+    ImageModule
   ],
 })
 

@@ -6,5 +6,7 @@ import { CloudinaryProvider } from './providers/cloudinary.provider';
 export class ImageService {
     constructor(@Inject(CloudinaryProvider) private readonly _imageProvider: IImageProvider) {}
 
-    
+    public async uploadImage(): Promise<void> {
+        this._imageProvider.uploadImage();
+    }
 }
