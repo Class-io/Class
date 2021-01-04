@@ -1,27 +1,27 @@
 import Token from '../../../common/constants/token';
 import { JwtService } from '../../../services/jwt/jwt.service';
 import { IUser } from '../../../database/models/user/interfaces/IUser';
-import { UsersService } from '../../user/users.service';
 import { IAccessTokenPayload } from '../interfaces/IAccessTokenPayload';
 import { AuthTokenPayload } from '../../../types';
 import { EmailAlreadyExistsException } from '../../../common/exceptions/email-already-exists.exception';
 import AccountType from '../../../common/constants/account-type';
 import { Response } from 'express';
+import { IUserRepository } from '../../../database/models/user/interfaces/IUserRepository';
 
 export abstract class BaseLoginHandler {
     protected abstract readonly _accountType: AccountType;
     protected _payload: AuthTokenPayload;
     protected _user: IUser;
 
-    constructor(protected readonly _usersService: UsersService, protected readonly _jwtService: JwtService) {}
+    constructor(protected readonly _userRepository: IUserRepository, protected readonly _jwtService: JwtService) {}
 
     protected async _createUserInDatabaseIfDoesNotExist(): Promise<void> {
-        this._user = await this._usersService.get({ email: this._payload.email });
+        this._user = await this._userRepository.get({ email: this._payload.email });
         if(!this._user) this._createUser();
     }
 
     protected async _throwExceptionWhenEmailExistsInDatabase(): Promise<void> {
-        this._user = await this._usersService.get({ email: this._payload.email });
+        this._user = await this._userRepository.get({ email: this._payload.email });
         const userHasDifferentAccount = this._user && this._user.accountType !== this._accountType;
 
         if(userHasDifferentAccount) throw new EmailAlreadyExistsException();
@@ -35,7 +35,7 @@ export abstract class BaseLoginHandler {
     }
 
     protected async _createUser(): Promise<void> {
-        this._user = await this._usersService.create({
+        this._user = await this._userRepository.create({
             email: this._payload.email,
             username: this._payload.email,
             isConfirmed: true,
