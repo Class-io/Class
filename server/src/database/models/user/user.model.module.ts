@@ -9,4 +9,4 @@ import { UserRepository } from './user.repository';
     exports: [UserRepository]
 })
 
-export class UserModule {}
+export class UserModelModule {}

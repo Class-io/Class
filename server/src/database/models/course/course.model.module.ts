@@ -9,4 +9,4 @@ import { CourseRepository } from './course.repository';
     exports: [CourseRepository]
 })
 
-export class CourseModule {}
+export class CourseModelModule {}
