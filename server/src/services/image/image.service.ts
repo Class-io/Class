@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
+import { IImage } from './interfaces/IImage';
 import { IImageProvider } from './interfaces/IImageProvider';
 import { CloudinaryProvider } from './providers/cloudinary.provider';
 
@@ -8,5 +9,9 @@ export class ImageService {
 
     public async uploadImage(): Promise<void> {
         this._imageProvider.uploadImage();
+    }
+
+    private _validateImageFormat(image: IImage): void {
+        
     }
 }
