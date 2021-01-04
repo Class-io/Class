@@ -1,7 +1,7 @@
 import { CanActivate, ExecutionContext, Inject, Injectable } from "@nestjs/common";
 import { UserRepository } from '../../database/models/user/user.repository';
 import { IAccessTokenPayload } from "../../routes/auth/interfaces/IAccessTokenPayload";
-import { JwtService } from "../../providers/jwt/jwt.service";
+import { JwtService } from "../../services/jwt/jwt.service";
 import Token from "../constants/token";
 import { UserNotFoundException } from '../exceptions/user-not-found-exception';
 
