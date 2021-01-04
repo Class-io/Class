@@ -10,7 +10,11 @@ export class UserService {
 
     public async updateAvatar(request: Request, image: IImage): Promise<void> {
         const imageName = await this._imageService.uploadImage(image);
+        await this._changeAvatarInDatabase(request.user.id, imageName);
+    }
 
-        await this._userRepository.updateById(request.user.id, { avatar: imageName })
+    private async _changeAvatarInDatabase(id: string, imageName: string): Promise<void> {
+        const avatarUrl = `avatars/${imageName}.jpg`;
+        await this._userRepository.updateById(id, { avatar: avatarUrl })
     }
 }
