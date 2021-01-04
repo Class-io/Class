@@ -7,14 +7,18 @@ import * as sharp from 'sharp';
 
 @Injectable()
 export class ImageService {
+    private _imageName: string;
+
     constructor(@Inject(CloudinaryProvider) private readonly _cloudProvider: ICloudProvider) {}
 
-    public async uploadImage(image: IImage): Promise<void> {
+    public async uploadImage(image: IImage): Promise<string> {
         this._validateImageFormat(image);
 
         await this._prepareImage(image);
 
         await this._cloudProvider.uploadImage(image);
+
+        return this._imageName;
     }
 
     private _validateImageFormat(image: IImage): void {
@@ -39,7 +43,9 @@ export class ImageService {
     }
 
     private _renameImage(image: IImage): void {
-        const generatedName = Math.random().toString().substr(10) + Date.now() + '.jpeg';
+        const generatedName = Math.random().toString().substr(10) + Date.now();
+
         image.originalname = generatedName;
+        this._imageName = generatedName;
     }
 }
