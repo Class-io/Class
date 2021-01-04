@@ -12,18 +12,24 @@ import { AccountModule } from './routes/account/account.module';
 import { CourseModelModule } from './database/models/course/course.model.module';
 import { CourseSeederModule } from './database/seeders/course/course-seeder.module';
 import { ImageModule } from './services/image/image.module';
+import { UserModule } from './routes/user/user.module';
 
 @Module({
   imports: [
     MongooseModule.forRoot(config.DATABASE.URL, { dbName: config.DATABASE.NAME, useFindAndModify: false }),
     EventEmitterModule.forRoot(),
+    ScheduleModule.forRoot(),
+
     UserSeederModule,
+    UserModelModule,
+    UserModule,
+
     CourseSeederModule,
+    CourseModelModule,
+
     AuthModule,
     AccountModule,
-    UserModelModule,
-    CourseModelModule,
-    ScheduleModule.forRoot(),
+    
     TaskModule,
     EventModule,
     ImageModule
