@@ -11,5 +11,8 @@ export default {
         CONFIRM_EMAIL: '/account/confirm-email',
         RESET_PASSWORD: '/account/reset-password',
         SEND_CONFIRMATION_MAIL: '/account/send-confirmation-mail'
+    },
+    USER: {
+        AVATAR: '/user/avatar'
     }
 } as const;
