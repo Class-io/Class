@@ -1,20 +1,20 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { InvalidImageFormatException } from '../../common/exceptions/invalid-image-format.exception';
 import { IImage } from './interfaces/IImage';
-import { IImageProvider } from './interfaces/IImageProvider';
+import { ICloudProvider } from './interfaces/ICloudProvider';
 import { CloudinaryProvider } from './providers/cloudinary.provider';
 import * as sharp from 'sharp';
 
 @Injectable()
 export class ImageService {
-    constructor(@Inject(CloudinaryProvider) private readonly _imageProvider: IImageProvider) {}
+    constructor(@Inject(CloudinaryProvider) private readonly _cloudProvider: ICloudProvider) {}
 
     public async uploadImage(image: IImage): Promise<void> {
         this._validateImageFormat(image);
 
         await this._prepareImage(image);
 
-        await this._imageProvider.uploadImage(image);
+        await this._cloudProvider.uploadImage(image);
     }
 
     private _validateImageFormat(image: IImage): void {

@@ -1,5 +1,5 @@
 import { IImage } from './IImage';
 
-export interface IImageProvider {
+export interface ICloudProvider {
     uploadImage(image: IImage): Promise<void>;
 }
