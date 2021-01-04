@@ -9,12 +9,6 @@ export class UserController {
     @Put(Constants.ENDPOINT.USER.AVATAR)
     @UseInterceptors(FileInterceptor('file'))
     public async updateAvatar(@Res() res: Response, @UploadedFile() file: IImage) {
-        console.log(file);
 
-        if(!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
-            res.send('Wrong file. Only jpg, jped and png allowed!');
-        } else {
-            res.send('Right file');
-        }
     }   
 }
