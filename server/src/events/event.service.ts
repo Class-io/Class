@@ -2,7 +2,7 @@ import { Global, Injectable, Logger } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
 import { Constants } from '../common/constants';
 import { generateConfirmationCode } from '../common/helpers/generate-confirmation-code';
-import { IUserRepository } from '../database/models/user/interfaces/IUserRepository';
+import { UserRepository } from '../database/models/user/user.repository';
 import { MailService } from '../services/mail/mail.service';
 import { ISendConfirmationCodeEventPayload } from './interfaces/ISendConfirmationCodeEventPayload';
 
@@ -10,7 +10,7 @@ import { ISendConfirmationCodeEventPayload } from './interfaces/ISendConfirmatio
 @Global()
 export class EventService {
     private readonly logger: Logger = new Logger();
-    constructor(private readonly _userRepository: IUserRepository, private readonly _mailService: MailService) {}
+    constructor(private readonly _userRepository: UserRepository, private readonly _mailService: MailService) {}
 
     @OnEvent(Constants.EVENT.SEND_CONFIRMATION_CODE)
     public async sendConfirmationCode(payload: ISendConfirmationCodeEventPayload): Promise<void> {

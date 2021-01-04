@@ -3,16 +3,16 @@ import { Injectable } from '@nestjs/common';
 import { random, internet } from 'faker';
 import { hashString } from '../../../common/helpers/hash-string';
 import { sleep } from '../../../common/helpers/sleep';
-import { UsersService } from '../../../routes/user/users.service';
 import { RegisterRequestDTO } from '../../../routes/auth/dto/register.dto';
 import { logger } from '../../../common/utils/logger';
+import { UserRepository } from '../../models/user/user.repository';
 
 @Injectable()
 export class UserSeeder {
     private _fakeUserData: RegisterRequestDTO;
     private _fakeUserDataWithHashedPassword: RegisterRequestDTO;
 
-    constructor(private readonly _usersService: UsersService) {}
+    constructor(private readonly _userRepository: UserRepository) {}
 
     @Command({ command: 'seed:user', describe: 'Create new user', autoExit: true })
     public async run(@Option({ name: 'tutor', alias: 't', type: 'boolean', default: false }) isTutor: boolean): Promise<void> {
@@ -41,7 +41,7 @@ export class UserSeeder {
 
     private async _saveUserAccount(): Promise<void> {
         try {
-            await this._usersService.create(this._fakeUserDataWithHashedPassword);
+            await this._userRepository.create(this._fakeUserDataWithHashedPassword);
         } catch(error) {
             logger.red(error);
         }

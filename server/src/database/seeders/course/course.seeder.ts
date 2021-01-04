@@ -5,14 +5,14 @@ import { logger } from '../../../common/utils/logger';
 import { CreateCourseDTO } from '../../../routes/course/dto/create.dto';
 import { CoursesService } from '../../../routes/course/courses.service';
 import { Constants } from '../../../common/constants';
-import { UsersService } from '../../../routes/user/users.service';
 import { IUser } from '../../models/user/interfaces/IUser';
+import { UserRepository } from '../../models/user/user.repository';
 
 @Injectable()
 export class CourseSeeder {
     private _fakeData: CreateCourseDTO;
 
-    constructor(private readonly _coursesService: CoursesService, private readonly _usersService: UsersService) {}
+    constructor(private readonly _coursesService: CoursesService, private readonly _userRepository: UserRepository) {}
 
     @Command({ command: 'seed:course', describe: 'Create new course', autoExit: true })
     public async run(@Option({ name: 'email', alias: 'e', type: 'string' }) email: string): Promise<void> {
@@ -62,7 +62,7 @@ export class CourseSeeder {
 
     private async _getUserByEmailOrPrintErrorMessage(email: string): Promise<IUser> {
         try {
-            const user = await this._usersService.get({ email });
+            const user = await this._userRepository.get({ email });
 
             if(!user) throw new Error('User with provided email does not exist');
             if(!user.isTutor) throw new Error('Only tutors can have their own courses');

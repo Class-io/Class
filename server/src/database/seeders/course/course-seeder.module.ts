@@ -1,11 +1,11 @@
 import { Module } from "@nestjs/common";
 import { CommandModule } from "nestjs-command";
 import { CoursesModule } from '../../../routes/course/courses.module';
-import { UsersModule } from '../../models/user/user.module';
+import { UserModule } from '../../models/user/user.module';
 import { CourseSeeder } from './course.seeder';
 
 @Module({
-    imports: [CommandModule, CoursesModule, UsersModule],
+    imports: [CommandModule, CoursesModule, UserModule],
     providers: [CourseSeeder],
     exports: [CourseSeeder]
 })

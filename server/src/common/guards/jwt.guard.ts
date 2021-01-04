@@ -1,13 +1,13 @@
 import { CanActivate, ExecutionContext, Inject, Injectable } from "@nestjs/common";
+import { UserRepository } from '../../database/models/user/user.repository';
 import { IAccessTokenPayload } from "../../routes/auth/interfaces/IAccessTokenPayload";
-import { UsersService } from '../../routes/user/users.service';
 import { JwtService } from "../../services/jwt/jwt.service";
 import Token from "../constants/token";
 import { UserNotFoundException } from '../exceptions/user-not-found-exception';
 
 @Injectable()
 export class JwtGuard implements CanActivate {
-    constructor(@Inject('JwtService') private readonly _jwtService: JwtService, @Inject('UsersService') private readonly _usersService: UsersService) {}
+    constructor(@Inject(JwtService) private readonly _jwtService: JwtService, @Inject(UserRepository) private readonly _userRepository: UserRepository) {}
 
     public async canActivate(context: ExecutionContext): Promise<boolean> {
         const token = this._getTokenFromContext(context);
@@ -29,7 +29,7 @@ export class JwtGuard implements CanActivate {
     }
 
     private async _checkIfUsersExistsInDatabase(id: string): Promise<void> {
-        const user = await this._usersService.get({ _id: id, isConfirmed: true });
+        const user = await this._userRepository.get({ _id: id, isConfirmed: true });
         if(!user) throw new UserNotFoundException();
     }
 

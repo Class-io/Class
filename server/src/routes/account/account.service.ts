@@ -9,11 +9,11 @@ import { SendConfirmationMailHandler } from './handlers/send-confirmation-mail.h
 import { ConfirmEmailHandler } from './handlers/confirm-email.handler';
 import { ResetPasswordHandler } from './handlers/reset-password.handler';
 import { ChangePasswordHandler } from './handlers/change-password.handler';
-import { IUserRepository } from '../../database/models/user/interfaces/IUserRepository';
+import { UserRepository } from '../../database/models/user/user.repository';
 
 @Injectable()
 export class AccountService {
-    constructor(private readonly _userRepository: IUserRepository, private readonly _eventEmitter: EventEmitter2) {}
+    constructor(private readonly _userRepository: UserRepository, private readonly _eventEmitter: EventEmitter2) {}
 
     public async sendConfirmationMail(input: SendConfirmationMailRequestDTO): Promise<void> {
         await new SendConfirmationMailHandler(this._userRepository, this._eventEmitter).sendConfirmationMail(input);
