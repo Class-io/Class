@@ -10,7 +10,7 @@ import config from '../../config';
 export class MiddlewareInitiator {
     public static initiate(app: INestApplication): void {
         app.useGlobalFilters(new ExceptionMiddleware());
-
+        
         app.use(cookieParser());
 
         this.createDocumentation(app);

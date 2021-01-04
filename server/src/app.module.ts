@@ -17,6 +17,9 @@ import { UserModule } from './routes/user/user.module';
 @Module({
   imports: [
     MongooseModule.forRoot(config.DATABASE.URL, { dbName: config.DATABASE.NAME, useFindAndModify: false }),
+    AuthModule,
+    AccountModule,
+
     EventEmitterModule.forRoot(),
     ScheduleModule.forRoot(),
 
@@ -27,9 +30,6 @@ import { UserModule } from './routes/user/user.module';
     CourseSeederModule,
     CourseModelModule,
 
-    AuthModule,
-    AccountModule,
-    
     TaskModule,
     EventModule,
     ImageModule
