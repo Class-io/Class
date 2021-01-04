@@ -3,7 +3,7 @@ import { OnEvent } from '@nestjs/event-emitter';
 import { Constants } from '../common/constants';
 import { generateConfirmationCode } from '../common/helpers/generate-confirmation-code';
 import { UserRepository } from '../database/models/user/user.repository';
-import { MailService } from '../services/mail/mail.service';
+import { MailService } from '../providers/mail/mail.service';
 import { ISendConfirmationCodeEventPayload } from './interfaces/ISendConfirmationCodeEventPayload';
 
 @Injectable()

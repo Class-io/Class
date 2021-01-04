@@ -1,7 +1,7 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { RegisterRequestDTO } from "./dto/register.dto";
 import { LoginRequestDTO } from "./dto/login.dto";
-import { JwtService } from "../../services/jwt/jwt.service";
+import { JwtService } from "../../providers/jwt/jwt.service";
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { GoogleLoginRequestDTO } from './dto/google.dto';
 import { RegisterHandler } from './handlers/register.handler';

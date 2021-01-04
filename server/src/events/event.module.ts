@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { UserModule } from '../database/models/user/user.module';
-import { MailModule } from '../services/mail/mail.module';
+import { MailModule } from '../providers/mail/mail.module';
 import { EventService } from './event.service';
 
 @Module({
