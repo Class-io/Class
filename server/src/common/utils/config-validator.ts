@@ -29,6 +29,11 @@ export class ConfigValidator {
                 GITHUB_CLIENT_ID: string().required(),
                 GITHUB_CLIENT_SECRET: string().required()
             },
+            CLOUDINARY: {
+                CLOUD_NAME: string().required(),
+                API_KEY: string().required(),
+                API_SECRET: string().required()
+            },
             DATABASE: {
                 NAME: string(),
                 URL: string().required()

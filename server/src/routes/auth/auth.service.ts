@@ -1,4 +1,4 @@
-import { Inject, Injectable } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { RegisterRequestDTO } from "./dto/register.dto";
 import { LoginRequestDTO } from "./dto/login.dto";
 import { JwtService } from "../../services/jwt/jwt.service";
@@ -18,19 +18,19 @@ export class AuthService {
     constructor(private readonly _userRepository: UserRepository, private readonly _jwtService: JwtService, private readonly _eventEmitter: EventEmitter2) {}
 
     public async register(input: RegisterRequestDTO): Promise<void> {
-        new RegisterHandler(this._userRepository, this._eventEmitter).register(input);
+        await new RegisterHandler(this._userRepository, this._eventEmitter).register(input);
     }
 
     public async login(input: LoginRequestDTO, response: Response): Promise<void> {
-        new LoginHandler(this._userRepository, this._jwtService).login(input, response);
+        await new LoginHandler(this._userRepository, this._jwtService).login(input, response);
     }
     
     public async loginWithGoogle(input: GoogleLoginRequestDTO, response: Response): Promise<void> {
-        new GoogleLoginHandler(this._userRepository, this._jwtService).loginWithGoogle(input, response);
+        await new GoogleLoginHandler(this._userRepository, this._jwtService).loginWithGoogle(input, response);
     }
 
     public async loginWithGithub(input: GithubLoginRequestDTO, response: Response): Promise<void> {
-        new GithubLoginHandler(this._userRepository, this._jwtService).loginWithGithub(input, response);
+        await new GithubLoginHandler(this._userRepository, this._jwtService).loginWithGithub(input, response);
     }
 
     public logout(response: Response): void {

@@ -46,5 +46,9 @@ export const UserSchema = new Schema({
     courses: {
         type: [String],
         default: []
+    },
+    avatar: {
+        type: String,
+        default: 'avatars/default.jpg'
     }
 });

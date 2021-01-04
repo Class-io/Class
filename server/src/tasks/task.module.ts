@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
-import { UserModule } from '../database/models/user/user.module';
+import { UserModelModule } from '../database/models/user/user.model.module';
 import { TasksService } from './task.service';
 
 @Module({
-  imports: [UserModule],
+  imports: [UserModelModule],
   providers: [TasksService],
 })
 

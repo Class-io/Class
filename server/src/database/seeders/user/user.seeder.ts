@@ -6,11 +6,12 @@ import { sleep } from '../../../common/helpers/sleep';
 import { RegisterRequestDTO } from '../../../routes/auth/dto/register.dto';
 import { logger } from '../../../common/utils/logger';
 import { UserRepository } from '../../models/user/user.repository';
+import { CreateUserDTO } from '../../models/user/dto/create.dto';
 
 @Injectable()
 export class UserSeeder {
-    private _fakeUserData: RegisterRequestDTO;
-    private _fakeUserDataWithHashedPassword: RegisterRequestDTO;
+    private _fakeUserData: CreateUserDTO;
+    private _fakeUserDataWithHashedPassword: CreateUserDTO;
 
     constructor(private readonly _userRepository: UserRepository) {}
 
@@ -30,7 +31,8 @@ export class UserSeeder {
             username: random.alphaNumeric(5),
             email: internet.email(),
             password: random.alphaNumeric(5),
-            isTutor: isTutor
+            isTutor: isTutor,
+            isConfirmed: true
         };
     }
 

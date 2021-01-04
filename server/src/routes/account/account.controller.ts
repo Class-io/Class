@@ -18,25 +18,25 @@ export class AccountController {
     constructor(private readonly _accountService: AccountService) {}
     
     @Post(Constants.ENDPOINT.ACCOUNT.SEND_CONFIRMATION_MAIL)
-    @HttpCode(200)
+    @HttpCode(204)
     public sendConfirmationMail(@Body(new ValidationPipe(SendConfirmationMailValidationSchema)) body: SendConfirmationMailRequestDTO) {
         return this._accountService.sendConfirmationMail(body);
     }
 
     @Post(Constants.ENDPOINT.ACCOUNT.CONFIRM_EMAIL)
-    @HttpCode(200)
+    @HttpCode(204)
     public confirmEmail(@Body(new ValidationPipe(ConfirmEmailValidationSchema)) body: ConfirmEmailRequestDTO) {
         return this._accountService.confirmEmail(body);
     }
 
     @Post(Constants.ENDPOINT.ACCOUNT.RESET_PASSWORD)
-    @HttpCode(200)
+    @HttpCode(204)
     public resetPassword(@Body(new ValidationPipe(ResetPasswordValidationSchema)) body: ResetPasswordRequestDTO) {
         return this._accountService.resetPassword(body);
     }
 
     @Post(Constants.ENDPOINT.ACCOUNT.CHANGE_PASSWORD)
-    @HttpCode(200)
+    @HttpCode(204)
     @UseGuards(JwtGuard)
     public changePassword(@Req() request: Request, @Body(new ValidationPipe(ChangePasswordValidationSchema)) body: ChangePasswordRequestDTO) {
         return this._accountService.changePassword(request, body);

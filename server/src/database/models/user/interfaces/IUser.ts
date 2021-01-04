@@ -12,4 +12,6 @@ export interface IUser extends Document {
     readonly isTutor: boolean;
     readonly accountType: AccountType;
     readonly confirmationCode: IConfirmationCode;
+    readonly courses: string[];
+    readonly avatar: string;
 }

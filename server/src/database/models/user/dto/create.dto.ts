@@ -6,4 +6,5 @@ export class CreateUserDTO implements Readonly<CreateUserDTO> {
     password?: string;
     isConfirmed?: boolean;
     accountType?: AccountType;
+    isTutor?: boolean;
 }
