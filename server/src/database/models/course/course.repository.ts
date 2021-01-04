@@ -5,9 +5,10 @@ import { CreateCourseDTO } from './dto/create.dto';
 import { GetCourseDTO } from './dto/get.dto';
 import { UpdateCourseDTO } from './dto/update.dto';
 import { ICourse } from './interfaces/ICourse';
+import { ICourseRepository } from './interfaces/ICourseRepository';
 
 @Injectable()
-export class CoursesService {
+export class CourseRepository implements ICourseRepository {
     constructor(@InjectModel('Course') private readonly _courseModel: Model<ICourse>) {}
 
     public async getMany(data: GetCourseDTO): Promise<ICourse[]> {

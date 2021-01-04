@@ -1,5 +1,4 @@
-import { Injectable } from "@nestjs/common";
-import { UsersService } from "../user/users.service";
+import { Inject, Injectable } from "@nestjs/common";
 import { RegisterRequestDTO } from "./dto/register.dto";
 import { LoginRequestDTO } from "./dto/login.dto";
 import { JwtService } from "../../services/jwt/jwt.service";
@@ -12,25 +11,26 @@ import { GithubLoginRequestDTO } from './dto/github.dto';
 import { GithubLoginHandler } from './handlers/github-login.handler';
 import { Response } from 'express';
 import { LogoutHandler } from './handlers/logout.handler';
+import { UserRepository } from '../../database/models/user/user.repository';
 
 @Injectable()
 export class AuthService {
-    constructor(private readonly _usersService: UsersService, private readonly _jwtService: JwtService, private readonly _eventEmitter: EventEmitter2) {}
+    constructor(private readonly _userRepository: UserRepository, private readonly _jwtService: JwtService, private readonly _eventEmitter: EventEmitter2) {}
 
     public async register(input: RegisterRequestDTO): Promise<void> {
-        new RegisterHandler(this._usersService, this._eventEmitter).register(input);
+        new RegisterHandler(this._userRepository, this._eventEmitter).register(input);
     }
 
     public async login(input: LoginRequestDTO, response: Response): Promise<void> {
-        new LoginHandler(this._usersService, this._jwtService).login(input, response);
+        new LoginHandler(this._userRepository, this._jwtService).login(input, response);
     }
     
     public async loginWithGoogle(input: GoogleLoginRequestDTO, response: Response): Promise<void> {
-        new GoogleLoginHandler(this._usersService, this._jwtService).loginWithGoogle(input, response);
+        new GoogleLoginHandler(this._userRepository, this._jwtService).loginWithGoogle(input, response);
     }
 
     public async loginWithGithub(input: GithubLoginRequestDTO, response: Response): Promise<void> {
-        new GithubLoginHandler(this._usersService, this._jwtService).loginWithGithub(input, response);
+        new GithubLoginHandler(this._userRepository, this._jwtService).loginWithGithub(input, response);
     }
 
     public logout(response: Response): void {

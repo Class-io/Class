@@ -1,5 +1,5 @@
 import { randomBytes } from 'crypto';
-import { IConfirmationCode } from '../../routes/user/interfaces/IConfirmationCode';
+import { IConfirmationCode } from '../../database/models/user/interfaces/IConfirmationCode';
 import { Constants } from '../constants';
 
 export function generateConfirmationCode(): IConfirmationCode {

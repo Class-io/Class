@@ -1,4 +1,4 @@
-import AccountType from '../../../common/constants/account-type';
+import AccountType from '../../../../common/constants/account-type';
 import { IConfirmationCode } from '../interfaces/IConfirmationCode';
 
 export class GetUserDTO implements Readonly<GetUserDTO> {

@@ -1,5 +1,5 @@
 import { Document } from 'mongoose';
-import AccountType from '../../../common/constants/account-type';
+import AccountType from '../../../../common/constants/account-type';
 import { IConfirmationCode } from './IConfirmationCode';
 
 export interface IUser extends Document {
