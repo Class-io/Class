@@ -3,7 +3,7 @@ import { BaseAccountHandler } from './base.handler';
 
 export class ResetPasswordHandler extends BaseAccountHandler {
     public async resetPassword(input: ResetPasswordRequestDTO): Promise<void> {
-        const user = await this._usersSerivce.get({ email: input.email });
+        const user = await this._userRepository.get({ email: input.email });
 
         this._throwExceptionWhenUserDoesNotExist(user);
 

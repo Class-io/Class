@@ -6,7 +6,7 @@ import { InvalidCredentialsException } from '../../../common/exceptions/invalid-
 
 export class ChangePasswordHandler extends BaseAccountHandler {
     public async changePassword(request: Request, input: ChangePasswordRequestDTO): Promise<void> {
-        const user = await this._usersSerivce.get({ _id: request.user.id });
+        const user = await this._userRepository.get({ _id: request.user.id });
 
         this._throwExceptionWhenAccountIsFromSocialMedia(user);
 

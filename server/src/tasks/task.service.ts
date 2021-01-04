@@ -1,13 +1,13 @@
 import { Global, Injectable, Logger } from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { IUser } from '../database/models/user/interfaces/IUser';
-import { UserRepository } from '../database/models/user/user.repository';
+import { IUserRepository } from '../database/models/user/interfaces/IUserRepository';
 
 @Injectable()
 @Global()
 export class TasksService {
     private readonly logger: Logger = new Logger();
-    constructor(private readonly _userRepository: UserRepository) {}
+    constructor(private readonly _userRepository: IUserRepository) {}
 
     @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT)
     public async removeUnconfirmedUsers(): Promise<void> {

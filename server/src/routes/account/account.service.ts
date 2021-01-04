@@ -1,5 +1,4 @@
 import { Injectable } from "@nestjs/common";
-import { UsersService } from "../user/users.service";
 import { ConfirmEmailRequestDTO } from './dto/confirm-email.dto';
 import { SendConfirmationMailRequestDTO } from './dto/send-confirmation-mail.dto';
 import { EventEmitter2 } from '@nestjs/event-emitter';
@@ -10,24 +9,25 @@ import { SendConfirmationMailHandler } from './handlers/send-confirmation-mail.h
 import { ConfirmEmailHandler } from './handlers/confirm-email.handler';
 import { ResetPasswordHandler } from './handlers/reset-password.handler';
 import { ChangePasswordHandler } from './handlers/change-password.handler';
+import { IUserRepository } from '../../database/models/user/interfaces/IUserRepository';
 
 @Injectable()
 export class AccountService {
-    constructor(private readonly _usersSerivce: UsersService, private readonly _eventEmitter: EventEmitter2) {}
+    constructor(private readonly _userRepository: IUserRepository, private readonly _eventEmitter: EventEmitter2) {}
 
     public async sendConfirmationMail(input: SendConfirmationMailRequestDTO): Promise<void> {
-        await new SendConfirmationMailHandler(this._usersSerivce, this._eventEmitter).sendConfirmationMail(input);
+        await new SendConfirmationMailHandler(this._userRepository, this._eventEmitter).sendConfirmationMail(input);
     }
 
     public async confirmEmail(input: ConfirmEmailRequestDTO): Promise<void> {
-        await new ConfirmEmailHandler(this._usersSerivce).confirmEmail(input);
+        await new ConfirmEmailHandler(this._userRepository).confirmEmail(input);
     }
 
     public async resetPassword(input: ResetPasswordRequestDTO): Promise<void> {
-        await new ResetPasswordHandler(this._usersSerivce).resetPassword(input);
+        await new ResetPasswordHandler(this._userRepository).resetPassword(input);
     }
 
     public async changePassword(request: Request, input: ChangePasswordRequestDTO): Promise<void> {
-        await new ChangePasswordHandler(this._usersSerivce).changePassword(request, input);
+        await new ChangePasswordHandler(this._userRepository).changePassword(request, input);
     }
 }
