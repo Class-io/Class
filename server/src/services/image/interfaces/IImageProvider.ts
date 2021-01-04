@@ -1,3 +1,5 @@
+import { IImage } from './IImage';
+
 export interface IImageProvider {
-    uploadImage(): Promise<void>;
+    uploadImage(image: IImage): Promise<void>;
 }

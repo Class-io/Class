@@ -38,6 +38,7 @@
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^6.5.4",
+    "sharp": "^0.27.0",
     "swagger-ui-express": "^4.1.6",
     "yamljs": "^0.3.0"
   },
@@ -54,6 +55,7 @@
     "@types/mongoose": "^5.10.1",
     "@types/node": "^13.9.1",
     "@types/nodemailer": "^6.4.0",
+    "@types/sharp": "^0.26.1",
     "@types/supertest": "^2.0.8",
     "@types/swagger-ui-express": "^4.1.2",
     "@types/yamljs": "^0.2.31",
