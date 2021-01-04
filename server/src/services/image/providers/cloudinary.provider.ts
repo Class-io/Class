@@ -1,8 +1,9 @@
-import * as CloudinaryLib from 'cloudinary';
+import { Injectable } from '@nestjs/common';
+import { IImageProvider } from '../interfaces/IImageProvider';
 
-export const Cloudinary = 'lib:cloudinary';
-
-export const CloudinaryProvider = {
-    provide: Cloudinary,
-    useValue: CloudinaryLib.v2,
-};
+@Injectable()
+export class CloudinaryProvider implements IImageProvider {
+    public async uploadImage(): Promise<void> {
+        console.log('Hello from cloudinary provider');
+    }
+}
