@@ -6,7 +6,7 @@ import { InvalidAccountTypeException } from '../../../common/exceptions/invalid-
 import { InvalidConfirmationCodeException } from '../../../common/exceptions/invalid-confirmation-code.exception';
 import { UserNotFoundException } from '../../../common/exceptions/user-not-found-exception';
 import { hashString } from '../../../common/helpers/hash-string';
-import { IUser } from '../../user/interfaces/IUser';
+import { IUser } from '../../../database/models/user/interfaces/IUser';
 import { UsersService } from '../../user/users.service';
 
 export class BaseAccountHandler {

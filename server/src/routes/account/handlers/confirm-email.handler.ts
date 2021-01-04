@@ -1,4 +1,4 @@
-import { IUser } from '../../user/interfaces/IUser';
+import { IUser } from '../../../database/models/user/interfaces/IUser';
 import { ConfirmEmailRequestDTO } from '../dto/confirm-email.dto';
 import { BaseAccountHandler } from './base.handler';
 

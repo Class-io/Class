@@ -6,7 +6,7 @@ import { CreateCourseDTO } from '../../../routes/course/dto/create.dto';
 import { CoursesService } from '../../../routes/course/courses.service';
 import { Constants } from '../../../common/constants';
 import { UsersService } from '../../../routes/user/users.service';
-import { IUser } from '../../../routes/user/interfaces/IUser';
+import { IUser } from '../../models/user/interfaces/IUser';
 
 @Injectable()
 export class CourseSeeder {

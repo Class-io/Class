@@ -1,5 +1,5 @@
 import { Module } from "@nestjs/common";
-import { UsersModule } from "../user/users.module";
+import { UsersModule } from "../../database/models/user/user.module";
 import { AccountService } from './account.service';
 import { AccountController } from './account.controller';
 import { JwtModule } from '../../services/jwt/jwt.module';

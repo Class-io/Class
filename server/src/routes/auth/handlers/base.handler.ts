@@ -1,6 +1,6 @@
 import Token from '../../../common/constants/token';
 import { JwtService } from '../../../services/jwt/jwt.service';
-import { IUser } from '../../user/interfaces/IUser';
+import { IUser } from '../../../database/models/user/interfaces/IUser';
 import { UsersService } from '../../user/users.service';
 import { IAccessTokenPayload } from '../interfaces/IAccessTokenPayload';
 import { AuthTokenPayload } from '../../../types';

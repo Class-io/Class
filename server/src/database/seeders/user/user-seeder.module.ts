@@ -1,6 +1,6 @@
 import { Module } from "@nestjs/common";
 import { CommandModule } from "nestjs-command";
-import { UsersModule } from '../../../routes/user/users.module';
+import { UsersModule } from '../../models/user/user.module';
 import { UserSeeder } from "./user.seeder";
 
 @Module({

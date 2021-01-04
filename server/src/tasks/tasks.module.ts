@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { UsersModule } from '../routes/user/users.module';
+import { UsersModule } from '../database/models/user/user.module';
 import { TasksService } from './tasks.service';
 
 @Module({

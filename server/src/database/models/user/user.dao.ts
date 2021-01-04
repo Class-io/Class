@@ -7,7 +7,7 @@ import { UpdateUserDTO } from "./dto/update.dto";
 import { IUser } from "./interfaces/IUser";
 
 @Injectable()
-export class UsersService {
+export class UserDAO {
     constructor(@InjectModel('User') private readonly _userModel: Model<IUser>) {}
 
     public async getMany(data: GetUserDTO = {}): Promise<IUser[]> {

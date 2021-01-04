@@ -1,6 +1,6 @@
 import { Global, Injectable, Logger } from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
-import { IUser } from '../routes/user/interfaces/IUser';
+import { IUser } from '../database/models/user/interfaces/IUser';
 import { UsersService } from '../routes/user/users.service';
 
 @Injectable()

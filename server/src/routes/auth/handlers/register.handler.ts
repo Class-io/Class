@@ -3,7 +3,7 @@ import { Constants } from '../../../common/constants';
 import { EmailAlreadyExistsException } from '../../../common/exceptions/email-already-exists.exception';
 import { UsernameAlreadyExistsException } from '../../../common/exceptions/username-already-exists.exception';
 import { hashString } from '../../../common/helpers/hash-string';
-import { IUser } from '../../user/interfaces/IUser';
+import { IUser } from '../../../database/models/user/interfaces/IUser';
 import { UsersService } from '../../user/users.service';
 import { RegisterRequestDTO } from '../dto/register.dto';
 

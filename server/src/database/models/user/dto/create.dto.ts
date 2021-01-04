@@ -1,4 +1,4 @@
-import AccountType from '../../../common/constants/account-type';
+import AccountType from '../../../../common/constants/account-type';
 
 export class CreateUserDTO implements Readonly<CreateUserDTO> {
     email: string;
