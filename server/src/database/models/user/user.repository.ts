@@ -5,9 +5,10 @@ import { CreateUserDTO } from "./dto/create.dto";
 import { GetUserDTO } from './dto/get.dto';
 import { UpdateUserDTO } from "./dto/update.dto";
 import { IUser } from "./interfaces/IUser";
+import { IUserRepository } from './interfaces/IUserRepository';
 
 @Injectable()
-export class UserDAO {
+export class UserRepository implements IUserRepository {
     constructor(@InjectModel('User') private readonly _userModel: Model<IUser>) {}
 
     public async getMany(data: GetUserDTO = {}): Promise<IUser[]> {

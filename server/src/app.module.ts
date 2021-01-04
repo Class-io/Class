@@ -2,9 +2,9 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose/dist/mongoose.module';
 import { AuthModule } from './routes/auth/auth.module';
 import config from './config';
-import { UsersModule } from './database/models/user/user.module';
+import { UserModule } from './database/models/user/user.module';
 import { ScheduleModule } from '@nestjs/schedule';
-import { TasksModule } from './tasks/tasks.module';
+import { TaskModule } from './tasks/task.module';
 import { UserSeederModule } from './database/seeders/user/user-seeder.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { EventModule } from './events/event.module';
@@ -20,10 +20,10 @@ import { CourseSeederModule } from './database/seeders/course/course-seeder.modu
     CourseSeederModule,
     AuthModule,
     AccountModule,
-    UsersModule,
+    UserModule,
     CoursesModule,
     ScheduleModule.forRoot(),
-    TasksModule,
+    TaskModule,
     EventModule
   ],
 })
