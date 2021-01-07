@@ -31,8 +31,8 @@ export class CourseSeeder {
             authorName: faker.internet.userName(),
             name: faker.random.words(3),
             price: faker.random.number(200),
-            topic: faker.random.arrayElement(Object.values(Constants.COURSE_TOPIC)),
-            level: faker.random.arrayElement(Object.values(Constants.COURSE_LEVEL)),
+            topic: faker.random.arrayElement(Object.values(Constants.COURSE.TOPIC)),
+            level: faker.random.arrayElement(Object.values(Constants.COURSE.LEVEL)),
             description: faker.random.words(10),
             duration: faker.random.number(),
             image: 'default.png'
