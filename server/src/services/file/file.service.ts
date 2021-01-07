@@ -6,7 +6,7 @@ import { CloudinaryProvider } from './providers/cloudinary.provider';
 import * as sharp from 'sharp';
 
 @Injectable()
-export class ImageService {
+export class FileService {
     private _imageName: string;
 
     constructor(@Inject(CloudinaryProvider) private readonly _cloudProvider: ICloudProvider) {}

@@ -2,7 +2,7 @@ import { Controller, HttpCode, Put, Req, UploadedFile, UseGuards, UseInterceptor
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Constants } from '../../common/constants';
 import { JwtGuard } from '../../common/guards/jwt.guard';
-import { IImage } from '../../services/image/interfaces/IImage';
+import { IImage } from '../../services/file/interfaces/IImage';
 import { Request } from 'express';
 import { UserService } from './user.service';
 
