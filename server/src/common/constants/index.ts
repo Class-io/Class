@@ -10,6 +10,7 @@ import { Exception } from './exception';
 import { StatusCode } from './status-code';
 import { Time } from './time';
 import { Token } from './token';
+import { User } from './user';
 
 export const Constants = {
     ACCOUNT_TYPE: AccountType,
@@ -23,5 +24,6 @@ export const Constants = {
     EXCEPTION: Exception,
     STATUS_CODE: StatusCode,
     TIME: Time,
-    TOKEN: Token
+    TOKEN: Token,
+    USER: User
 } as const;

@@ -49,6 +49,6 @@ export const UserSchema = new Schema({
     },
     avatar: {
         type: String,
-        default: 'avatars/default.jpg'
+        default: Constants.USER.DEFAULT_AVATAR
     }
 });

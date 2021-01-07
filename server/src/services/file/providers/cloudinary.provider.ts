@@ -10,4 +10,10 @@ export class CloudinaryProvider implements ICloudProvider {
             if(error) throw error;
         }).end(image.buffer);
     }
+
+    public async removeFile(filename: string): Promise<void> {
+        cloudinary.v2.uploader.destroy(filename, (error) => {
+            if(error) throw error;
+        });
+    }
 }

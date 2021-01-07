@@ -11,7 +11,7 @@ export class FileService {
 
     constructor(@Inject(CloudinaryProvider) private readonly _cloudProvider: ICloudProvider) {}
 
-    public async uploadImage(image: IImage): Promise<string> {
+    public async uploadAvatar(image: IImage): Promise<string> {
         this._validateImageFormat(image);
 
         await this._prepareImage(image);
@@ -19,6 +19,10 @@ export class FileService {
         await this._cloudProvider.uploadImage(image);
 
         return this._imageName;
+    }
+
+    public async removeFile(): Promise<void> {
+
     }
 
     private _validateImageFormat(image: IImage): void {
