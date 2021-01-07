@@ -3,6 +3,6 @@ import { BaseException } from "./base.exception";
 
 export class EmailNotConfirmedException extends BaseException {
     id = Constants.EXCEPTION.EMAIL_NOT_CONFIRMED;
-    statusCode = 403;
+    statusCode = Constants.STATUS_CODE.FORBIDDEN;
     message = 'Email has not been confirmed yet'
 }
