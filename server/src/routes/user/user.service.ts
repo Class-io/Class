@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { UserRepository } from '../../database/models/user/user.repository';
-import { FileService } from '../../services/file/image.service';
+import { FileService } from '../../services/file/file.service';
 import { IImage } from '../../services/file/interfaces/IImage';
 import { Request } from 'express';
 
