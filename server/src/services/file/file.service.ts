@@ -21,8 +21,9 @@ export class FileService {
         return this._imageName;
     }
 
-    public async removeFile(): Promise<void> {
-
+    public async removeImage(filename: string): Promise<void> {
+        const filenameWithoutExtension = filename.slice(0, -4);
+        await this._cloudProvider.removeFile(filenameWithoutExtension);
     }
 
     private _validateImageFormat(image: IImage): void {
