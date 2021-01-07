@@ -3,9 +3,9 @@ import { Injectable } from '@nestjs/common';
 import { random, internet } from 'faker';
 import { hashString } from '../../../common/helpers/hash-string';
 import { sleep } from '../../../common/helpers/sleep';
-import { logger } from '../../../common/utils/logger';
 import { UserRepository } from '../../models/user/user.repository';
 import { CreateUserDTO } from '../../models/user/dto/create.dto';
+import { Logger } from '../../../common/utils/logger';
 
 @Injectable()
 export class UserSeeder {
@@ -44,15 +44,15 @@ export class UserSeeder {
         try {
             await this._userRepository.create(this._fakeUserDataWithHashedPassword);
         } catch(error) {
-            logger.red(error);
+            Logger.error(error.message);
         }
     }
 
     private async _printUserCredentialsAfterSleep(): Promise<void> {
-        logger.green('User generated successfully');
+        Logger.green('User generated successfully');
 
         await sleep(1500);
 
-        console.log(this._fakeUserData);
+        Logger.white(this._fakeUserData);
     }
 }

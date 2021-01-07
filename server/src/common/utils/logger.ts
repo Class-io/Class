@@ -16,15 +16,15 @@ export class Logger extends NestLogger {
         this._logger.debug(message);
     }
 
-    public static green(message: string) {
+    public static green(message: any) {
         console.log(green(message));
     }
 
-    public static red(message: string) {
+    public static red(message: any) {
         console.log(red(message));
     }
 
-    public static white(message: string) {
+    public static white(message: any) {
         console.log(message);
     }
 }

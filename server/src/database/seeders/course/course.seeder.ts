@@ -1,7 +1,7 @@
 import { Command, Option } from 'nestjs-command';
 import { Injectable } from '@nestjs/common';
 import * as faker from 'faker';
-import { logger } from '../../../common/utils/logger';
+import { Logger } from '../../../common/utils/logger';
 import { CreateCourseDTO } from '../../models/course/dto/create.dto';
 import { Constants } from '../../../common/constants';
 import { IUser } from '../../models/user/interfaces/IUser';
@@ -52,12 +52,12 @@ export class CourseSeeder {
         try {
             await this._courseRepository.create(this._fakeData);
         } catch(error) {
-            logger.red(error);
+            Logger.red(error.message);
         }
     }
 
     private _printSuccessMessage(): void {
-        logger.green('Course generated successfully');
+        Logger.green('Course generated successfully');
     }
 
     private async _getUserByEmailOrPrintErrorMessage(email: string): Promise<IUser> {
@@ -69,7 +69,7 @@ export class CourseSeeder {
 
             return user;
         } catch(error) {
-            logger.red(error);
+            Logger.red(error.message);
             process.exit(0);
         }
     }
