@@ -11,7 +11,7 @@ import { EventModule } from './events/event.module';
 import { AccountModule } from './routes/account/account.module';
 import { CourseModelModule } from './database/models/course/course.model.module';
 import { CourseSeederModule } from './database/seeders/course/course-seeder.module';
-import { ImageModule } from './services/image/image.module';
+import { ImageModule } from './services/file/image.module';
 import { UserModule } from './routes/user/user.module';
 
 @Module({
