@@ -3,7 +3,6 @@ import { Injectable } from '@nestjs/common';
 import { random, internet } from 'faker';
 import { hashString } from '../../../common/helpers/hash-string';
 import { sleep } from '../../../common/helpers/sleep';
-import { RegisterRequestDTO } from '../../../routes/auth/dto/register.dto';
 import { logger } from '../../../common/utils/logger';
 import { UserRepository } from '../../models/user/user.repository';
 import { CreateUserDTO } from '../../models/user/dto/create.dto';
