@@ -1,4 +1,4 @@
-export default {
+export const Endpoint = {
     AUTH: {
         REGISTER: '/auth/register',
         LOGIN: '/auth/login',

@@ -1,25 +1,25 @@
-import APP_MODE from './app-mode';
-import DEFAULT_EXCEPTION from './default-exception';
-import EXCEPTION from './exception';
-import ENDPOINT from './endpoint';
-import TOKEN from './token';
-import EVENT from './event';
-import TIME from './time';
-import ACCOUNT_TYPE from './account-type';
-import COURSE_RATING from './course-rating';
-import COURSE_LEVEL from './course-level';
-import COURSE_TOPIC from './course-topic';
+import { AppMode } from './app-mode';
+import { DefaultException } from './default-exception';
+import { Exception } from './exception';
+import { Endpoint } from './endpoint';
+import { Token } from './token';
+import { Event } from './event';
+import { Time } from './time';
+import { AccountType } from './account-type';
+import { CourseRating } from './course-rating';
+import { CourseLevel } from './course-level';
+import { CourseTopic } from './course-topic';
 
 export const Constants = {
-    APP_MODE,
-    DEFAULT_EXCEPTION,
-    EXCEPTION,
-    ENDPOINT,
-    TOKEN,
-    EVENT,
-    TIME,
-    ACCOUNT_TYPE,
-    COURSE_RATING,
-    COURSE_LEVEL,
-    COURSE_TOPIC
+    APP_MODE: AppMode,
+    DEFAULT_EXCEPTION: DefaultException,
+    EXCEPTION: Exception,
+    ENDPOINT: Endpoint,
+    TOKEN: Token,
+    EVENT: Event,
+    TIME: Time,
+    ACCOUNT_TYPE: AccountType,
+    COURSE_RATING: CourseRating,
+    COURSE_LEVEL: CourseLevel,
+    COURSE_TOPIC: CourseTopic
 } as const;

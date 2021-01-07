@@ -1,5 +1,3 @@
-enum Token {
+export enum Token {
     ACCESS
 }
-
-export default Token;
