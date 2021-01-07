@@ -1,13 +1,30 @@
 import { red, green } from 'chalk';
+import { Logger as NestLogger } from '@nestjs/common';
 
-class Logger {
-    public green(text: string): void {
-        console.log(green(text));
+export class Logger extends NestLogger {
+    private static _logger = NestLogger;
+
+    public static log(message: string) {
+        this._logger.log(message);
     }
 
-    public red(text: string): void {
-        console.log(red(text));
+    public static error(message: string) {
+        this._logger.error(message);
+    }
+
+    public static debug(message: string) {
+        this._logger.debug(message);
+    }
+
+    public static green(message: any) {
+        console.log(green(message));
+    }
+
+    public static red(message: any) {
+        console.log(red(message));
+    }
+
+    public static white(message: any) {
+        console.log(message);
     }
 }
-
-export const logger = new Logger();

@@ -1,12 +1,13 @@
-import { Global, Injectable, Logger } from '@nestjs/common';
+import { Global, Injectable } from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
+import { Constants } from '../common/constants';
+import { Logger } from '../common/utils/logger';
 import { IUser } from '../database/models/user/interfaces/IUser';
 import { UserRepository } from '../database/models/user/user.repository';
 
 @Injectable()
 @Global()
 export class TasksService {
-    private readonly logger: Logger = new Logger();
     constructor(private readonly _userRepository: UserRepository) {}
 
     @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT)
@@ -15,7 +16,7 @@ export class TasksService {
 
         await this._deleteUsers(users);
 
-        this.logger.debug('Unconfirmed users have been removed from the database');
+        Logger.debug('Unconfirmed users have been removed from the database');
     }
 
     private async _deleteUsers(users: IUser[]): Promise<void> {
@@ -25,7 +26,6 @@ export class TasksService {
     }
 
     private _accountAgeIsLongerThanTwoHours(user: IUser): boolean {
-        const HOURS_2 = 7200000
-        return Date.now() - user.joinedAt > HOURS_2;
+        return Date.now() - user.joinedAt > Constants.TIME.HOURS_2;
     }
 }

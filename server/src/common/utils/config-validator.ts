@@ -1,7 +1,7 @@
 import { object, string, number } from 'joi';
 import config from '../../config';
 import { Constants } from '../constants';
-import { logger } from './logger';
+import { Logger } from './logger';
 
 export class ConfigValidator {
     public static async validate(): Promise<boolean> {
@@ -48,6 +48,6 @@ export class ConfigValidator {
     }
     
     private static _printErrorMessage(message: string): void {
-        logger.red(`Environment variable error: ${message}`);
+        Logger.red(`Environment variable error: ${message}`);
     }
 }
