@@ -7,6 +7,7 @@ import { DefaultException } from './default-exception';
 import { Endpoint } from './endpoint';
 import { Event } from './event';
 import { Exception } from './exception';
+import { StatusCode } from './status-code';
 import { Time } from './time';
 import { Token } from './token';
 
@@ -20,6 +21,7 @@ export const Constants = {
     ENDPOINT: Endpoint,
     EVENT: Event,
     EXCEPTION: Exception,
+    STATUS_CODE: StatusCode,
     TIME: Time,
     TOKEN: Token
 } as const;
