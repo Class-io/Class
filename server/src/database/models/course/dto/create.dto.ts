@@ -1,13 +1,12 @@
-import { CourseLevel } from '../../../../common/constants/course-level';
-import { CourseTopic } from '../../../../common/constants/course-topic';
+import { Course } from '../../../../common/constants/course';
 
 export class CreateCourseDTO implements Readonly<CreateCourseDTO> {
     authorId: string;
     authorName: string;
     name: string;
     price: number;
-    topic: CourseTopic;
-    level: CourseLevel;
+    topic: Course.TOPIC;
+    level: Course.LEVEL;
     description: string;
     duration: number;
     image: string;

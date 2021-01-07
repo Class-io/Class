@@ -1,7 +1,5 @@
 import { Document } from 'mongoose';
-import { CourseLevel } from '../../../../common/constants/course-level';
-import { CourseRating } from '../../../../common/constants/course-rating';
-import { CourseTopic } from '../../../../common/constants/course-topic';
+import { Course } from '../../../../common/constants/course';
 
 export interface ICourse extends Document {
     readonly id: string;
@@ -9,9 +7,9 @@ export interface ICourse extends Document {
     readonly authorName: string;
     readonly name: string;
     readonly price: number;
-    readonly rating: CourseRating;
-    readonly topic: CourseTopic;
-    readonly level: CourseLevel;
+    readonly rating: Course.RATING;
+    readonly topic: Course.TOPIC;
+    readonly level: Course.LEVEL;
     readonly reviewsNumber: number;
     readonly description: string;
     readonly duration: number;

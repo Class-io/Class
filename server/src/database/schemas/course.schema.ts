@@ -21,28 +21,28 @@ export const CourseSchema = new Schema({
     rating: {
         type: Number,
         enum: [
-            Constants.COURSE_RATING.EMPTY, Constants.COURSE_RATING.ONE_STAR,
-            Constants.COURSE_RATING.ONE_AND_HALF_STARS, Constants.COURSE_RATING.TWO_STARS,
-            Constants.COURSE_RATING.TWO_AND_HALF_STARS, Constants.COURSE_RATING.THREE_STARS,
-            Constants.COURSE_RATING.THREE_AND_HALF_STARS, Constants.COURSE_RATING.FOUR_STARS,
-            Constants.COURSE_RATING.FOUR_AND_HALF_STARS, Constants.COURSE_RATING.FIVE_STARS
+            Constants.COURSE.RATING.EMPTY, Constants.COURSE.RATING.ONE_STAR,
+            Constants.COURSE.RATING.ONE_AND_HALF_STARS, Constants.COURSE.RATING.TWO_STARS,
+            Constants.COURSE.RATING.TWO_AND_HALF_STARS, Constants.COURSE.RATING.THREE_STARS,
+            Constants.COURSE.RATING.THREE_AND_HALF_STARS, Constants.COURSE.RATING.FOUR_STARS,
+            Constants.COURSE.RATING.FOUR_AND_HALF_STARS, Constants.COURSE.RATING.FIVE_STARS
         ],
-        default: Constants.COURSE_RATING.EMPTY
+        default: Constants.COURSE.RATING.EMPTY
     },
     topic: {
         type: String,
         enum: [
-            Constants.COURSE_TOPIC.JAVASCRIPT,
-            Constants.COURSE_TOPIC.TYPESCRIPT
+            Constants.COURSE.TOPIC.JAVASCRIPT,
+            Constants.COURSE.TOPIC.TYPESCRIPT
         ],
         required: true
     },
     level: {
         type: String,
         enum: [
-            Constants.COURSE_LEVEL.BEGINNER,
-            Constants.COURSE_LEVEL.INTERMEDIATE,
-            Constants.COURSE_LEVEL.ADVANCED
+            Constants.COURSE.LEVEL.BEGINNER,
+            Constants.COURSE.LEVEL.INTERMEDIATE,
+            Constants.COURSE.LEVEL.ADVANCED
         ],
         required: true
     },
