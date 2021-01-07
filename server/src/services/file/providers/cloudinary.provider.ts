@@ -12,7 +12,7 @@ export class CloudinaryProvider implements ICloudProvider {
     }
 
     public async removeFile(filename: string): Promise<void> {
-        cloudinary.v2.uploader.destroy(filename, (error) => {
+        await cloudinary.v2.uploader.destroy(filename, (error) => {
             if(error) throw error;
         });
     }

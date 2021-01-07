@@ -12,9 +12,9 @@ export class UserService {
     public async updateAvatar(request: Request, image: IImage): Promise<void> {
         const imageName = await this._fileService.uploadAvatar(image);
 
-        await this._changeAvatarInDatabase(request.user.id, imageName);
-
         await this._removeOldAvatar(request.user.id);
+
+        await this._changeAvatarInDatabase(request.user.id, imageName);
     }
 
     private async _removeOldAvatar(id: string): Promise<void> {
