@@ -3,6 +3,6 @@ import { BaseException } from "./base.exception";
 
 export class UsernameAlreadyExistsException extends BaseException {
     id = Constants.EXCEPTION.USERNAME_ALREADY_EXISTS;
-    statusCode = 401;
-    message = 'Username already exists'
+    statusCode = Constants.STATUS_CODE.CONFLICT;
+    message = 'Username already exists';
 }

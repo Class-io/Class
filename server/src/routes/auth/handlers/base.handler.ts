@@ -1,10 +1,10 @@
-import Token from '../../../common/constants/token';
+import { Token } from '../../../common/constants/token';
 import { JwtService } from '../../../services/jwt/jwt.service';
 import { IUser } from '../../../database/models/user/interfaces/IUser';
 import { IAccessTokenPayload } from '../interfaces/IAccessTokenPayload';
 import { AuthTokenPayload } from '../../../types';
 import { EmailAlreadyExistsException } from '../../../common/exceptions/email-already-exists.exception';
-import AccountType from '../../../common/constants/account-type';
+import { AccountType } from '../../../common/constants/account-type';
 import { Response } from 'express';
 import { IUserRepository } from '../../../database/models/user/interfaces/IUserRepository';
 

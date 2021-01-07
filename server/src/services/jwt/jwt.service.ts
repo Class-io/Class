@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import Token from "../../common/constants/token";
+import { Token } from "../../common/constants/token";
 import { VerifyErrors, verify, sign } from "jsonwebtoken";
 import config from "../../config";
 import { TokenPayload } from "../../types";

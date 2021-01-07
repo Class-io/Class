@@ -1,5 +1,5 @@
 import { Constants } from '../../../common/constants';
-import ACCOUNT_TYPE from '../../../common/constants/account-type';
+import { AccountType } from '../../../common/constants/account-type';
 import { EmailNotConfirmedException } from '../../../common/exceptions/email-not-confirmed.exception';
 import { InvalidCredentialsException } from '../../../common/exceptions/invalid-credentials.exception';
 import { compareStringToHash } from '../../../common/helpers/compare-string-to-hash';
@@ -8,7 +8,7 @@ import { BaseLoginHandler } from './base.handler';
 import { Response } from 'express';
 
 export class LoginHandler extends BaseLoginHandler {
-    protected _accountType: ACCOUNT_TYPE = Constants.ACCOUNT_TYPE.REGULAR;
+    protected _accountType: AccountType = Constants.ACCOUNT_TYPE.REGULAR;
 
     public async login(input: LoginRequestDTO, response: Response): Promise<void> {
         await this._getUserFromDatabaseByEmailOrThrowException(input.email);

@@ -1,4 +1,4 @@
-enum CourseRating {
+export enum CourseRating {
     EMPTY = 0.0,
     ONE_STAR = 1.0,
     ONE_AND_HALF_STARS = 1.5,
@@ -10,5 +10,3 @@ enum CourseRating {
     FOUR_AND_HALF_STARS = 4.5,
     FIVE_STARS = 5.0
 }
-
-export default CourseRating;

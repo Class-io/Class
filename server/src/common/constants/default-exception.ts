@@ -1,7 +1,7 @@
-enum DefaultException {
-    ID = 0,
-    STATUS = 500,
-    MESSAGE = 'Internal server error'
-}
+import { StatusCode } from './status-code';
 
-export default DefaultException;
+export const DefaultException = {
+    ID: 0,
+    STATUS: StatusCode.INTERNAL_SERVER_ERROR,
+    MESSAGE: 'Internal server error'
+} as const;

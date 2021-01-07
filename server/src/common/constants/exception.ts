@@ -1,4 +1,4 @@
-enum Exception {
+export enum Exception {
     DEFAULT = 0,
     INPUT_NOT_VALID = 100,
     USER_NOT_FOUND = 101,
@@ -13,5 +13,3 @@ enum Exception {
     EMAIL_NOT_CONFIRMED = 110,
     INVALID_IMAGE_FORMAT = 111
 }
-
-export default Exception;

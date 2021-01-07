@@ -1,4 +1,4 @@
-import { Controller, HttpCode, Put, Req, Res, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Controller, HttpCode, Put, Req, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Constants } from '../../common/constants';
 import { JwtGuard } from '../../common/guards/jwt.guard';
@@ -11,10 +11,10 @@ export class UserController {
     constructor(private readonly _userService: UserService) {}
 
     @Put(Constants.ENDPOINT.USER.AVATAR)
+    @HttpCode(Constants.STATUS_CODE.NO_CONTENT)
     @UseInterceptors(FileInterceptor('file'))
     @UseGuards(JwtGuard)
-    @HttpCode(204)
-    public async updateAvatar(@Req() request: Request, @UploadedFile() image: IImage) {
+    public async updateAvatar(@Req() request: Request, @UploadedFile() image: IImage): Promise<void> {
         await this._userService.updateAvatar(request, image);
     }
 }
