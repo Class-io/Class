@@ -11,9 +11,9 @@ export class UserController {
     constructor(private readonly _userService: UserService) {}
 
     @Put(Constants.ENDPOINT.USER.AVATAR)
+    @HttpCode(Constants.STATUS_CODE.NO_CONTENT)
     @UseInterceptors(FileInterceptor('file'))
     @UseGuards(JwtGuard)
-    @HttpCode(204)
     public async updateAvatar(@Req() request: Request, @UploadedFile() image: IImage): Promise<void> {
         await this._userService.updateAvatar(request, image);
     }

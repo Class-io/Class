@@ -17,30 +17,31 @@ export class AuthController {
     constructor(private readonly _authService: AuthService) {}
     
     @Post(Constants.ENDPOINT.AUTH.REGISTER)
+    @HttpCode(Constants.STATUS_CODE.CREATED)
     public async register(@Body(new ValidationPipe(RegisterValidationSchema)) body: RegisterRequestDTO): Promise<void> {
         await this._authService.register(body);
     }
 
     @Post(Constants.ENDPOINT.AUTH.LOGIN)
-    @HttpCode(204)
+    @HttpCode(Constants.STATUS_CODE.NO_CONTENT)
     public async login(@Res({ passthrough: true }) response: Response, @Body(new ValidationPipe(LoginValidationSchema)) body: LoginRequestDTO): Promise<void> {
         await this._authService.login(body, response);
     }
 
     @Post(Constants.ENDPOINT.AUTH.LOGIN_GOOGLE)
-    @HttpCode(204)
+    @HttpCode(Constants.STATUS_CODE.NO_CONTENT)
     public async loginWithGoogle(@Res({ passthrough: true }) response: Response, @Body(new ValidationPipe(GoogleLoginValidationSchema)) body: GoogleLoginRequestDTO): Promise<void> {
         await this._authService.loginWithGoogle(body, response);
     }
 
     @Post(Constants.ENDPOINT.AUTH.LOGIN_GITHUB)
-    @HttpCode(204)
+    @HttpCode(Constants.STATUS_CODE.NO_CONTENT)
     public async loginWithGithub(@Res({ passthrough: true }) response: Response, @Body(new ValidationPipe(GithubLoginValidationSchema)) body: GithubLoginRequestDTO): Promise<void> {
         await this._authService.loginWithGithub(body, response);
     }
 
     @Post(Constants.ENDPOINT.AUTH.LOGOUT)
-    @HttpCode(204)
+    @HttpCode(Constants.STATUS_CODE.NO_CONTENT)
     public logout(@Res({ passthrough: true }) response: Response): void {
         this._authService.logout(response);
     }

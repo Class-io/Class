@@ -18,25 +18,25 @@ export class AccountController {
     constructor(private readonly _accountService: AccountService) {}
     
     @Post(Constants.ENDPOINT.ACCOUNT.SEND_CONFIRMATION_MAIL)
-    @HttpCode(204)
+    @HttpCode(Constants.STATUS_CODE.NO_CONTENT)
     public async sendConfirmationMail(@Body(new ValidationPipe(SendConfirmationMailValidationSchema)) body: SendConfirmationMailRequestDTO): Promise<void> {
         await this._accountService.sendConfirmationMail(body);
     }
 
     @Post(Constants.ENDPOINT.ACCOUNT.CONFIRM_EMAIL)
-    @HttpCode(204)
+    @HttpCode(Constants.STATUS_CODE.NO_CONTENT)
     public async confirmEmail(@Body(new ValidationPipe(ConfirmEmailValidationSchema)) body: ConfirmEmailRequestDTO): Promise<void> {
         await this._accountService.confirmEmail(body);
     }
 
     @Post(Constants.ENDPOINT.ACCOUNT.RESET_PASSWORD)
-    @HttpCode(204)
+    @HttpCode(Constants.STATUS_CODE.NO_CONTENT)
     public async resetPassword(@Body(new ValidationPipe(ResetPasswordValidationSchema)) body: ResetPasswordRequestDTO): Promise<void> {
         await this._accountService.resetPassword(body);
     }
 
     @Post(Constants.ENDPOINT.ACCOUNT.CHANGE_PASSWORD)
-    @HttpCode(204)
+    @HttpCode(Constants.STATUS_CODE.NO_CONTENT)
     @UseGuards(JwtGuard)
     public async changePassword(@Req() request: Request, @Body(new ValidationPipe(ChangePasswordValidationSchema)) body: ChangePasswordRequestDTO): Promise<void> {
         await this._accountService.changePassword(request, body);
